@@ -172,7 +172,7 @@ export const RefundManagement = () => {
     }, 1000);
   };
 
-  console.log("permission", permission)
+  console.log("currentItems", currentItems)
 
   return (
     <>
@@ -219,7 +219,7 @@ export const RefundManagement = () => {
                             </td>
                             < td > {`$ ${item?.refund_amount}`}</td>
                             <td>{item?.refund_date}</td>
-                            <td>{item?.leaddetail?.email}</td>
+                            <td>{item?.refunduser?.name}</td>
                             <td>{item?.refund_type}</td>
                             <td>{item?.merchantdetail?.name}</td>
                             <td>

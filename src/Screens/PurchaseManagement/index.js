@@ -198,6 +198,7 @@ export const PurchaseManagement = () => {
       setCopiedId(null);
     }, 1000);
   };
+ console.log("currentItems"  , currentItems)
 
   return (
     <>
@@ -245,7 +246,7 @@ export const PurchaseManagement = () => {
                             {/* <td>{item?.username}</td> */}
                             <td>{`$ ${item?.purchase_amount}`}</td>
                             <td>{item?.purchase_date}</td>
-                            <td>{item?.leaddetail?.email}</td>
+                            <td>{item?.purchaseuser?.name}</td>
                             <td>{item?.purchase_type}</td>
                             {/* <td>{item?.merchantdetail?.name}</td>  */}
                             {/* <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td> */}

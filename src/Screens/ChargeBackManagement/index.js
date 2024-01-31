@@ -238,7 +238,7 @@ export const ChargeBackManagement = () => {
                             {/* <td>{item?.username}</td> */}
                             <td>{`$ ${item?.chargeback_amount}`}</td>
                             <td>{item?.chargeback_date}</td>
-                            <td>{item?.leaddetail?.email}</td>
+                            <td>{item?.chargebackuser?.name}</td>
                             <td>{item?.chargeback_type}</td>
                             <td>{item?.merchantdetail?.name}</td>
 

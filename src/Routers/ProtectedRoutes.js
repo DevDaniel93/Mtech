@@ -1,84 +1,90 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router'
+ import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+
 export const ProtectedRoutes = (props) => {
-    const { Components } = props;
-    const navigate = useNavigate();
+  const { Components } = props;
+  const navigate = useNavigate();
 
-    const loginToken = localStorage.getItem('login');
-
-    const copyPaste = () => {
-        document.addEventListener("DOMContentLoaded", function() {
-            var ctrlDown = false,
-                ctrlKey = 17,
-                cmdKey = 91,
-                vKey = 86,
-                cKey = 67;
-        
-        
-           document.addEventListener("keydown", function(e) {
-                if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
-            });
-        
-        
-           document.addEventListener("keyup", function(e) {
-                if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
-            });
-        
-        
-           var elements = document.querySelector("body");
-        
-        
-           elements.forEach(function(element) {
-                element.addEventListener("keydown", function(e) {
-                    if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) e.preventDefault();
-                });
-            });
-        });
-        
-    }
-
-    const apiStatus = () => {
-        const formDataMethod =  new FormData();
-        formDataMethod.append('token', loginToken);
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/auth/check-token`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-            },
-            body: formDataMethod  
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                if(data?.status === false) {
-                    localStorage.removeItem('login');
-                    navigate('/')
-                }
-                document.querySelector('.loaderBox').classList.add("d-none");
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
-
-            })
-    }
-
+  const loginToken = localStorage.getItem('login');
+  const CopyPaste = () => {
     useEffect(() => {
-        let login = localStorage.getItem('login');
-        if (!login) {
-            navigate('/');
-           
-        }
+      const ctrlKey = 17;
+      const cmdKey = 91;
+      const vKey = 86;
+      const cKey = 67;
+  
+      let ctrlDown = false;
+  
+      const handleKeyDown = (e) => {
+        if (e.keyCode === ctrlKey || e.keyCode === cmdKey) ctrlDown = true;
+      };
+  
+      const handleKeyUp = (e) => {
+        if (e.keyCode === ctrlKey || e.keyCode === cmdKey) ctrlDown = false;
+      };
+  
+      const handleKeyPress = (e) => {
+        if (ctrlDown && (e.keyCode === vKey || e.keyCode === cKey)) e.preventDefault();
+      };
+  
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keyup', handleKeyUp);
+  
+      const elements = document.querySelectorAll("body");
+  
+      elements.forEach((element) => {
+        element.addEventListener('keydown', handleKeyPress);
+      });
+  
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('keyup', handleKeyUp);
+  
+        elements.forEach((element) => {
+          element.removeEventListener('keydown', handleKeyPress);
+        });
+      };
+    }, []); // Empty dependency array for running only once
+  };
 
-        apiStatus()
-        copyPaste()
-
-       
+  const apiStatus = () => {
+    const formDataMethod = new FormData();
+    formDataMethod.append('token', loginToken);
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/auth/check-token`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: formDataMethod
     })
-    return (
-        <>
-            <Components />
-        </>
-    )
-}
+      .then((response) => response.json())
+      .then((data) => {
+        if (data?.status === false) {
+          localStorage.removeItem('login');
+          navigate('/');
+        }
+        document.querySelector('.loaderBox').classList.add("d-none");
+      })
+      .catch(() => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+      });
+  };
+
+  useEffect(() => {
+    let login = localStorage.getItem('login');
+    if (!login) {
+      navigate('/');
+    }
+
+    apiStatus();
+    
+
+  }, []);  
+
+  return (
+    <>
+      <Components />
+    </>
+  );
+};

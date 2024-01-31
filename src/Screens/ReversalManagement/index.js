@@ -173,7 +173,7 @@ export const ReversalManagement = () => {
     },
   ];
 
-
+ console.log("currentItems" , currentItems)
   return (
     <>
       <DashboardLayout>
@@ -219,7 +219,7 @@ export const ReversalManagement = () => {
                             {/* <td>{item?.username}</td> */}
                             <td>{`$ ${item?.reversal_amount}`}</td>
                             <td>{item?.reversal_date}</td>
-                            <td>{item?.leaddetail?.email}</td>
+                            <td>{item?.reversaluser?.name}</td>
                             <td>{item?.reversal_type}</td>
                             {/* <td>{item?.merchantdetail?.name}</td>  */}
                             {/* <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td> */}
