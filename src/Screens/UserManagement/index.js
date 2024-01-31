@@ -19,7 +19,7 @@ import { faCompass } from "@fortawesome/free-solid-svg-icons";
 import { text } from "@fortawesome/fontawesome-svg-core";
 
 export const UserManagement = () => {
-
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -82,6 +82,8 @@ export const UserManagement = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data.users);
+        
+        setPermission(data?.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -160,6 +162,7 @@ export const UserManagement = () => {
       })
   }
 
+  console.log("permission", permission)
 
   return (
     <>
@@ -174,7 +177,8 @@ export const UserManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add User" variant='primaryButton' onClick={hanldeRoute} />
+                    {permission?.users.create === true ?
+                      <CustomButton text="Add User" variant='primaryButton' onClick={hanldeRoute} />:"" }
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -206,8 +210,12 @@ export const UserManagement = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/user-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link>
+                                {permission?.users.read === true ?
+                                  <Link to={`/user-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> :"" }
+
+{permission?.users.update === true ?
+                                  <Link to={`/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> :"" }
+{/* {permission?.users.delete === true ?                               */}
                                   {item?.status == 0 ? <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}>  <FontAwesomeIcon icon={faCompass} />  Active </button>
 
                                     : <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}>  <FontAwesomeIcon icon={faCompass} style={{ decoration: 'line-through' }} /> Inactive </button>

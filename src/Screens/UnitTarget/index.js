@@ -29,7 +29,7 @@ export const UnitTarget = () => {
   const [userinputValue, setuserInputValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
-   
+
   const [userValue, setuserValue] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -41,7 +41,8 @@ export const UnitTarget = () => {
   const { apiData: unitListing, loading: unitLoading } = useApi('admin/unit-listing');
   const { apiData: TargetListing, loading: TargetLoding } = useApi('admin/unit-Target-List');
   const { apiData: TargetResponseData, loading: TragetResponseLoading, error: TargetResponseError, updateDataForm: targetUpdateData, editParam: TargetEditData } = usePostUpdate('admin/unit-targets-edit/');
-
+  const [unitpermission, setUnitpermission] = useState()
+  const [userpermission, setUserpermission] = useState()
   const [editFormData, SetEditFormData] = useState({
     unit_id: '',
     target: '',
@@ -194,7 +195,7 @@ export const UnitTarget = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
 
-
+        setUnitpermission(data?.permission)
         setData(data?.data);
       })
       .catch((error) => {
@@ -226,7 +227,7 @@ export const UnitTarget = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
-
+        setUserpermission(data?.permission)
 
         setUserdata(data?.data);
       })
@@ -343,7 +344,7 @@ export const UnitTarget = () => {
       [name]: value,
     }));
   };
-  
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -379,7 +380,7 @@ export const UnitTarget = () => {
       })
   }
 
- const handleuserSubmit = (event) => {
+  const handleuserSubmit = (event) => {
     event.preventDefault();
 
 
@@ -448,7 +449,7 @@ export const UnitTarget = () => {
     }
   };
 
- const [viewleads, setViewleads] = useState('');
+  const [viewleads, setViewleads] = useState('');
   const [useresdata, setUserData] = useState();
 
 
@@ -482,7 +483,7 @@ export const UnitTarget = () => {
       })
   }
 
- useEffect(() => {
+  useEffect(() => {
     fetchUserData();
   }, [viewleads]);
 
@@ -492,7 +493,7 @@ export const UnitTarget = () => {
     <>
       <DashboardLayout>
 
-    <div className="container-fluid">
+        <div className="container-fluid">
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
@@ -517,9 +518,9 @@ export const UnitTarget = () => {
                           <h2 className="mainTitle">Unit Listing</h2>
                           <div className="col-md-6 mb-2">
                             <div className="addUser">
-                              <CustomButton text="Add Unit Target" variant='primaryButton' onClick={() => {
+                              {unitpermission?.unit_targets.create === true ? <CustomButton text="Add Unit Target" variant='primaryButton' onClick={() => {
                                 setUser(true)
-                              }} />
+                              }} /> : " "}
                               <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
                             </div>
                           </div>
@@ -543,8 +544,8 @@ export const UnitTarget = () => {
                                       <FontAwesomeIcon icon={faEllipsisV} />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  
-                                      <Link className="tableAction" to={`target-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link>
+
+                                      {unitpermission?.unit_targets.create === true ? <Link className="tableAction" to={`target-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
                                     </Dropdown.Menu>
                                   </Dropdown>
                                 </td>
@@ -602,7 +603,7 @@ export const UnitTarget = () => {
                             onChange={handleChange}
 
                           />
-                      
+
 
                           <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleSubmit} />
                         </CustomModal>
@@ -616,9 +617,9 @@ export const UnitTarget = () => {
                           <h2 className="mainTitle">User Listing</h2>
                           <div className="col-md-6 mb-2">
                             <div className="addUser">
-                              <CustomButton text="Add User Target" variant='primaryButton' onClick={() => {
+                              {userpermission?.user_targets.create === true ? <CustomButton text="Add User Target" variant='primaryButton' onClick={() => {
                                 setUsers(true)
-                              }} />
+                              }} /> : ""}
                               <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
                             </div>
                           </div>
@@ -637,17 +638,17 @@ export const UnitTarget = () => {
                                 <td className="text-uppercase">
                                   {item?.unit_detail?.name}
                                 </td>
- 
+
                                 <td>{item?.target ? `$ ${item?.target}` : '$0'}</td>
-                                  <td>
+                                <td>
                                   <Dropdown className="tableDropdown">
                                     <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
                                       <FontAwesomeIcon icon={faEllipsisV} />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu align="end" className="tableDropdownMenu">
-   
 
-                                      <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link>
+
+                                      { userpermission?.user_targets.reade === true ? <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
                                     </Dropdown.Menu>
                                   </Dropdown>
                                 </td>
@@ -712,7 +713,7 @@ export const UnitTarget = () => {
                             option={useresdata}
                             onChange={handleChange}
                           />
-                 
+
 
                           <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleuserSubmit} />
                         </CustomModal>
@@ -733,7 +734,7 @@ export const UnitTarget = () => {
 
 
         </div>
- 
+
 
       </DashboardLayout>
     </>

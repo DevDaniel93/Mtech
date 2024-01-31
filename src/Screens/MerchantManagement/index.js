@@ -29,6 +29,7 @@ export const MerchantManagement = () => {
   const [status , setStatus] = useState()
   const [userForm, setUserFrom] = useState(false);
   const [idUser, setIdUser] = useState(0);
+  const [permission, setPermission] = useState()
   const [formData, setFormData] = useState({
     name: '',
    });
@@ -76,6 +77,7 @@ export const MerchantManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
          
         setData(data?.data);
+        setPermission(data?.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -236,9 +238,9 @@ export const MerchantManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add Merchant" variant='primaryButton' onClick={() => {
+                    {permission?.merchant.create === true ? <CustomButton text="Add Merchant" variant='primaryButton' onClick={() => {
                         setUser(true)
-                      }} />
+                      }} /> : " "}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -264,10 +266,10 @@ export const MerchantManagement = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <button onClick={() => {
+                                {permission?.merchant.update === true ?  <button onClick={() => {
                                     brandID(item.id)
                                     setUserFrom(true)
-                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>
+                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button> : ""}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

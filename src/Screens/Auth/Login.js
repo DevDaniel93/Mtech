@@ -43,7 +43,8 @@ const AdminLogin = () => {
             if (response.ok) {
                
                 const responseData = await response.json();
-                localStorage.setItem('login', responseData.data.token);
+                localStorage.setItem('login' , responseData.data.token );
+                localStorage.setItem('role' , responseData.data.role );
 
                 document.querySelector('.loaderBox').classList.add("d-none");
                 navigate('/dashboard')

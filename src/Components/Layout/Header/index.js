@@ -20,7 +20,7 @@ import "./style.css";
 
 
 export const Header = (props) => {
-
+  const [status , setStatus] = useState()
   const [notificationState, setNotificationState] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -30,10 +30,12 @@ export const Header = (props) => {
   const Continue = () => {
     setShowModal(false)
     setShowModal2(true)
+          setStatus(true)
   }
 
   const handleClickPopup = () => {
     setShowModal(true)
+    setStatus(true)
   }
 
   const handleRedirect = () => {
@@ -54,6 +56,9 @@ export const Header = (props) => {
       .then((data) => {
         console.log(data)
         localStorage.removeItem('login');
+        setStatus(data?.status)
+ console.log("data?.status" , data?.status)
+
         navigate('/');
       })
       .catch((error) => {
@@ -160,8 +165,8 @@ export const Header = (props) => {
         </Container>
       </Navbar>
 
-      <CustomModal show={showModal} close={() => { setShowModal(false) }} action={Continue} heading='Are you sure you want to logout?' />
-      <CustomModal show={showModal2} close={handleRedirect} success heading='Successfully Logged Out' />
+      <CustomModal    status={status} show={showModal} close={() => { setShowModal(false) }} action={Continue} heading='Are you sure you want to logout?' />
+      <CustomModal    status={status} show={showModal2} close={handleRedirect} success heading='Successfully Logged Out' />
     </header>
   );
 };

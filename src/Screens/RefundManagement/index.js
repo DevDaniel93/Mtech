@@ -18,6 +18,7 @@ import "./style.css";
 
 export const RefundManagement = () => {
 
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -81,6 +82,7 @@ export const RefundManagement = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data?.data);
+        setPermission(data?.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -170,7 +172,7 @@ export const RefundManagement = () => {
     }, 1000);
   };
 
-  console.log("coppied", coppied)
+  console.log("permission", permission)
 
   return (
     <>
@@ -185,7 +187,8 @@ export const RefundManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Refund" variant='primaryButton' onClick={hanldeRoute} />
+                      {permission?.refund.create === true ?
+                        <CustomButton text="Add New Refund" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -225,9 +228,14 @@ export const RefundManagement = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/refund-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-refund/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                  {permission?.refund.read === true ?
+
+                                    <Link to={`/refund-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
+                                  {permission?.refund.update === true ?
+                                    <Link to={`/edit-refund/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : ""}
+                                  {permission?.refund.delete === true ?
+
+                                    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
 
                               </Dropdown>

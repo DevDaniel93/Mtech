@@ -16,6 +16,7 @@ import CustomButton from "../../Components/CustomButton";
 import "./style.css";
 
 export const ChargeBackManagement = () => {
+  const [permission, setPermission] = useState()
 
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +52,7 @@ export const ChargeBackManagement = () => {
 
 
 
-  
+
   const inActive = () => {
     setShowModal(false)
     setShowModal2(true)
@@ -94,6 +95,8 @@ export const ChargeBackManagement = () => {
         console.log(data)
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data?.data);
+        setPermission(data?.permission)
+
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -132,7 +135,7 @@ export const ChargeBackManagement = () => {
       key: "Charge BackType",
       title: "Charge Back Type",
     },
-        
+
     {
       key: "merchant",
       title: "Merchant",
@@ -177,8 +180,8 @@ export const ChargeBackManagement = () => {
 
 
   const [isCopied, setIsCopied] = useState(false);
-  
- 
+
+
 
 
   const copyToClipboard = async () => {
@@ -193,9 +196,9 @@ export const ChargeBackManagement = () => {
   return (
     <>
       <DashboardLayout>
-      {/* <button onClick={copyToClipboard}>Copy to Clipboard</button> */}
+        {/* <button onClick={copyToClipboard}>Copy to Clipboard</button> */}
 
- 
+
         <div className="container-fluid">
           <div className="row mb-3">
             <div className="col-12">
@@ -206,7 +209,8 @@ export const ChargeBackManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Charge Back" variant='primaryButton' onClick={hanldeRoute} />
+                      {permission?.chargeback.create === true ?
+                        <CustomButton text="Add New Charge Back" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -237,18 +241,21 @@ export const ChargeBackManagement = () => {
                             <td>{item?.leaddetail?.email}</td>
                             <td>{item?.chargeback_type}</td>
                             <td>{item?.merchantdetail?.name}</td>
- 
+
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/chargeback-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-chargeback/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+
+                                  {permission?.chargeback.read === true ? <Link to={`/chargeback-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
+                                  {permission?.chargeback.update === true ?
+                                      <Link to={`/edit-chargeback/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : "" }
+                                    { permission?.chargeback.delete === true ?
+                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>:""}
                                 </Dropdown.Menu>
-                                  </Dropdown>
+                              </Dropdown>
                             </td>
                           </tr>
                         ))}
@@ -270,7 +277,7 @@ export const ChargeBackManagement = () => {
           <CustomModal show={showModal3} close={() => { setShowModal3(false) }} action={ActiveMale} heading='Are you sure you want to mark this user as Active?' />
           <CustomModal show={showModal4} close={() => { setShowModal4(false) }} success heading='Marked as Active' />
         </div>
- 
+
       </DashboardLayout>
     </>
   );

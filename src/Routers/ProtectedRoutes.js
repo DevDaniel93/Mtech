@@ -6,6 +6,37 @@ export const ProtectedRoutes = (props) => {
 
     const loginToken = localStorage.getItem('login');
 
+    const copyPaste = () => {
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctrlDown = false,
+                ctrlKey = 17,
+                cmdKey = 91,
+                vKey = 86,
+                cKey = 67;
+        
+        
+           document.addEventListener("keydown", function(e) {
+                if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+            });
+        
+        
+           document.addEventListener("keyup", function(e) {
+                if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
+            });
+        
+        
+           var elements = document.querySelector("body");
+        
+        
+           elements.forEach(function(element) {
+                element.addEventListener("keydown", function(e) {
+                    if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) e.preventDefault();
+                });
+            });
+        });
+        
+    }
+
     const apiStatus = () => {
         const formDataMethod =  new FormData();
         formDataMethod.append('token', loginToken);
@@ -41,6 +72,7 @@ export const ProtectedRoutes = (props) => {
         }
 
         apiStatus()
+        copyPaste()
 
        
     })

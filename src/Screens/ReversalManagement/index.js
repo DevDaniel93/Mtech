@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil  ,faTrash , faCopy} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -27,20 +27,20 @@ export const ReversalManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
-
+  const [permission, setPermission] = useState()
   const navigate = useNavigate();
   const coppied = (id, lead_code) => {
     navigator.clipboard.writeText(`${lead_code}`);
     setCopied(true);
-    setCopiedId(id);  
+    setCopiedId(id);
     setTimeout(() => {
       setCopied(false);
-      setCopiedId(null);  
+      setCopiedId(null);
     }, 1000);
   };
-   
-  console.log("coppied" , coppied)
- 
+
+  console.log("coppied", coppied)
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -71,45 +71,46 @@ export const ReversalManagement = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
 
-const reversal = () =>{
-  const LogoutData = localStorage.getItem('login');
-  document.querySelector('.loaderBox').classList.remove("d-none");
-  fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/reversal-listing',
-    {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${LogoutData}`
-      },
-    }
-  )
-
-    .then(response =>
-      response.json()
+  const reversal = () => {
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/reversal-listing',
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
     )
-    .then((data) => {
-    
-      document.querySelector('.loaderBox').classList.add("d-none");
-      setData(data?.data);
-    })
-    .catch((error) => {
-      document.querySelector('.loaderBox').classList.add("d-none");
-   
-    })
 
-}  
+      .then(response =>
+        response.json()
+      )
+      .then((data) => {
+
+        document.querySelector('.loaderBox').classList.add("d-none");
+        setData(data?.data);
+        setPermission(data?.permission)
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+      })
+
+  }
 
   useEffect(() => {
     document.title = 'Mt Records | reversal Management';
 
     reversal()
   }, []);
-  
 
 
 
-  
+
+
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
@@ -130,14 +131,14 @@ const reversal = () =>{
       .then((data) => {
         reversal()
         document.querySelector('.loaderBox').classList.add("d-none");
-      
+
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
-     
+
       })
   }
-  
+
 
   const maleHeaders = [
     {
@@ -165,7 +166,7 @@ const reversal = () =>{
       title: "reversal Type",
     },
 
-   
+
     {
       key: "action",
       title: "Action",
@@ -186,7 +187,7 @@ const reversal = () =>{
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New reversal" variant='primaryButton' onClick={hanldeRoute}/>
+                      {permission?.reversal.create === true ? <CustomButton text="Add New reversal" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -219,7 +220,7 @@ const reversal = () =>{
                             <td>{`$ ${item?.reversal_amount}`}</td>
                             <td>{item?.reversal_date}</td>
                             <td>{item?.leaddetail?.email}</td>
-                            <td>{item?.reversal_type}</td> 
+                            <td>{item?.reversal_type}</td>
                             {/* <td>{item?.merchantdetail?.name}</td>  */}
                             {/* <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td> */}
                             <td>
@@ -228,9 +229,12 @@ const reversal = () =>{
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/reversal-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-reversal/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                  {permission?.reversal.update === true ?
+                                    <Link to={`/reversal-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
+                                  {permission?.reversal.update === true ?
+                                    <Link to={`/edit-reversal/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : ""}
+
+                                  {permission?.reversal.delete === true ? <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
 
                               </Dropdown>

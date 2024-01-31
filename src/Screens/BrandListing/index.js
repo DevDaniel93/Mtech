@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faPencil, faCheck, faTimes, faFilter , faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faPencil, faCheck, faTimes, faFilter, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -18,7 +18,7 @@ import { SelectBox } from "../../Components/CustomSelect";
 import "./style.css";
 
 export const BrandListing = () => {
-
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -85,6 +85,7 @@ export const BrandListing = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setData(data.brands);
+        setPermission(data?.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -268,9 +269,9 @@ export const BrandListing = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add Brand" variant='primaryButton' onClick={() => {
+                      {permission?.brands.create === true ? <CustomButton text="Add Brand" variant='primaryButton' onClick={() => {
                         setUser(true)
-                      }} />
+                      }} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -295,11 +296,14 @@ export const BrandListing = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <button onClick={() => {
+                                  {permission?.brands.update === true ? <button onClick={() => {
                                     brandID(item.id)
                                     setUserFrom(true)
-                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button> : ""}
+                               
+                               
+                               
+                                {permission?.brands.delete === true ?    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

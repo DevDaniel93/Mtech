@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faChainSlash, faTrash , faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faChainSlash, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -17,7 +17,7 @@ import CustomButton from "../../Components/CustomButton";
 import "./style.css";
 
 export const PurchaseManagement = () => {
-
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -82,6 +82,7 @@ export const PurchaseManagement = () => {
       .then((data) => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
+        setPermission(data?.permission)
         setData(data?.data);
       })
       .catch((error) => {
@@ -181,7 +182,7 @@ export const PurchaseManagement = () => {
       title: "Purchase Type",
     },
 
-  
+
     {
       key: "action",
       title: "Action",
@@ -211,7 +212,8 @@ export const PurchaseManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add New Purchase" variant='primaryButton' onClick={hanldeRoute} />
+
+ {permission?.purchase.create === true ?                     <CustomButton text="Add New Purchase" variant='primaryButton' onClick={hanldeRoute} /> :""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -253,9 +255,12 @@ export const PurchaseManagement = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/purchase-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-purchase/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                  {permission?.purchase.read === true ?
+                                    <Link to={`/purchase-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
+                                  {permission?.purchase.read === true ?
+                                    <Link to={`/edit-purchase/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : ""}
+                                  {permission?.purchase.delete === true ?
+                                    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
 
                               </Dropdown>

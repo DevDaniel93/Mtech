@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash , faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
@@ -19,6 +19,7 @@ import "./style.css";
 
 export const LeadListing = () => {
   window.close();
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -61,7 +62,7 @@ export const LeadListing = () => {
   const handleChange = (e) => {
     setInputValue(e.target.value);
   }
-  const filterData = data.filter(item =>
+  const filterData = data?.filter(item =>
     item.name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
@@ -91,6 +92,7 @@ export const LeadListing = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data.leads);
+        setPermission(data?.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -205,16 +207,16 @@ export const LeadListing = () => {
       )
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
- 
+
         leadData()
- 
+
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
-       })
+      })
   }
 
-
+  console.log("permission", permission)
 
   return (
     <>
@@ -229,7 +231,8 @@ export const LeadListing = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                      <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} />
+
+                      {permission?.leads.create === true ? <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -290,9 +293,23 @@ export const LeadListing = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <Link to={`/lead-detail/${item?.code}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link>
-                                  <Link to={`/edit-lead/${item?.code}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link>
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.code) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                  {/* {data?.permission?.leads.create == true ? <Link to={`/lead-detail/${item?.code}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""} */}
+                                  {permission?.leads.read === true ?
+                                    <Link to={`/lead-detail/${item?.code}`} className="tableAction">
+                                      <FontAwesomeIcon icon={faEye} className="tableActionIcon" />
+                                      View
+                                    </Link> :
+                                    ""
+                                  }
+                                  {permission?.leads.update === true ?
+                                    <Link to={`/edit-lead/${item?.code}`} className="tableAction"><FontAwesomeIcon icon={faEdit} className="tableActionIcon" />Edit</Link> :
+                                    ""
+                                  }
+                                  {permission?.leads.delete === true ?
+                                    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.code) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>
+                                    :
+                                    ""
+                                  }
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

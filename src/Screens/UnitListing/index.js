@@ -18,7 +18,7 @@ import Select from 'react-select'
 import "./style.css";
 
 export const UnitListing = () => {
-
+  const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
@@ -78,6 +78,7 @@ export const UnitListing = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setBrands(data.brands);
+        setPermission(data.permission)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -301,9 +302,10 @@ export const UnitListing = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
+                     {permission?.units.create === true ? 
                       <CustomButton text="Add Unit" variant='primaryButton' onClick={() => {
                         setUser(true)
-                      }} />
+                      }} /> : ""} 
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -335,10 +337,10 @@ export const UnitListing = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  <button onClick={() => {
+{permission?.units.update ?                                  <button onClick={() => {
                                     editUnit(item.id)
                                     setUserFrom(true)
-                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>
+                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>:" "}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
