@@ -44,7 +44,7 @@ export const ProtectedRoutes = (props) => {
           element.removeEventListener('keydown', handleKeyPress);
         });
       };
-    }, []); // Empty dependency array for running only once
+    }, []); 
   };
 
   const apiStatus = () => {
