@@ -151,7 +151,14 @@ export const Sidebar = (props) => {
                 <span className="sideLinkText">Reversal Management</span>
               </Link>
             </li>
-
+            <li className="sidebar-li">
+              <Link className={`sideLink ${location.pathname.includes('/chargeback-management') ? 'active' : ''}`} to="/chargeback-management">
+                <span className="sideIcon">
+                  <FontAwesomeIcon icon={faEye} />
+                </span>
+                <span className="sideLinkText">Charge Back Management</span>
+              </Link>
+            </li>
             <li className="sidebar-li">
               <Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
                 <span className="sideIcon">
