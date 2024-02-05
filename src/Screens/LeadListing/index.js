@@ -49,7 +49,7 @@ export const LeadListing = () => {
     }, 1000);
   };
 
-
+  const role = localStorage.getItem('role');
   const inActive = () => {
     setShowModal(false)
     setShowModal2(true)
@@ -116,6 +116,7 @@ export const LeadListing = () => {
       key: "lead code",
       title: "LEAD CODE",
     },
+
     {
       key: "date",
       title: "DATE",
@@ -218,6 +219,28 @@ export const LeadListing = () => {
 
   console.log("permission", permission)
 
+  function handleChanges(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('csv', file);
+
+      fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/csv-data-handle', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          leadData()
+          console.log('Upload successful:', data);
+        })
+        .catch(error => {
+
+          console.error('Error uploading file:', error);
+        });
+    }
+  }
   return (
     <>
       <DashboardLayout>
@@ -230,10 +253,16 @@ export const LeadListing = () => {
                     <h2 className="mainTitle">Lead Management</h2>
                   </div>
                   <div className="col-md-6 mb-2">
-                    <div className="addUser">
+                    <div className="addUser d-flex" >
+                      {role == 1 ? <CustomInput type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="upload file" onChange={handleChanges} /> : " "}
 
-                      {permission?.leads.create === true ? <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : ""}
+
+                      {permission?.leads.create === true ? <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
+
+
+
                     </div>
                   </div>
                 </div>
@@ -257,7 +286,7 @@ export const LeadListing = () => {
                               </button>
 
                               {copied && copiedId === item.id && (
-                                <span className="text-success px-3 py-1 rounded-pill">Copied</span>
+                                <span className="text-success px-3 py-1 rounded-pill copiedText">Copied</span>
                               )}
 
                             </td>

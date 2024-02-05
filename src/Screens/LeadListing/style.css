@@ -3,6 +3,16 @@
     border-right: 2px solid #fff0;
 }
 
+.copiedText {
+    bottom: -2px;
+    position: absolute;
+    right: 0px;
+}
+
+td {
+    position: relative;
+}
+
 
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {

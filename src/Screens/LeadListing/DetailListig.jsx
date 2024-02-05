@@ -80,7 +80,7 @@ export const DetailListing = () => {
                             <div className="row">
                                 <div className="col-md-4 mb-4">
                                    <p className="secondaryText">Source Name</p>
-                                   <p>{lead?.source}</p>
+                                   <p>{lead?.getsource?.name}</p>
                                 </div>
                                 <div className="col-md-4 mb-4">
                                    <p className="secondaryText">Product Name</p>

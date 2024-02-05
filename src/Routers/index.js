@@ -5,7 +5,8 @@ import ForgetPassword from "../Screens/Auth/ForgetPassword";
 import ForgetPassword2 from "../Screens/Auth/ForgetPassword2";
 import ForgetPassword3 from "../Screens/Auth/ForgetPassword3";
 import { Dashboard } from "../Screens/Dashboard";
-
+import { Permission } from "../Screens/Permission";
+ 
 import { LeadListing } from "../Screens/LeadListing";
 // import DepartDetails from "../Screens/LeadListing/DepartDetails";
 import { UnitListing } from "../Screens/UnitListing";
@@ -82,7 +83,7 @@ export default function AdminRouter() {
         <Route path="/forget-password3" element={<ForgetPassword3 />} />
 
         <Route path="/dashboard" element={<ProtectedRoutes Components={Dashboard} />} />
-
+        <Route path="/permission" element={<Permission />} />
         <Route path="/role-management" element={<ProtectedRoutes Components={Roles} />} />
 
         <Route path="/lead-listing" element={<ProtectedRoutes Components={LeadListing} />} />

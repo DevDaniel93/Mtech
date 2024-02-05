@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Table from 'react-bootstrap/Table';
 
 import { DashboardLayout } from "./../../Components/Layout/DashboardLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -164,6 +165,7 @@ export const Dashboard = () => {
                     }}
                   />
                 </div>
+                 
               </div>
             </div>
           </div>

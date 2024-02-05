@@ -105,6 +105,7 @@ export const BrandListing = () => {
       key: "id",
       title: "S.No",
     },
+
     {
       key: "name",
       title: "Brand Name",
