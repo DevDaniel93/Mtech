@@ -124,6 +124,7 @@ export const Roles = () => {
     if (dataSubmitted) {
       setEditUser(false)
       setData(rolesListing?.roles)
+      
     }
   }, [roleUpdateData, dataSubmitted, rolesListing])
 

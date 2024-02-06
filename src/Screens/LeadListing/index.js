@@ -93,6 +93,7 @@ export const LeadListing = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data.leads);
         setPermission(data?.permission)
+        setItemsPerPage(data?.leads.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

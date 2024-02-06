@@ -95,6 +95,7 @@ export const ChargeBackManagement = () => {
         console.log(data)
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data?.data);
+        setItemsPerPage(data?.leads.length);
         setPermission(data?.permission)
 
       })

@@ -86,6 +86,7 @@ export const BrandListing = () => {
 
         setData(data.brands);
         setPermission(data?.permission)
+        setItemsPerPage(data.brands.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

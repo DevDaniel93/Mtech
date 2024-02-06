@@ -114,6 +114,7 @@ export const UnitReportManagement = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setBrands(data.brands);
+        setItemsPerPage(data?.brands.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -141,6 +142,7 @@ export const UnitReportManagement = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setUnit(data.units);
+        setItemsPerPage(data?.units.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

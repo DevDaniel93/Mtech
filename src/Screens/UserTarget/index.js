@@ -184,7 +184,7 @@ export const UserTarget = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
-
+        setItemsPerPage(data?.data.length);
 
         setData(data?.data);
       })

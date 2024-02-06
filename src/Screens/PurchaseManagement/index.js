@@ -84,6 +84,7 @@ export const PurchaseManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setPermission(data?.permission)
         setData(data?.data);
+        setItemsPerPage(data?.data.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

@@ -79,6 +79,7 @@ export const UnitListing = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setBrands(data.brands);
+        setItemsPerPage(data?.brands.length);
         setPermission(data.permission)
       })
       .catch((error) => {
@@ -119,8 +120,9 @@ export const UnitListing = () => {
       )
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
-       
+        setItemsPerPage(data?.units.length);
         setData(data.units);
+        
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

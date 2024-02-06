@@ -78,6 +78,7 @@ export const MerchantManagement = () => {
          
         setData(data?.data);
         setPermission(data?.permission)
+        setItemsPerPage(data?.data.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

@@ -83,6 +83,7 @@ export const RefundManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data?.data);
         setPermission(data?.permission)
+        setItemsPerPage(data.data.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

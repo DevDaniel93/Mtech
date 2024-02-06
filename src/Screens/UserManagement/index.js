@@ -82,7 +82,7 @@ export const UserManagement = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
         setData(data.users);
-        
+        setItemsPerPage(data?.users.length);
         setPermission(data?.permission)
       })
       .catch((error) => {

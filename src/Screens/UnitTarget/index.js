@@ -196,6 +196,7 @@ export const UnitTarget = () => {
 
 
         setUnitpermission(data?.permission)
+        setItemsPerPage(data?.data.length);
         setData(data?.data);
       })
       .catch((error) => {
@@ -228,7 +229,7 @@ export const UnitTarget = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setUserpermission(data?.permission)
-
+        setItemsPerPage(data?.length);
         setUserdata(data?.data);
       })
       .catch((error) => {

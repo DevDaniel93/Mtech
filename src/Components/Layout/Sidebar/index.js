@@ -256,12 +256,3 @@ export const Sidebar = (props) => {
     </div>
   );
 };
-{/* 
-        <li className="sidebar-li">
-          <Link className={`sideLink ${location.pathname.includes('/Usertarget-listing') ? 'active' : ''}`} to="/Usertarget-listing">
-            <span className="sideIcon">
-              <FontAwesomeIcon icon={faMoneyBill} />
-            </span>
-            <span className="sideLinkText">User Target</span>
-          </Link>
-        </li> */}
