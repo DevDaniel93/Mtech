@@ -23,7 +23,7 @@ export const Permission = () => {
         user_role: ''
     })
     const [initalRole, setrole] = useState({});
-
+    const [initalRoles, setroles] = useState({});
     const [data, setData] = useState('');
     const [lead, setLead] = useState('');
     const [permissions, setPermission] = useState()
@@ -39,41 +39,39 @@ export const Permission = () => {
     const handleCheckboxChange = (index, category, permissionKey) => {
         console.log(getpermission)
         setGetpermission((prevPermissions) => {
-          const newPermissions = [...prevPermissions];
-          const item = { ...newPermissions[index] };
-      
-          if (permissionKey) {
-            // If a permission key is provided, toggle the corresponding permission value
-            if (typeof item[category][permissionKey] === "boolean") {
-              // If it's a boolean value, toggle it
-              item[category] = { ...item[category], [permissionKey]: !item[category][permissionKey] };
+            const newPermissions = [...prevPermissions];
+            const item = { ...newPermissions[index] };
+
+            if (permissionKey) {
+                // If a permission key is provided, toggle the corresponding permission value
+                if (typeof item[category][permissionKey] === "boolean") {
+                    // If it's a boolean value, toggle it
+                    item[category] = { ...item[category], [permissionKey]: !item[category][permissionKey] };
+                } else {
+                    // If it's a string value, toggle between 'true' and 'false'
+                    item[category] = { ...item[category], [permissionKey]: item[category][permissionKey] === "true" ? "false" : "true" };
+                }
             } else {
-              // If it's a string value, toggle between 'true' and 'false'
-              item[category] = { ...item[category], [permissionKey]: item[category][permissionKey] === "true" ? "false" : "true" };
+                // If no permission key, toggle the entire category value
+                if (typeof item[category] === "boolean") {
+                    // If it's a boolean value, toggle it
+                    item[category] = !item[category];
+                } else {
+                    // If it's a string value, toggle between 'true' and 'false'
+                    item[category] = item[category] === "true" ? "false" : "true";
+                }
             }
-          } else {
-            // If no permission key, toggle the entire category value
-            if (typeof item[category] === "boolean") {
-              // If it's a boolean value, toggle it
-              item[category] = !item[category];
-            } else {
-              // If it's a string value, toggle between 'true' and 'false'
-              item[category] = item[category] === "true" ? "false" : "true";
-            }
-          }
-      
-          newPermissions[index] = item;
-          return newPermissions;
+
+            newPermissions[index] = item;
+            return newPermissions;
         });
-      };
-      
+    };
 
 
+    console.log("initalRole", initalRole)
 
 
     const leadData = () => {
-
-        // Define a function to handle checkbox changes
 
 
 
@@ -139,16 +137,18 @@ export const Permission = () => {
 
             })
     }
+
+
     const [role, setRole] = useState()
     const [childrole, setChrildrole] = useState()
     const [getpermission, setGetpermission] = useState()
 
-
+    console.log("initalRoles", initalRoles)
     const fectchDATAData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/get-permissions?role=${role}&child_role=${childrole}`,
+        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/get-permissions?role=${initalRoles}&child_role=${childrole}`,
             {
                 method: 'GET',
                 headers: {
@@ -171,6 +171,7 @@ export const Permission = () => {
                 document.querySelector('.loaderBox').classList.add("d-none");
 
             })
+
     }
 
 
@@ -181,9 +182,11 @@ export const Permission = () => {
 
 
     useEffect(() => {
+
         fectchDATAData()
 
-    }, [role, childpermission])
+
+    }, [initalRoles, childrole])
 
 
 
@@ -202,6 +205,38 @@ export const Permission = () => {
 
 
 
+
+    const handleupdate = () => {
+        const formDataMethod = new FormData();
+        formDataMethod.append('permissions', JSON.stringify(getpermission));
+
+        formDataMethod.append('role', initalRoles);
+        formDataMethod.append('child_role', childrole);
+
+        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/permission-modifiy`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${LogoutData}`
+            },
+            body: formDataMethod
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                // setShowModal(true)
+                console.log("update api ", data)
+                console.log("update api ", data?.status)
+                data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
+                setStatus(data?.status)
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+            })
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -276,14 +311,21 @@ export const Permission = () => {
         const { name, value } = event.target;
         if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
             setChildpermission(true)
+
+            setroles(value)
+            console.log("permissionname ", name)
+
+        }
+        if (name == 'permission' && value == 1 || name == 'permission' && value == 2) {
+
             setChrildrole(value)
         }
 
         if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
             setChildpermission(false)
-
+            setroles(value)
         }
-        setRole(value)
+
         setFormData((prevData) => ({
 
 
@@ -298,6 +340,9 @@ export const Permission = () => {
 
 
     };
+
+
+
 
     return (
         <>
@@ -352,65 +397,6 @@ export const Permission = () => {
                                         </tr>
                                     </thead>
 
-                                    {/* {permission?.map((data) => (
-                                            <tr>
-                                                <td>{data.id}</td>
-                                                <td>{data.Child_Role} </td>
-
-
-                                                {getpermission?.permissions?.map((data) => (
-                                                    <tr key={data.id}>
-                                                        {data?.create.map((checks) => (
-                                                            <td key={checks.id}>
-                                                                <Form.Check
-                                                                    inline
-                                                                    name="group1"
-                                                                    type="checkbox"
-                                                                    id={`checkbox-${data.id}-${checks.id}`}
-                                                                    checked={checks.create}
-                                                                />
-                                                            </td>
-                                                        ))}
-                                                    </tr>
-                                                ))}
-
-
-
-                                                <td> <Form.Check
-                                                    inline
-
-                                                    name="group1"
-                                                    type="checkbox"
-                                                    id={`i`}
-                                                />
-                                                </td>
-                                                <td> <Form.Check
-                                                    inline
-
-                                                    name="group1"
-                                                    type="checkbox"
-                                                    id={`i`}
-                                                />
-                                                </td>
-                                                <td> <Form.Check
-                                                    inline
-
-                                                    name="group1"
-                                                    type="checkbox"
-                                                    id={`i`}
-                                                />
-                                                </td>
-                                                <td> <Form.Check
-                                                    inline
-
-                                                    name="group1"
-                                                    type="checkbox"
-                                                    id={`i`}
-                                                />
-                                                </td>
-                                            </tr>
-                                        ))} */}
-
                                     {
                                         getpermission &&
                                         getpermission.map((item, index) => (
@@ -445,29 +431,31 @@ export const Permission = () => {
                                                                         onChange={() => handleCheckboxChange(index, category)}
                                                                     />
                                                                 ) : (
+
                                                                     <input
                                                                         type="checkbox"
                                                                         checked={false}
                                                                         onChange={() => handleCheckboxChange(index, category)}
                                                                     />
+
                                                                 )}
+
                                                             </td>
                                                         )}
+
                                                     </tr>
                                                 ))}
+
+                                                <div className="updated_table_btn mt-4">     <button onClick={handleupdate}> Update</button>
+                                                </div>
+
                                             </tbody>
+
                                         ))
                                     }
 
-
-
-
-
-
-
-
-
                                 </Table>
+
                             </div>
                         </div>
                     </div>
@@ -478,11 +466,4 @@ export const Permission = () => {
 };
 
 
-
-//  <Form.Check
-// inline
-// name="group1"
-// type="checkbox"
-// id={`checkbox-${data.id}-${checks.id}`}
-// checked={checks.create}
-// />
+ 

@@ -73,3 +73,11 @@
         border-color: #fff0;
     }
 }
+
+.updated_table_btn button{
+    border: none;
+background-color: #00293b;
+color: #fff;
+padding: 5px 24px;
+border-radius: 20px;
+}
