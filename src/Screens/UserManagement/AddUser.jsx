@@ -36,6 +36,10 @@ export const AddUser = () => {
         {
             code: 2,
             name: 'Executive'
+        },
+        {
+            code: 3,
+            name: 'Sub Executive'
         }
     ]
 

@@ -267,7 +267,7 @@ export const Roles = () => {
             />
             <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleEditSubmit} />
           </CustomModal>
-          <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Role added Successfully.' />
+          <CustomModal show={showModal}  close={() => { setShowModal(false) }} success heading='Role added Successfully.' />
 
         </div>
       </DashboardLayout>

@@ -14,7 +14,7 @@ export const EditUser = () => {
     const [successStatus, setSuccessStatus] = useState('Server Error!');
     const [initalRole, setrole] = useState({});
     const [initialunit, setUnit] = useState({});
-    const [status , setStatus] = useState() 
+    const [status, setStatus] = useState()
     const [showModal, setShowModal] = useState(false);
     const [permission, setPermission] = useState(false)
     const [formData, setFormData] = useState({
@@ -35,13 +35,13 @@ export const EditUser = () => {
         if (initialunit.hasOwnProperty(key)) {
             const item = initialunit[key];
 
-          
 
-             const option = {
+
+            const option = {
                 label: item.name,
                 value: item.id,
             };
- 
+
             SelectOptions.push(option);
         }
     }
@@ -73,18 +73,18 @@ export const EditUser = () => {
                 response.json()
             )
             .then((data) => {
-              
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setFormData(data.users);
                 data.users?.permission != null ? setPermission(true) : setPermission(false)
                 const abac = SelectOptions.filter(dataItem => data?.users?.unit_id?.includes(dataItem.id))
-              
- 
-              
+
+
+
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-          
+
             })
     }
 
@@ -107,13 +107,13 @@ export const EditUser = () => {
                 response.json()
             )
             .then((data) => {
-            
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setrole(data.roles);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-            
+
             })
     }
 
@@ -136,14 +136,14 @@ export const EditUser = () => {
                 response.json()
             )
             .then((data) => {
-          
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setUnit(data.units);
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-           
+
             })
     }
 
@@ -157,21 +157,21 @@ export const EditUser = () => {
 
         for (const key in formData) {
             if (
-              
+
                 formData.name === '' ||
                 formData.product === '' ||
                 formData.email === '' ||
-                formData.user_role === '' 
- 
-   
+                formData.user_role === ''
+
+
             ) {
-              
- 
+
+
                 return;
             }
         }
 
-         const formDataMethod = new FormData();
+        const formDataMethod = new FormData();
         for (const key in formData) {
             if (key == 'unit_id') {
                 formDataMethod.append(key, JSON.stringify(formData[key]))
@@ -180,10 +180,10 @@ export const EditUser = () => {
             }
         }
 
-      
-        
+
+
         document.querySelector('.loaderBox').classList.remove("d-none");
-         fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit/${id}`, {
+        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -202,7 +202,7 @@ export const EditUser = () => {
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-        
+
             })
     };
 
@@ -224,6 +224,10 @@ export const EditUser = () => {
         {
             code: 2,
             name: 'Executive'
+        },
+        {
+            code: 3,
+            name: 'Sub Executive'
         }
     ]
 
@@ -241,7 +245,7 @@ export const EditUser = () => {
             ...prevData,
             [name]: value,
         }));
-        
+
     };
 
 
@@ -355,7 +359,7 @@ export const EditUser = () => {
                         </div>
                     </div>
                 </div>
-                <CustomModal status={status}  show={showModal} close={() => { setShowModal(false) ; goBack() }} success heading={successStatus} />
+                <CustomModal status={status} show={showModal} close={() => { setShowModal(false); goBack() }} success heading={successStatus} />
 
             </DashboardLayout>
         </>

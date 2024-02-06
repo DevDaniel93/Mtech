@@ -291,6 +291,10 @@ export const Permission = () => {
         {
             code: 2,
             name: 'Executive'
+        },
+        {
+            code: 3,
+            name: 'Sub Executive'
         }
     ]
 
@@ -307,7 +311,7 @@ export const Permission = () => {
             console.log("permissionname ", name)
 
         }
-        if (name == 'permission' && value == 1 || name == 'permission' && value == 2) {
+        if (name == 'permission' && value == 1 || name == 'permission' && value == 2 || name == 'permission' && value == 3 ) {
 
             setChrildrole(value)
         }

@@ -25,7 +25,8 @@ export const AddLead = () => {
         received: '',
         recovery: '',
         sales_rep: '',
-        account_rep: ''
+        account_rep: '',
+        date: ''
     });
 
     const sourcename = [
@@ -261,29 +262,29 @@ export const AddLead = () => {
             })
     }
 
-    
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
- 
+
         for (const key in formData) {
             if (
-                 formData.brand === '' ||
+                formData.brand === '' ||
                 formData.product === '' ||
                 formData.email === '' ||
                 formData.name === '' ||
                 formData.phone === '' ||
-                formData.description === '' 
-   
+                formData.description === ''
+
             ) {
-              
- 
+
+
                 return;
             }
         }
 
 
-    
+
         const formDataMethod = new FormData();
         for (const key in formData) {
             formDataMethod.append(key, formData[key]);
@@ -313,8 +314,8 @@ export const AddLead = () => {
 
 
     useEffect(() => {
-         fetchUnitData()
-     }, [])
+        fetchUnitData()
+    }, [])
 
 
     const navigate = useNavigate();
@@ -372,7 +373,7 @@ export const AddLead = () => {
                                                     value={formData.product}
                                                     onChange={handleChange}
                                                 />
- 
+
                                             </div>
 
                                             <div className="col-md-4 mb-4">
@@ -516,7 +517,23 @@ export const AddLead = () => {
                                             </div>
 
 
+                                            <div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    required
+                                                    label="Date"
+                                                    id="recovery"
 
+                                                    type="date"
+                                                    placeholder="date"
+                                                    labelClass="mainLabel"
+                                                    inputClass="mainInput"
+                                                    name="date"
+                                                    value={formData.date}
+                                                    onChange={handleChange}
+                                                    disabled={!isReceivedEmpty}
+                                                />
+
+                                            </div>
 
 
 
