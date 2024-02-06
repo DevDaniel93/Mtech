@@ -29,6 +29,7 @@ export const UnitListing = () => {
   const [userForm, setUserFrom] = useState(false);
   const [idUser, setIdUser] = useState(0);
   const [brands, setBrands] = useState({});
+  const [status , setStatus] = useState() 
   const editBrandList = [];
   const [formData, setFormData] = useState({
     name: '',
@@ -201,6 +202,7 @@ export const UnitListing = () => {
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setShowModal(true)
+        setStatus(data?.status)
         setUser(false)
         setFormData({
           name: ''
@@ -424,7 +426,7 @@ export const UnitListing = () => {
           </CustomModal>
 
 
-          <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Unit added Successfully.' />
+          <CustomModal show={showModal} status={status}  close={() => { setShowModal(false) }} success heading='Unit added Successfully.' />
 
         </div>
       </DashboardLayout>

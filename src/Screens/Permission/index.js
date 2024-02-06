@@ -212,7 +212,7 @@ export const Permission = () => {
 
         formDataMethod.append('role', initalRoles);
         formDataMethod.append('child_role', childrole);
-
+        document.querySelector('.loaderBox').classList.remove("d-none");
         fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/permission-modifiy`, {
             method: 'POST',
             headers: {
@@ -231,6 +231,7 @@ export const Permission = () => {
                 console.log("update api ", data?.status)
                 data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
                 setStatus(data?.status)
+                document.querySelector('.loaderBox').classList.add("d-none");
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -240,16 +241,12 @@ export const Permission = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        document.querySelector('.loaderBox').classList.remove("d-none");
         for (const key in formData) {
             if (
 
                 formData.user_role === ''
-
-
             ) {
-
-
                 return;
             }
         }
@@ -262,8 +259,6 @@ export const Permission = () => {
             }
         }
 
-
-        document.querySelector('.loaderBox').classList.remove("d-none");
         fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit`, {
             method: 'POST',
             headers: {
@@ -280,6 +275,7 @@ export const Permission = () => {
                 // setShowModal(true)
                 data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
                 setStatus(data?.status)
+                document.querySelector('.loaderBox').classList.add("d-none");
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -299,11 +295,6 @@ export const Permission = () => {
     ]
 
 
-    const handleChangeSelect = (selected) => {
-        setFormData({
-            ...formData, unit_id: selected
-        })
-    };
 
 
 
@@ -327,18 +318,11 @@ export const Permission = () => {
         }
 
         setFormData((prevData) => ({
-
-
-
             ...prevData,
             [name]: value,
 
         }
         ));
-
-
-
-
     };
 
 
@@ -466,4 +450,3 @@ export const Permission = () => {
 };
 
 
- 
