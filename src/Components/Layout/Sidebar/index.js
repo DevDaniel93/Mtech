@@ -58,7 +58,7 @@ export const Sidebar = (props) => {
   }, []);
 
   const role = localStorage.getItem('role');
-  console.log("role", role)
+  console.log("permission", permission)
   const location = useLocation()
   return (
     <div className={`sidebar ${props.sideClass}`} id="sidebar">
@@ -89,7 +89,7 @@ export const Sidebar = (props) => {
 
 
         <li className="sidebar-li">
-            {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
+            {permission?.role === 1 ? <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMessage} />
               </span>
@@ -176,7 +176,7 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/unit-listing') ? 'active' : ''}`} to="/unit-listing">
+            {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/unit-listing') ? 'active' : ''}`} to="/unit-listing">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMountainCity} />
               </span>
@@ -210,7 +210,7 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.leads.read === true ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
+            {permission?.unit_report === true ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>
@@ -234,7 +234,7 @@ export const Sidebar = (props) => {
             </Link> : " "}
           </li>
           <li className="sidebar-li">
-            {permission?.leads.read === true ? <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
+            {permission?.unit_targets.read === true ? <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>
@@ -244,7 +244,7 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.leads.read === true ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
+            {permission?.report === true ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>
