@@ -8,10 +8,11 @@ import CustomInput from '../../Components/CustomInput';
 import { SelectBox } from "../../Components/CustomSelect";
 import CustomButton from "../../Components/CustomButton";
 export const AddLead = () => {
+    const [showModal, setShowModal] = useState(false);
     const [status, setStatus] = useState()
     const [brands, setBrands] = useState({});
     const [unit, setUnit] = useState({});
-    const [showModal, setShowModal] = useState(false);
+
     const [user, setUser] = useState();
     const [formData, setFormData] = useState({
         source: '',

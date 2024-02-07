@@ -209,7 +209,7 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.unit_report === true ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
+            {permission?.unit_report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>
@@ -243,7 +243,7 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.report === true ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
+            {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>

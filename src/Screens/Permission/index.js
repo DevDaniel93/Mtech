@@ -9,15 +9,17 @@ import {
 import { CChart } from "@coreui/react-chartjs";
 import { SelectBox } from "../../Components/CustomSelect";
 import { useApi } from "../../Api";
-
+import CustomModal from "../../Components/CustomModal";
 import "./style.css";
+import { useNavigate } from "react-router";
 import Form from 'react-bootstrap/Form';
 export const Permission = () => {
-
+    const [showModal, setShowModal] = useState(false);
+    const [status, setStatus] = useState()
 
 
     const [childpermission, setChildpermission] = useState(false)
-    const [status, setStatus] = useState()
+
     const [successStatus, setSuccessStatus] = useState('Server Error!');
     const [formData, setFormData] = useState({
         user_role: ''
@@ -226,9 +228,8 @@ export const Permission = () => {
             })
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-                // setShowModal(true)
-                console.log("update api ", data)
-                console.log("update api ", data?.status)
+                setShowModal(true)
+                setStatus(data?.status)
                 data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
                 setStatus(data?.status)
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -311,7 +312,7 @@ export const Permission = () => {
             console.log("permissionname ", name)
 
         }
-        if (name == 'permission' && value == 1 || name == 'permission' && value == 2 || name == 'permission' && value == 3 ) {
+        if (name == 'permission' && value == 1 || name == 'permission' && value == 2 || name == 'permission' && value == 3) {
 
             setChrildrole(value)
         }
@@ -329,7 +330,11 @@ export const Permission = () => {
         ));
     };
 
+    const navigate = useNavigate();
 
+    const goBack = () => {
+        navigate(-1)
+    };
 
 
     return (
@@ -352,7 +357,6 @@ export const Permission = () => {
                                             option={initalRole}
                                             onChange={handleChange}
                                         />
-
                                     </div>
                                     {
                                         childpermission && (
@@ -448,6 +452,16 @@ export const Permission = () => {
                         </div>
                     </div>
                 </div>
+                <CustomModal
+                    show={showModal}
+                    close={() => {
+                        setShowModal(false);
+                        goBack();
+                    }}
+                    success
+                    status={status}
+                    heading={successStatus}
+                />
             </DashboardLayout >
         </>
     );
