@@ -67,7 +67,7 @@ export const BrandListing = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/brand-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-listing`,
       {
         method: 'GET',
         headers: {
@@ -129,7 +129,7 @@ export const BrandListing = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/brand-add-edit`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-add-edit`,
       {
         method: 'POST',
         headers: {
@@ -163,7 +163,7 @@ export const BrandListing = () => {
   const brandID = (unitID) => {
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/view-brand/${unitID}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-brand/${unitID}`,
       {
         method: 'GET',
         headers: {
@@ -199,7 +199,7 @@ export const BrandListing = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/brand-add-edit/${idUser}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-add-edit/${idUser}`,
       {
         method: 'POST',
         headers: {
@@ -236,7 +236,7 @@ export const BrandListing = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/delete-brand/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/delete-brand/${catId}`,
       {
         method: 'GET',
         headers: {

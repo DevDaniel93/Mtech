@@ -33,7 +33,7 @@ export const ChargeBackDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Refund Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/get-chargeback/${id}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-chargeback/${id}`,
             {
                 method: 'GET',
                 headers: {

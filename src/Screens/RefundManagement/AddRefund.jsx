@@ -35,7 +35,7 @@ export const AddRefund = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/merchant-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -65,7 +65,7 @@ export const AddRefund = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/role-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -94,7 +94,7 @@ export const AddRefund = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -152,7 +152,7 @@ export const AddRefund = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/refund-add-edit`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/refund-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -207,7 +207,7 @@ export const AddRefund = () => {
      
     const fetchData = async () => {
         try {
-            const response = await fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

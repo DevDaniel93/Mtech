@@ -64,7 +64,7 @@ export const RefundManagement = () => {
   const refund = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/refund-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/refund-listing`,
       {
         method: 'GET',
         headers: {
@@ -137,7 +137,7 @@ export const RefundManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/refund-delete/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/refund-delete/${catId}`,
       {
         method: 'GET',
         headers: {

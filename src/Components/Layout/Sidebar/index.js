@@ -23,8 +23,8 @@ export const Sidebar = (props) => {
 
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
-    // document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/leads-listing',
+    
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing`,
       {
         method: 'GET',
         headers: {
@@ -39,7 +39,7 @@ export const Sidebar = (props) => {
         response.json()
       )
       .then((data) => {
-
+console.log("permission" , data)
         // document.querySelector('.loaderBox').classList.add("d-none");
         // setData(data.leads);
         setPermission(data?.permission)
@@ -134,7 +134,8 @@ export const Sidebar = (props) => {
 
         <li className="sidebar-li">
 
-{permission?.refund?.read === true ? <Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
+{permission?.refund?.read === true ? 
+<Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
   <span className="sideIcon">
     <FontAwesomeIcon icon={faEye} />
   </span>

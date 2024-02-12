@@ -74,7 +74,7 @@ export const ReversalManagement = () => {
   const reversal = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/reversal-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/reversal-listing`,
       {
         method: 'GET',
         headers: {
@@ -115,7 +115,7 @@ export const ReversalManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/purchase-delete/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-delete/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -222,8 +222,7 @@ export const ReversalManagement = () => {
                             <td>{item?.reversal_date}</td>
                             <td>{item?.reversaluser?.name}</td>
                             <td>{item?.reversal_type}</td>
-                            {/* <td>{item?.merchantdetail?.name}</td>  */}
-                            {/* <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td> */}
+ 
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

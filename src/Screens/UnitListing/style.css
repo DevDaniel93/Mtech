@@ -19,7 +19,7 @@
     -moz-appearance: none;
     border-color: #fff !important;
     outline: none !important;
-    margin-bottom: 25px;
+    margin-bottom: 0 !important;
 }
 
 

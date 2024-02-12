@@ -65,7 +65,7 @@ export const PurchaseManagement = () => {
 
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/purchase-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-listing`,
       {
         method: 'GET',
         headers: {
@@ -96,7 +96,7 @@ export const PurchaseManagement = () => {
   // const leadData = () => {
   //   const LogoutData = localStorage.getItem('login');
   //   document.querySelector('.loaderBox').classList.remove("d-none");
-  //   fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/leads-listing',
+  //   fetch('https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing',
   //     {
   //       method: 'GET',
   //       headers: {
@@ -132,7 +132,7 @@ export const PurchaseManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/purchase-delete/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-delete/${catId}`,
       {
         method: 'GET',
         headers: {

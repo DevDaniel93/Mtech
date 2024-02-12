@@ -79,7 +79,7 @@ export const Permission = () => {
 
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/get-permissions?role=4&child_role=1',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/get-permissions?role=4&child_role=1`,
             {
                 method: 'GET',
                 headers: {
@@ -115,7 +115,7 @@ export const Permission = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/role-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -150,7 +150,7 @@ export const Permission = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/get-permissions?role=${initalRoles}&child_role=${childrole}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/get-permissions?role=${initalRoles}&child_role=${childrole}`,
             {
                 method: 'GET',
                 headers: {
@@ -215,7 +215,7 @@ export const Permission = () => {
         formDataMethod.append('role', initalRoles);
         formDataMethod.append('child_role', childrole);
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/permission-modifiy`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/permission-modifiy`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -260,7 +260,7 @@ export const Permission = () => {
             }
         }
 
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -456,7 +456,7 @@ export const Permission = () => {
                     show={showModal}
                     close={() => {
                         setShowModal(false);
-                        goBack();
+                        // goBack();
                     }}
                     success
                     status={status}

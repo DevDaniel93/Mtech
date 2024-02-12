@@ -74,7 +74,7 @@ export const LeadListing = () => {
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/leads-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing`,
       {
         method: 'GET',
         headers: {
@@ -193,7 +193,7 @@ export const LeadListing = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/delete-leads/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/delete-leads/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -227,7 +227,7 @@ export const LeadListing = () => {
       const formData = new FormData();
       formData.append('csv', file);
 
-      fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/csv-data-handle', {
+      fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/csv-data-handle`, {
         method: 'POST',
         body: formData,
       })
@@ -258,7 +258,8 @@ export const LeadListing = () => {
                       {role == 1 ? <CustomInput type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="upload file" onChange={handleChanges} /> : " "}
 
 
-                      {permission?.leads.create === true ? <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+                      {permission?.leads.create === true ?
+                       <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
 
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
 

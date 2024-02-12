@@ -30,7 +30,7 @@ export const EditLead = () => {
     const fectchBrandData = (brandID) => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-brands/${brandID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-brands/${brandID}`,
             {
                 method: 'GET',
                 headers: {
@@ -59,7 +59,7 @@ export const EditLead = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -91,7 +91,7 @@ export const EditLead = () => {
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/view-leads/${id}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -150,7 +150,7 @@ export const EditLead = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-         fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/leads-add-edit/${id}`, {
+         fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -186,7 +186,7 @@ export const EditLead = () => {
 
     const userData = (uniID) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-units/${uniID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -335,7 +335,7 @@ export const EditLead = () => {
     const isReceivedEmpty = formData.received === '';
     const isRecoveryEmpty = formData.recovery === '';
 
-
+console.log("formData" , formData)
     return (
         <>
             <DashboardLayout>
@@ -404,7 +404,7 @@ export const EditLead = () => {
                                 labelClass='mainLabel'
                                 inputClass='mainInput'
                                 name="name"
-                                value={formData?.id}
+                                value={formData?.name}
                                 onChange={handleChange}
                             />
                         </div>

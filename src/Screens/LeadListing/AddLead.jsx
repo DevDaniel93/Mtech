@@ -80,7 +80,7 @@ export const AddLead = () => {
     const fectchBrandData = (brandID) => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-brands/${brandID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-brands/${brandID}`,
             {
                 method: 'GET',
                 headers: {
@@ -108,7 +108,7 @@ export const AddLead = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -238,7 +238,7 @@ export const AddLead = () => {
 
     const userData = (uniID) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-units/${uniID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -293,7 +293,7 @@ export const AddLead = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/leads-add-edit`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -531,7 +531,7 @@ export const AddLead = () => {
                                                     name="date"
                                                     value={formData.date}
                                                     onChange={handleChange}
-                                                    disabled={!isReceivedEmpty}
+ 
                                                 />
 
                                             </div>
