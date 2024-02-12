@@ -97,7 +97,7 @@ export const UnitReportManagement = () => {
   const fectchBrandData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/brand-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-listing`,
       {
         method: 'GET',
         headers: {
@@ -125,7 +125,7 @@ export const UnitReportManagement = () => {
   const fetchUnitData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
       {
         method: 'GET',
         headers: {
@@ -161,7 +161,7 @@ export const UnitReportManagement = () => {
       formDataMethod.append(key, formData[key]);
     }
 
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-report-generate-1`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-report-generate-1`,
       {
         method: 'POST',
         headers: {

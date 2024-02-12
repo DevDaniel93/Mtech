@@ -38,7 +38,7 @@ export const EditReversal = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/merchant-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -63,11 +63,11 @@ export const EditReversal = () => {
             })
     }
 
-    //   https://custom3.mystagingserver.site/mtrecords/public/api/admin/reversal-add-edit/1
+    //   https://mtrecordflow.com/mtrecords-api/public/api/admin/reversal-add-edit/1
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/get-reversal/${id}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-reversal/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -125,7 +125,7 @@ export const EditReversal = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/reversal-add-edit/${id}`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/reversal-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -162,7 +162,7 @@ export const EditReversal = () => {
     const userData = (uniID) => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-units/${uniID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -193,7 +193,7 @@ export const EditReversal = () => {
     const fetchData = async () => {
 
         try {
-            const response = await fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

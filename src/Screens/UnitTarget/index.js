@@ -177,7 +177,7 @@ export const UnitTarget = () => {
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-Target-List',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-Target-List`,
       {
         method: 'GET',
         headers: {
@@ -211,7 +211,7 @@ export const UnitTarget = () => {
   const fetchuserData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/usertarget-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/usertarget-listing`,
       {
         method: 'GET',
         headers: {
@@ -353,7 +353,7 @@ export const UnitTarget = () => {
 
 
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/set-unit-target`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/set-unit-target`,
       {
         method: 'POST',
         headers: {
@@ -387,7 +387,7 @@ export const UnitTarget = () => {
 
 
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/usertarget-add-edit`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/usertarget-add-edit`,
       {
         method: 'POST',
         headers: {
@@ -430,7 +430,7 @@ export const UnitTarget = () => {
   const deleteTarget = async (id) => {
     try {
 
-      const response = await fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-targets-delete/${id}`, {
+      const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-targets-delete/${id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -459,7 +459,7 @@ export const UnitTarget = () => {
   const fetchUserData = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-units/${viewleads}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${viewleads}`,
       {
         method: 'GET',
         headers: {

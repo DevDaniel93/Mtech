@@ -70,7 +70,7 @@ export default function AdminRouter() {
  
 
   return (
-    <BrowserRouter basename="/customProject">
+    <BrowserRouter basename="/">
       <Routes>
  
 
@@ -83,7 +83,7 @@ export default function AdminRouter() {
         <Route path="/forget-password3" element={<ForgetPassword3 />} />
 
         <Route path="/dashboard" element={<ProtectedRoutes Components={Dashboard} />} />
-        <Route path="/permission" element={<Permission />} />
+        <Route path="/permission" element={<ProtectedRoutes Components={Permission} />} />
         <Route path="/role-management" element={<ProtectedRoutes Components={Roles} />} />
 
         <Route path="/lead-listing" element={<ProtectedRoutes Components={LeadListing} />} />

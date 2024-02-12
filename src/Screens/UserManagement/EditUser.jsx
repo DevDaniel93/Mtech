@@ -20,7 +20,6 @@ export const EditUser = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password: '',
         unit_id: [],
         user_role: ''
     });
@@ -58,7 +57,7 @@ export const EditUser = () => {
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/get-user/${id}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-user/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -92,7 +91,7 @@ export const EditUser = () => {
     const fectchBrandData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/role-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -121,7 +120,7 @@ export const EditUser = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -183,7 +182,7 @@ export const EditUser = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit/${id}`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -296,7 +295,7 @@ export const EditUser = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <div className="col-md-4 mb-4">
+                                            {/* <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label='Password'
                                                     id='password'
@@ -308,7 +307,7 @@ export const EditUser = () => {
                                                     value={formData.password}
                                                     onChange={handleChange}
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div className="col-md-4 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"

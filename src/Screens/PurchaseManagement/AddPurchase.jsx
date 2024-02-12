@@ -34,7 +34,7 @@ export const AddPurchase = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/merchant-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -93,7 +93,7 @@ export const AddPurchase = () => {
          
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/purchase-add-edit`, {
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -159,7 +159,7 @@ export const AddPurchase = () => {
     const userData = (uniID) => {
    console.log("viewleads" , uniID)
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-units/${uniID}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ export const AddPurchase = () => {
     const fetchData = async () => {
          
         try {
-            const response = await fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

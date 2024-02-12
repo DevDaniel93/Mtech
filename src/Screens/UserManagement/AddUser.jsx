@@ -48,7 +48,7 @@ export const AddUser = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/role-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -76,7 +76,7 @@ export const AddUser = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/unit-listing',
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -158,7 +158,7 @@ export const AddUser = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-         fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-add-edit`, {
+         fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

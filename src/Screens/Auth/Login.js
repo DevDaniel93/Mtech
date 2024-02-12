@@ -31,7 +31,7 @@ const AdminLogin = () => {
         formDataMethod.append('password', formData.password);
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        const apiUrl = 'https://custom3.mystagingserver.site/mtrecords/public/api/auth/login';
+        const apiUrl = `https://mtrecordflow.com/mtrecords-api/public/api/auth/login`;
 
 
         try {

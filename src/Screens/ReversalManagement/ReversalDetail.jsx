@@ -32,7 +32,7 @@ export const ReversalDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Reversal Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/get-reversal/${id}`,
+        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-reversal/${id}`,
             {
                 method: 'GET',
                 headers: {

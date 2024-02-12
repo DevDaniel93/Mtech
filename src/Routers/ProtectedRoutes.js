@@ -50,8 +50,9 @@ export const ProtectedRoutes = (props) => {
   const apiStatus = () => {
     const formDataMethod = new FormData();
     formDataMethod.append('token', loginToken);
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/auth/check-token`, {
+    document.querySelector('.loaderBox').classList.remove("d-none")
+ 
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/auth/check-token`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

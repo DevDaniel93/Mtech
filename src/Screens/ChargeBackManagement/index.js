@@ -77,7 +77,7 @@ export const ChargeBackManagement = () => {
   const chargeback = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/chargeback-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-listing`,
       {
         method: 'GET',
         headers: {
@@ -92,11 +92,18 @@ export const ChargeBackManagement = () => {
         response.json()
       )
       .then((data) => {
-        console.log(data)
+ 
+ 
         document.querySelector('.loaderBox').classList.add("d-none");
+ 
+        setPermission(data?.permission)
         setData(data?.data);
         setItemsPerPage(data?.leads.length);
+        
+
+ 
         setPermission(data?.permission)
+        console.log("chargeback permission"  , permission?.chargeback)
 
       })
       .catch((error) => {
@@ -153,7 +160,7 @@ export const ChargeBackManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/chargeback-delete/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-delete/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -194,6 +201,7 @@ export const ChargeBackManagement = () => {
       console.error('Unable to copy to clipboard.', err);
     }
   };
+  console.log("permission?.chargeback" , permission?.chargeback)
   return (
     <>
       <DashboardLayout>
@@ -211,7 +219,8 @@ export const ChargeBackManagement = () => {
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
                       {permission?.chargeback.create === true ?
-                        <CustomButton text="Add New Charge Back" variant='primaryButton' onClick={hanldeRoute} /> : ""}
+                        <CustomButton text="Add New Charge Back" variant='primaryButton' onClick={hanldeRoute} /> 
+                         : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -252,9 +261,9 @@ export const ChargeBackManagement = () => {
 
                                   {permission?.chargeback.read === true ? <Link to={`/chargeback-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
                                   {permission?.chargeback.update === true ?
-                                      <Link to={`/edit-chargeback/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : "" }
-                                    { permission?.chargeback.delete === true ?
-                                  <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button>:""}
+                                    <Link to={`/edit-chargeback/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : ""}
+                                  {permission?.chargeback.delete === true ?
+                                    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

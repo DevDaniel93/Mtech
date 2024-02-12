@@ -64,7 +64,7 @@ export const UserManagement = () => {
   const usermanagement = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch('https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-listing',
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-listing`,
       {
         method: 'GET',
         headers: {
@@ -137,7 +137,7 @@ export const UserManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/admin/user-delete/${catId}`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-delete/${catId}`,
       {
         method: 'GET',
         headers: {

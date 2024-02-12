@@ -95,7 +95,7 @@ export const Dashboard = () => {
                           {AmountLoading ? 'Loading...' : 
                           <h3 className="statsNumber">{`$ ${amount?.sumAmountMonthlyReceived}`}</h3>
                           }
-                          <p className="statsText">Monthly Amount Recieved</p>
+                          <p className="statsText">Monthly Recieved</p>
                         </div>
                       </div>
                       <div className="statsChange">

@@ -40,7 +40,7 @@ export const Header = (props) => {
 
   const handleRedirect = () => {
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://custom3.mystagingserver.site/mtrecords/public/api/auth/logout`,
+    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/auth/logout`,
       {
         method: 'GET',
         headers: {
