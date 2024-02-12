@@ -18,9 +18,31 @@ import stats2 from './stats2.png'
 import stats3 from './stats3.png'
 import userImage from './userImage.png'
 import mtech from './mtech.png'
+import Brands from './Brands.png'
+import ChargeBack from './Chargeback.png'
+import Leads from './Leads.png'
+import Merchant from './Merchant.png'
+import Permission from './Permissions.png'
+import Purchase from './Purchase.png'
+import Refund from './Refund.png'
+import Report from './Report.png'
+import Reversal from './Reversal.png'
+import Roles from './Roles.png'
+import Users from './Users.png'
 
 
 export {
+    Brands,
+    ChargeBack,
+    Leads,
+    Merchant,
+    Permission,
+    Purchase,
+    Refund,
+    Report,
+    Reversal,
+    Roles,
+    Users,
     logo,
     authImage,
     bell,

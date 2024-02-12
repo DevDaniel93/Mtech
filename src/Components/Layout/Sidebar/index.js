@@ -1,5 +1,18 @@
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {
+  Brands,
+  ChargeBack,
+  Leads,
+  Merchant,
+  Permission,
+  Purchase,
+  Refund,
+  Report,
+  Reversal,
+  Roles,
+  Users
+} from "../../../Assets/images";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,7 +36,7 @@ export const Sidebar = (props) => {
 
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
-    
+
     fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing`,
       {
         method: 'GET',
@@ -39,7 +52,7 @@ export const Sidebar = (props) => {
         response.json()
       )
       .then((data) => {
-console.log("permission" , data)
+        console.log("permission", data)
         // document.querySelector('.loaderBox').classList.add("d-none");
         // setData(data.leads);
         setPermission(data?.permission)
@@ -67,6 +80,7 @@ console.log("permission" , data)
           <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
             <span className="sideIcon">
               <FontAwesomeIcon icon={faBorderAll} />
+             
             </span>
             <span className="sideLinkText">Dashboard</span>
           </Link>
@@ -76,7 +90,7 @@ console.log("permission" , data)
         <div>
 
 
-       
+
 
 
 
@@ -88,10 +102,11 @@ console.log("permission" , data)
 
 
 
-        <li className="sidebar-li">
+          <li className="sidebar-li">
             {permission?.role === 1 ? <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faMessage} />
+                {/* <FontAwesomeIcon icon={faMessage} /> */}
+                <img src={Permission} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Permission</span>
             </Link> : ""}
@@ -100,7 +115,8 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faEye} />
+                {/* <FontAwesomeIcon icon={faEye} /> */}
+                <img src={Leads} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Lead Management</span>
             </Link> : ""}
@@ -108,20 +124,22 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/role-management') ? 'active' : ''}`} to="/role-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faMessage} />
+                {/* <FontAwesomeIcon icon={faMessage} /> */}
+                <img src={Roles} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Roles Management</span>
             </Link> : ""}
           </li>
 
 
-       
+
 
 
           <li className="sidebar-li">
             {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/brand-listing') ? 'active' : ''}`} to="/brand-listing">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faTasks} />
+                {/* <FontAwesomeIcon icon={faTasks} /> */}
+                <img src={Brands} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Brand Management</span>
             </Link> : ""}
@@ -134,22 +152,24 @@ console.log("permission" , data)
 
         <li className="sidebar-li">
 
-{permission?.refund?.read === true ? 
-<Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
-  <span className="sideIcon">
-    <FontAwesomeIcon icon={faEye} />
-  </span>
-  <span className="sideLinkText">Refund Management</span>
-</Link> : ""}
-</li>
+          {permission?.refund?.read === true ?
+            <Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
+              <span className="sideIcon">
+                {/* <FontAwesomeIcon icon={faEye} /> */}
+                <img src={Refund} className="sideBarIcon" />
+              </span>
+              <span className="sideLinkText">Refund Management</span>
+            </Link> : ""}
+        </li>
 
-     {/* {role == 2 ? */}
+        {/* {role == 2 ? */}
         <div>
-       
+
           <li className="sidebar-li">
             {permission?.users?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-management') ? 'active' : ''}`} to="/user-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faUser} />
+                {/* <FontAwesomeIcon icon={faUser} /> */}
+                <img src={Users} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">User Management</span>
             </Link> : " "}
@@ -157,7 +177,8 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.purchase?.read === true ? <Link className={`sideLink ${location.pathname.includes('/purchase-management') ? 'active' : ''}`} to="/purchase-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faEye} />
+                {/* <FontAwesomeIcon icon={faEye} /> */}
+                <img src={Purchase} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Purchase Management</span>
             </Link> : ""}
@@ -167,12 +188,13 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.chargeback?.read === true ? <Link className={`sideLink ${location.pathname.includes('/chargeback-management') ? 'active' : ''}`} to="/chargeback-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faEye} />
+                {/* <FontAwesomeIcon icon={faEye} /> */}
+                <img src={ChargeBack} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Charge Back Management</span>
             </Link> : ""}
           </li>
-     
+
 
 
           <li className="sidebar-li">
@@ -192,7 +214,7 @@ console.log("permission" , data)
 
         {/* {role == 3 ? */}
         <div>
- 
+
 
 
 
@@ -201,7 +223,8 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.reversal.read === true ? <Link className={`sideLink ${location.pathname.includes('/reversal-management') ? 'active' : ''}`} to="/reversal-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faEye} />
+                {/* <FontAwesomeIcon icon={faEye} /> */}
+                <img src={Reversal} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Reversal Management</span>
             </Link> : ""}
@@ -228,7 +251,8 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.merchant.read === true ? <Link className={`sideLink ${location.pathname.includes('/merchant-management') ? 'active' : ''}`} to="/merchant-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faMountainCity} />
+                {/* <FontAwesomeIcon icon={faMountainCity} /> */}
+                <img src={Merchant} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Merchant Management</span>
             </Link> : " "}
@@ -246,7 +270,8 @@ console.log("permission" , data)
           <li className="sidebar-li">
             {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faMoneyBill} />
+                {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                <img src={Report} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Report Management</span>
             </Link> : " "}

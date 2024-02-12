@@ -17,6 +17,12 @@
     display: none;
 }
 
+.sideBarIcon {
+    width: 25px;
+    filter: invert(1);
+    margin-left: 0;
+}
+
 .sideLink {
     font-size: 14px;
     font-weight: 600;
