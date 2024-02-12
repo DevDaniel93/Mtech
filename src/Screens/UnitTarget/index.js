@@ -513,212 +513,218 @@ export const UnitTarget = () => {
                       id="uncontrolled-tab-example"
                       className="mb-3"
                     >
-                      <Tab eventKey="unit" title="Unit">
 
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h2 className="mainTitle">Unit Listing</h2>
-                          <div className="col-md-6 mb-2">
-                            <div className="addUser">
-                              {unitpermission?.unit_targets.create === true ? <CustomButton text="Add Unit Target" variant='primaryButton' onClick={() => {
-                                setUser(true)
-                              }} /> : " "}
-                              <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
+                      {unitpermission?.unit_targets.read && (
+                        < Tab eventKey="unit" title="Unit">
+
+                          <div className="d-flex justify-content-between align-items-center">
+                            <h2 className="mainTitle">Unit Listing</h2>
+                            <div className="col-md-6 mb-2">
+                              <div className="addUser">
+                                {unitpermission?.unit_targets.create === true ? <CustomButton text="Add Unit Target" variant='primaryButton' onClick={() => {
+                                  setUser(true)
+                                }} /> : " "}
+                                <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <CustomTable
-                          headers={maleHeaders}
+                          <CustomTable
+                            headers={maleHeaders}
 
-                        >
-                          <tbody>
-                            {currentItems.map((item, index) => (
-                              <tr key={index}>
+                          >
+                            <tbody>
+                              {currentItems.map((item, index) => (
+                                <tr key={index}>
 
-                                <td>{index + 1}</td>
-                                <td className="text-uppercase">
-                                  {item?.name}
-                                </td>
-                                <td>{item?.target_amount ? `$ ${item?.target_amount}` : '$0'}</td>
-                                <td>
-                                  <Dropdown className="tableDropdown">
-                                    <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                      <FontAwesomeIcon icon={faEllipsisV} />
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu align="end" className="tableDropdownMenu">
+                                  <td>{index + 1}</td>
+                                  <td className="text-uppercase">
+                                    {item?.name}
+                                  </td>
+                                  <td>{item?.target_amount ? `$ ${item?.target_amount}` : '$0'}</td>
+                                  <td>
+                                    <Dropdown className="tableDropdown">
+                                      <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
+                                        <FontAwesomeIcon icon={faEllipsisV} />
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu align="end" className="tableDropdownMenu">
 
-                                      {unitpermission?.unit_targets.create === true ? <Link className="tableAction" to={`target-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </CustomTable>
+                                        {unitpermission?.unit_targets.create === true ? <Link className="tableAction" to={`target-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </CustomTable>
 
-                        <CustomPagination
-                          itemsPerPage={itemsPerPage}
-                          totalItems={data.length}
-                          currentPage={currentPage}
-                          onPageChange={handlePageChange}
-                        />
-
-
-
-                        <CustomModal show={addUser} close={() => { setUser(false) }} heading="Set Target" >
-
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="unit_id"
-                            label="Select Unit"
-                            labelClass='mainLabel'
-                            required
-                            value={formData.unit_id}
-                            option={unitValue}
-                            onChange={handleChange}
-
-                          />
-                          <CustomInput
-                            label="Set Target"
-                            type="number"
-                            placeholder="Set Target"
-                            required
-                            name="target"
-                            labelClass='mainLabel'
-                            inputClass='mainInput'
-                            value={formData.target}
-                            onChange={(event) => {
-                              setFormData({ ...formData, target: event.target.value });
-
-                            }}
-
-
-                          />
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="month"
-                            labelClass='mainLabel'
-                            label="Select Month"
-                            required
-                            value={formData.month}
-                            option={monthList}
-                            onChange={handleChange}
-
+                          <CustomPagination
+                            itemsPerPage={itemsPerPage}
+                            totalItems={data.length}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
                           />
 
 
-                          <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleSubmit} />
-                        </CustomModal>
-                      </Tab>
+
+                          <CustomModal show={addUser} close={() => { setUser(false) }} heading="Set Target" >
+
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="unit_id"
+                              label="Select Unit"
+                              labelClass='mainLabel'
+                              required
+                              value={formData.unit_id}
+                              option={unitValue}
+                              onChange={handleChange}
+
+                            />
+                            <CustomInput
+                              label="Set Target"
+                              type="number"
+                              placeholder="Set Target"
+                              required
+                              name="target"
+                              labelClass='mainLabel'
+                              inputClass='mainInput'
+                              value={formData.target}
+                              onChange={(event) => {
+                                setFormData({ ...formData, target: event.target.value });
+
+                              }}
 
 
+                            />
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="month"
+                              labelClass='mainLabel'
+                              label="Select Month"
+                              required
+                              value={formData.month}
+                              option={monthList}
+                              onChange={handleChange}
 
-                      <Tab eventKey="user" title="User">
+                            />
 
-                        <div className="d-flex justify-content-between align-items-center">
-                          <h2 className="mainTitle">User Listing</h2>
-                          <div className="col-md-6 mb-2">
-                            <div className="addUser">
-                              {userpermission?.user_targets.create === true ? <CustomButton text="Add User Target" variant='primaryButton' onClick={() => {
-                                setUsers(true)
-                              }} /> : ""}
-                              <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
+
+                            <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleSubmit} />
+                          </CustomModal>
+                        </Tab>
+                      )}
+
+
+                      {unitpermission?.user_targets.read && (
+                        < Tab eventKey="user" title="User">
+
+                          <div className="d-flex justify-content-between align-items-center">
+                            <h2 className="mainTitle">User Listing</h2>
+                            <div className="col-md-6 mb-2">
+                              <div className="addUser">
+                                {userpermission?.user_targets.create === true ? <CustomButton text="Add User Target" variant='primaryButton' onClick={() => {
+                                  setUsers(true)
+                                }} /> : ""}
+                                <CustomInput type="text" placeholder="Search Here..." value={userValue} inputClass="mainInput" onChange={handleuserChange} />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <CustomTable
-                          headers={userHeaders}
+                          <CustomTable
+                            headers={userHeaders}
 
-                        >
-                          <tbody>
-                            {usercurrentItems?.map((item, index) => (
-                              <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td className="text-uppercase">
-                                  {item?.user_detail?.name}
-                                </td>
-                                <td className="text-uppercase">
-                                  {item?.unit_detail?.name}
-                                </td>
+                          >
+                            <tbody>
+                              {usercurrentItems?.map((item, index) => (
+                                <tr key={index}>
+                                  <td>{index + 1}</td>
+                                  <td className="text-uppercase">
+                                    {item?.user_detail?.name}
+                                  </td>
+                                  <td className="text-uppercase">
+                                    {item?.unit_detail?.name}
+                                  </td>
 
-                                <td>{item?.target ? `$ ${item?.target}` : '$0'}</td>
-                                <td>
-                                  <Dropdown className="tableDropdown">
-                                    <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
-                                      <FontAwesomeIcon icon={faEllipsisV} />
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu align="end" className="tableDropdownMenu">
-
-
-                                      { userpermission?.user_targets.reade === true ? <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
-                                    </Dropdown.Menu>
-                                  </Dropdown>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </CustomTable>
-                        <CustomPagination
-                          itemsPerPage={itemsPerPage}
-                          totalItems={userdata.length}
-                          currentPage={currentPage}
-                          onPageChange={handlePageChange}
-                        />
-
-                        <CustomModal show={addUsers} close={() => { setUsers(false) }} heading="Set Target" >
-
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="unit_id"
-                            label="Select Unit"
-                            labelClass='mainLabel'
-                            required
-                            value={formData.unit_id}
-                            option={unitValue}
-                            onChange={handleChange}
-
-                          />
-                          <CustomInput
-                            label="Set Target"
-                            type="number"
-                            placeholder="Set Target"
-                            required
-                            name="target"
-                            labelClass='mainLabel'
-                            inputClass='mainInput'
-                            value={formData.target}
-                            onChange={(event) => {
-                              setFormData({ ...formData, target: event.target.value });
-
-                            }}
+                                  <td>{item?.target ? `$ ${item?.target}` : '$0'}</td>
+                                  <td>
+                                    <Dropdown className="tableDropdown">
+                                      <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
+                                        <FontAwesomeIcon icon={faEllipsisV} />
+                                      </Dropdown.Toggle>
+                                      <Dropdown.Menu align="end" className="tableDropdownMenu">
 
 
-                          />
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="month"
-                            labelClass='mainLabel'
-                            label="Select Month"
-                            required
-                            value={formData.month}
-                            option={monthList}
-                            onChange={handleChange}
-
-                          />
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="user_id"
-                            labelClass='mainLabel'
-                            label="Select User"
-                            required
-                            value={formData.user_id}
-                            option={useresdata}
-                            onChange={handleChange}
+                                        {userpermission?.user_targets.reade === true ? <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
+                                      </Dropdown.Menu>
+                                    </Dropdown>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </CustomTable>
+                          <CustomPagination
+                            itemsPerPage={itemsPerPage}
+                            totalItems={userdata.length}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
                           />
 
+                          <CustomModal show={addUsers} close={() => { setUsers(false) }} heading="Set Target" >
 
-                          <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleuserSubmit} />
-                        </CustomModal>
-                      </Tab>
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="unit_id"
+                              label="Select Unit"
+                              labelClass='mainLabel'
+                              required
+                              value={formData.unit_id}
+                              option={unitValue}
+                              onChange={handleChange}
+
+                            />
+                            <CustomInput
+                              label="Set Target"
+                              type="number"
+                              placeholder="Set Target"
+                              required
+                              name="target"
+                              labelClass='mainLabel'
+                              inputClass='mainInput'
+                              value={formData.target}
+                              onChange={(event) => {
+                                setFormData({ ...formData, target: event.target.value });
+
+                              }}
+
+
+                            />
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="month"
+                              labelClass='mainLabel'
+                              label="Select Month"
+                              required
+                              value={formData.month}
+                              option={monthList}
+                              onChange={handleChange}
+
+                            />
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="user_id"
+                              labelClass='mainLabel'
+                              label="Select User"
+                              required
+                              value={formData.user_id}
+                              option={useresdata}
+                              onChange={handleChange}
+                            />
+
+
+                            <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleuserSubmit} />
+                          </CustomModal>
+                        </Tab>
+                      )}
+
+
 
                     </Tabs>
 
@@ -737,7 +743,7 @@ export const UnitTarget = () => {
         </div>
 
 
-      </DashboardLayout>
+      </DashboardLayout >
     </>
   );
 };

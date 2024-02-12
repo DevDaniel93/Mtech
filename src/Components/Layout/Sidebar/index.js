@@ -234,12 +234,12 @@ console.log("permission" , data)
             </Link> : " "}
           </li>
           <li className="sidebar-li">
-            {permission?.unit_targets.read === true ? <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
+            <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
               <span className="sideIcon">
                 <FontAwesomeIcon icon={faMoneyBill} />
               </span>
-              <span className="sideLinkText">Unit Target</span>
-            </Link> : ""}
+              <span className="sideLinkText">Targets</span>
+            </Link>
           </li>
 
 
