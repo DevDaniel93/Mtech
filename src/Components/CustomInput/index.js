@@ -6,6 +6,7 @@ import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
 
 const CustomInput = (props) => {
 
+  
   const [typePass, setTypePass] = useState(true)
 
   const togglePassType = () => {
@@ -15,7 +16,7 @@ const CustomInput = (props) => {
   return (
     <>
       <div className="inputWrapper">
-        {props?.label && <label htmlFor={props?.id} className={props?.labelClass}>{props?.label}<span>{props?.required ? '*' : ''}</span></label>}
+        {props?.label && <label htmlFor={props?.id} className={props?.labelClass}>{props?.label} {props.icon}<span>{props?.required ? '*' : ''}</span></label>}
         {props?.type === 'password'
           ?
           <div className="passwordWrapper">

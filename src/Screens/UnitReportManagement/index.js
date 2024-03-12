@@ -97,7 +97,7 @@ export const UnitReportManagement = () => {
   const fectchBrandData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing`,
       {
         method: 'GET',
         headers: {
@@ -125,7 +125,7 @@ export const UnitReportManagement = () => {
   const fetchUnitData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
       {
         method: 'GET',
         headers: {
@@ -161,7 +161,7 @@ export const UnitReportManagement = () => {
       formDataMethod.append(key, formData[key]);
     }
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-report-generate-1`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-report-generate-1`,
       {
         method: 'POST',
         headers: {
@@ -222,7 +222,7 @@ export const UnitReportManagement = () => {
                       <SelectBox
                         selectClass="mainInput"
                         name="month"
-                        label="Status"
+                        label="Month"
                         value={formData.month}
                         required
                         option={monthList}

@@ -34,7 +34,7 @@ export const AddPurchase = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -93,7 +93,7 @@ export const AddPurchase = () => {
          
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/purchase-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -159,7 +159,7 @@ export const AddPurchase = () => {
     const userData = (uniID) => {
    console.log("viewleads" , uniID)
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ export const AddPurchase = () => {
     const fetchData = async () => {
          
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -219,6 +219,14 @@ export const AddPurchase = () => {
                 setMessageShow('Lead Verified')
                 setLeadStatus(true)
                 setView(data)
+                
+                setFormData((prevData) => ({
+                    ...prevData,
+                    email: data?.leads?.email,
+                    name: data?.leads?.name,
+                    gross: data?.leads?.gross
+
+                }));
             } else {
                 setMessageShow('Lead not exist')
                 setLeadStatus(false);
@@ -294,7 +302,7 @@ export const AddPurchase = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="lead_code"
-                                                    value={formData.lead_code}
+                                                    value={formData?.lead_code}
                                                     onChange={handleChange}
                                                     onBlur={handleFetch}
                                                 />
@@ -315,7 +323,7 @@ export const AddPurchase = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="name"
-                                                    value={viewl?.leads?.name}
+                                                    value={formData?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -330,7 +338,7 @@ export const AddPurchase = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="email"
-                                                    value={viewl?.leads?.email}
+                                                    value={formData?.email}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -344,7 +352,7 @@ export const AddPurchase = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="net_amount"
-                                                    value={viewl?.leads?.gross}
+                                                    value={formData?.gross}
                                                     onChange={handleChange}
                                                 />
                                             </div>

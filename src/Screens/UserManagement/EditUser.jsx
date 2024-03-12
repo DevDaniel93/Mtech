@@ -57,7 +57,7 @@ export const EditUser = () => {
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-user/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-user/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -91,7 +91,7 @@ export const EditUser = () => {
     const fectchBrandData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -120,7 +120,7 @@ export const EditUser = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -182,7 +182,7 @@ export const EditUser = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-add-edit/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

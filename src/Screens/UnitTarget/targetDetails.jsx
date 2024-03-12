@@ -79,7 +79,7 @@ export const TargetDetails = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Tim Admin | Chapter  Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-unit-targets_details/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-unit-targets_details/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ export const TargetDetails = () => {
         event.preventDefault();
         const userId = leadData?.id
         const LogoutData = localStorage.getItem('login');
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-targets-edit/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-targets-edit/${id}`,
             {
                 method: 'POST',
                 headers: {

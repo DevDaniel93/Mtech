@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
-import { mtech, logo, authImage } from "../../../Assets/images";
+import { mtech, logo, authImage ,  mtechlogo } from "../../../Assets/images";
+
 import "./style.css";
 
 export const AuthLayout = (props) => {
@@ -12,12 +13,12 @@ export const AuthLayout = (props) => {
         <>
             <section className="authBg">
                 <div className='container'>
-                    <div className="row g-0 authBox">
-                        <div className="col-lg-6">
+                    <div className="row g-0">
+                        <div className="col-lg-6 authBox m-auto">
                             <div className="authFormWrapper">
                                 <div className="authForm">
                                     <div className="m-auto siteLogo text-center">
-                                        <img src={mtech} className="mw-100" />
+                                        <img src={mtechlogo} className="mw-100" />
                                         {/* <h1>Project <span>Camp</span></h1> */}
                                     </div>
                                     <div className="authFormHeader">
@@ -34,11 +35,11 @@ export const AuthLayout = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 d-none d-lg-block">
+                        {/* <div className="col-lg-6 d-none d-lg-block">
                             <div className='authImage'>
                                 <img src={authImage} alt="authImage" className="h-100" />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

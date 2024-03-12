@@ -29,6 +29,7 @@ import Report from './Report.png'
 import Reversal from './Reversal.png'
 import Roles from './Roles.png'
 import Users from './Users.png'
+import mtechlogo from './mtech_logo.png'
 
 
 export {
@@ -61,5 +62,6 @@ export {
     stats2,
     stats3,
     userImage,
-    mtech
+    mtech,
+    mtechlogo
 }

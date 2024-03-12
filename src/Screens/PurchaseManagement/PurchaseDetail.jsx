@@ -33,7 +33,7 @@ export const PurchaseDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Purchase Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-purchase/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-purchase/${id}`,
             {
                 method: 'GET',
                 headers: {

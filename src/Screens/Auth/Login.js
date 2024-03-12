@@ -31,9 +31,10 @@ const AdminLogin = () => {
         formDataMethod.append('password', formData.password);
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        const apiUrl = `https://mtrecordflow.com/mtrecords-api/public/api/auth/login`;
 
-
+        const apiUrl = `${process.env.REACT_APP_API_URL}/public/api/auth/login`;
+ 
+ 
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',

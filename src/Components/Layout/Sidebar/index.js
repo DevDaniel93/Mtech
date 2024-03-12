@@ -32,12 +32,13 @@ import { useState, useEffect } from "react";
 
 export const Sidebar = (props) => {
 
-  const [permission, setPermission] = useState()
+  const [permission, setPermission] = useState();
+  const [isShown, setIsShown] = useState(false);
 
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing`,
       {
         method: 'GET',
         headers: {
@@ -71,11 +72,12 @@ export const Sidebar = (props) => {
   }, []);
 
   const role = localStorage.getItem('role');
+  console.log("role" , role)
   console.log("permission", permission)
   const location = useLocation()
   return (
-    <div className={`sidebar ${props.sideClass}`} id="sidebar">
-      <ul className="list-unstyled">
+    <div className={`sidebar  ${isShown ? '' : 'collapsed'} ${props.sideClass}`} id="sidebar">
+      <ul className="list-unstyled" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
         <li className="sidebar-li">
           <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
             <span className="sideIcon">
@@ -103,23 +105,24 @@ export const Sidebar = (props) => {
 
 
           <li className="sidebar-li">
-            {permission?.role === 1 ? <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
+          {role == 1 ?
+            <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
               <span className="sideIcon">
                 {/* <FontAwesomeIcon icon={faMessage} /> */}
                 <img src={Permission} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Permission</span>
-            </Link> : ""}
+            </Link> : " "}
           </li>
 
           <li className="sidebar-li">
-            {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
+          {permission?.roles?.read === true ?    <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
               <span className="sideIcon">
                 {/* <FontAwesomeIcon icon={faEye} /> */}
                 <img src={Leads} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Lead Management</span>
-            </Link> : ""}
+            </Link> : " "}
           </li>
           <li className="sidebar-li">
             {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/role-management') ? 'active' : ''}`} to="/role-management">

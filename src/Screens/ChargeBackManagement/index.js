@@ -77,7 +77,7 @@ export const ChargeBackManagement = () => {
   const chargeback = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/chargeback-listing`,
       {
         method: 'GET',
         headers: {
@@ -160,7 +160,7 @@ export const ChargeBackManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-delete/${catId}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/chargeback-delete/${catId}`,
       {
         method: 'GET',
         headers: {

@@ -45,7 +45,7 @@ console.log("formDatq   a" , formData)
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -73,7 +73,7 @@ console.log("formDatq   a" , formData)
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-chargeback/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-chargeback/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -115,7 +115,7 @@ console.log("formDatq   a" , formData)
         console.log(formData)
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-add-edit/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/chargeback-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -161,7 +161,7 @@ console.log("formDatq   a" , formData)
     const userData = (uniID) => {
          
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ console.log("setFormDataqqqqz   " , formData)
     const fetchData = async () => {
         console.log("viewleads", viewleads)
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

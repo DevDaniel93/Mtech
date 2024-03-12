@@ -107,7 +107,7 @@ export const ReportManagement = () => {
   const fectchBrandData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing`,
       {
         method: 'GET',
         headers: {
@@ -136,7 +136,7 @@ export const ReportManagement = () => {
   const fetchUnitData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
       {
         method: 'GET',
         headers: {
@@ -178,7 +178,7 @@ export const ReportManagement = () => {
 
     formDataMethod.append('unit_id', JSON.stringify(formData?.unit_id));
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-sheets-generate`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate`,
       {
         method: 'POST',
         headers: {

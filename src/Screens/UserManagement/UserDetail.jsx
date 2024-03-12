@@ -32,7 +32,7 @@ export const UserDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | User Management Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-user/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-user/${id}`,
             {
                 method: 'GET',
                 headers: {

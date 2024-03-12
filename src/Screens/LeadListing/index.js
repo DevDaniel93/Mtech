@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash, faCopy, faMagnifyingGlass, faFile } from "@fortawesome/free-solid-svg-icons";
 
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
@@ -14,18 +14,22 @@ import CustomPagination from "../../Components/CustomPagination"
 import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 
-
+import { SelectBox } from "../../Components/CustomSelect";
 import "./style.css";
 
 export const LeadListing = () => {
   window.close();
   const [permission, setPermission] = useState()
   const [data, setData] = useState([]);
+  const [formData, setFormData] = useState({})
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [showtable, setShowtable] = useState(false)
+  const [extra_data, setExtra_Data] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
   const [copied, setCopied] = useState(false)
@@ -59,22 +63,19 @@ export const LeadListing = () => {
     setShowModal4(true)
   }
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  }
   const filterData = data?.filter(item =>
-    item.name.toLowerCase().includes(inputValue.toLowerCase())
+    item?.name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
-
-
+  const currentItems = filterData?.slice(indexOfFirstItem, indexOfLastItem);
+  const [unit, setUnit] = useState({});
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-listing`,
+
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}`,
       {
         method: 'GET',
         headers: {
@@ -85,13 +86,78 @@ export const LeadListing = () => {
       }
     )
 
-      .then(response =>
-        response.json()
+      .then((response) => {
+        return (
+          response.json()
+
+        )
+      }
+
       )
+
       .then((data) => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
+
         setData(data.leads);
+
+        setExtra_Data(data?.extra_fileds)
+        setPermission(data?.permission)
+        setItemsPerPage(data?.leads.length);
+        setShowtable(true)
+
+        setExtra_Data(data?.extra_fileds);
+
+        setPermission(data?.permission);
+        setItemsPerPage(data?.leads.length);
+        if (data?.extra_fileds?.net > 0) {
+
+
+          setShowtable(true);
+        } else {
+          // If there is no data, set showtable to false
+          setShowtable(false);
+        }
+
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+        setShowtable(false)
+      })
+
+  }
+
+  const leadlist = () => {
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
+    )
+
+      .then((response) => {
+        return (
+          response.json()
+
+        )
+      }
+
+      )
+
+      .then((data) => {
+
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+        setData(data.leads);
+
+        setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
         setItemsPerPage(data?.leads.length);
       })
@@ -102,11 +168,60 @@ export const LeadListing = () => {
 
   }
 
+  console.log("showtable", showtable)
+
+
+
+
   useEffect(() => {
     document.title = 'Mt Records | Lead Management';
-    leadData()
+    leadlist()
 
   }, []);
+
+
+
+
+
+
+
+
+  const unitHeaders = [
+
+    {
+      key: "net amount ",
+      title: "Net Amount",
+    },
+
+    {
+      key: "unit_target",
+      title: "Unit Target",
+    },
+    {
+      key: "gross amount",
+      title: "Gross Amount",
+    },
+    {
+      key: "Received",
+      title: "Received",
+    },
+    {
+      key: "recovery",
+      title: "Recovery",
+    },
+    {
+      key: "Charge Back",
+      title: "Charge Back",
+    },
+    {
+      key: "refund_amount",
+      title: "Refund Amount  ",
+    },]
+
+
+
+
+
 
   const maleHeaders = [
     {
@@ -193,7 +308,7 @@ export const LeadListing = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/delete-leads/${catId}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/delete-leads/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -218,7 +333,7 @@ export const LeadListing = () => {
       })
   }
 
-  console.log("permission", permission)
+
 
   function handleChanges(event) {
     const file = event.target.files[0];
@@ -227,7 +342,7 @@ export const LeadListing = () => {
       const formData = new FormData();
       formData.append('csv', file);
 
-      fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/csv-data-handle`, {
+      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/csv-data-handle`, {
         method: 'POST',
         body: formData,
       })
@@ -242,6 +357,110 @@ export const LeadListing = () => {
         });
     }
   }
+
+
+  const monthList = [
+    {
+      code: 1,
+      name: 'January'
+    },
+    {
+      code: 2,
+      name: 'Feburay'
+    }, {
+      code: 3,
+      name: 'March'
+    },
+    {
+      code: 4,
+      name: 'April'
+    },
+    {
+      code: 5,
+      name: 'May'
+    },
+    {
+      code: 6,
+      name: 'June'
+    },
+    {
+      code: 7,
+      name: 'July'
+    },
+    {
+      code: 8,
+      name: 'August'
+    },
+    {
+      code: 9,
+      name: 'September'
+    },
+    {
+      code: 10,
+      name: 'Octuber'
+    },
+    {
+      code: 11,
+      name: 'November'
+    },
+    {
+      code: 12,
+      name: 'December'
+    }
+  ]
+
+
+  const fetchUnitData = () => {
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
+    )
+
+      .then(response =>
+        response.json()
+      )
+      .then((data) => {
+
+        document.querySelector('.loaderBox').classList.add("d-none");
+        setUnit(data.units);
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+      })
+  }
+
+  useEffect(() => {
+    fetchUnitData()
+  }, [])
+
+
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "search") {
+      setInputValue(value)
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+  };
+
+  console.log("extra_data", extra_data)
+  console.log("currentItems", currentItems)
+
   return (
     <>
       <DashboardLayout>
@@ -249,24 +468,101 @@ export const LeadListing = () => {
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
-                <div className="row mb-3 justify-content-between">
-                  <div className="col-md-6 mb-2">
+                <div className="row mb-3 ">
+                  <div className="col-md-4 mb-2">
                     <h2 className="mainTitle">Lead Management</h2>
                   </div>
-                  <div className="col-md-6 mb-2">
-                    <div className="addUser d-flex" >
-                      {role == 1 ? <CustomInput type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="upload file" onChange={handleChanges} /> : " "}
+                  <div className="col-md-8 mb-2">
+                    <div className="row   align-items-center  justify-content-end ">
 
 
-                      {permission?.leads.create === true ?
-                       <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
-
-                      <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                      {/* <div className="addUser g-0  " > */}
 
 
+
+
+                      <div className=" col-md-4 ">
+                        {role == 1 ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "}
+                      </div>
+                      <div className=" col-md-4 ">
+                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                      </div>
+
+                      <div className=" col-md-4 ">
+                        {permission?.leads.create === true ?
+                          <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+                      </div>
+
+
+
+
+                      {/* </div> */}
 
                     </div>
+
                   </div>
+
+
+                </div>
+                <div className="align-items-end row mb-3 border-bottom pb-3">
+
+
+
+                  <div className="col-md-4 mb-2">
+                    <div className="row align-items-end md-0">
+                      <div className="col-md-5">
+                        <SelectBox
+                          selectClass="mainInput"
+                          name="unit_id"
+                          label="Unit"
+                          required
+                          value={formData.unit_id}
+                          option={unit}
+                          onChange={handleChange}
+                        />
+                      </div>
+
+
+
+                      <div className="col-md-5">
+                        <div className="addUser align-items-center">
+                          <SelectBox
+                            selectClass="mainInput"
+                            name="month"
+                            label="Status"
+                            value={formData.month}
+                            required
+                            option={monthList}
+                            onChange={handleChange}
+                          />
+
+                        </div>
+                      </div>
+                      <div className="col-md-2">
+                        <CustomButton variant='primaryButton' className="searchBtn " type='button' onClick={leadData} icon={faMagnifyingGlass} />
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {showtable == true ? (
+                    <div className="col-md-8 text-center">
+                      <CustomTable headers={unitHeaders}>
+                        <tbody>
+                          <tr>
+                            <td>{`$${extra_data?.net}`}</td>
+                            <td className="text-capitalize">  {`$${extra_data?.unit_target}`}</td>
+                            <td> {`$${extra_data?.gross_amount}`} </td>
+                            <td>{`$${extra_data?.received}`} </td>
+                            <td> {`$${extra_data?.recovery}`}</td>
+                            <td className="text-capitalize">  {`$${extra_data?.charge_back}`}</td>
+                            <td className="text-capitalize">  {`$${extra_data?.refund_amount}`}</td>
+                          </tr>
+                        </tbody>
+                      </CustomTable>
+                    </div>
+                  ) : ""}
+
                 </div>
                 <div className="row mb-3">
                   <div className="col-12">
@@ -275,7 +571,7 @@ export const LeadListing = () => {
 
                     >
                       <tbody>
-                        {currentItems.map((item, index) => (
+                        {currentItems?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
@@ -295,21 +591,22 @@ export const LeadListing = () => {
                             <td className="text-capitalize">
                               {item?.date}
                             </td>
-                            <td>{item?.getsource.name}</td>
-                            <td>{item.getbrand?.name}</td>
+                            <td  >{item?.getsource.name}</td>
+                            <td >{item.getbrand?.name}</td>
                             <td>{item?.product}</td>
-                            <td className="text-capitalize">
-                              {item?.name}
+                            <td   >
+                              <span className={item?.chargeback === true ? "  p-2     bg-danger    text-white  w-2" : "item-name p-2      w-2"}>   {item?.name}</span>
+
                             </td>
                             {/* <td>{item?.username}</td> */}
                             <td>{item?.email}</td>
                             <td>{item?.phone}</td>
                             <td>{item?.description}</td>
-                            <td>{`$ ${item?.quoted_amount}`}</td>
+                            <td>{`$${item?.quoted_amount}`}</td>
 
-                            <td>{item?.received === null ? '$ 0' : `$ ${item?.received}`}</td>
-                            <td>{item?.recovery}</td>
-                            <td>{item?.gross}</td>
+                            <td>{item?.received === null ? '$ 0' : `$${item?.received}`}</td>
+                            <td> {`$${item?.recovery}`}</td>
+                            <td> {`$${item?.gross}`}</td>
                             <td>{item?.salesrep?.name}</td>
 
                             <td>{item?.accountrepdetail?.name}</td>
@@ -373,3 +670,8 @@ export const LeadListing = () => {
     </>
   );
 };
+
+
+
+
+

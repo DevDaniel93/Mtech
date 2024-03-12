@@ -23,11 +23,10 @@
 /*----- Logo Start -----*/
 
 .siteLogo {
-    width: 230px;
+    width: 138px;
     text-align: center;
     outline: none;
 }
-
 .siteLogo img {
     max-width: 100%;
 }
@@ -197,3 +196,11 @@
 
 
 }
+ 
+
+
+.authLogo {
+    width: 79px;
+    margin-bottom: 0;
+}
+

@@ -92,7 +92,7 @@ export const UsertargetDetails = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Lead Management Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-usertarget/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-usertarget/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -219,7 +219,7 @@ export const UsertargetDetails = () => {
         event.preventDefault();
         const userId = leadData?.id
  
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/usertarget-add-edit/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/usertarget-add-edit/${id}`,
             {
                 method: 'POST',
                 headers: {
@@ -254,7 +254,7 @@ export const UsertargetDetails = () => {
     const fetchUserData = () => {
       
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${formData?.unit_id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${formData?.unit_id}`,
             {
                 method: 'GET',
                 headers: {

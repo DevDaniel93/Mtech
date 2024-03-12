@@ -1,0 +1,12 @@
+.primaryButton {
+    background: #70c5b3;
+    color: #514f50;
+    border-color: #72c6b4;
+}
+
+
+
+.sideLink:hover, .sideLink.active {
+    color: #fff;
+    background: #638b84;
+}

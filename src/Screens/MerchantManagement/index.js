@@ -59,7 +59,7 @@ export const MerchantManagement = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
       {
         method: 'GET',
         headers: {
@@ -120,7 +120,7 @@ export const MerchantManagement = () => {
      
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-add-edit`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-add-edit`,
       {
         method: 'POST',
         headers: {
@@ -155,7 +155,7 @@ export const MerchantManagement = () => {
   const brandID = (unitID) => {
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-merchant/${unitID}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-merchant/${unitID}`,
       {
         method: 'GET',
         headers: {
@@ -191,7 +191,7 @@ export const MerchantManagement = () => {
      
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-add-edit/${idUser}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-add-edit/${idUser}`,
       {
         method: 'POST',
         headers: {

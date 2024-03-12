@@ -37,7 +37,7 @@ const [status , setStatus]  = useState()
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -96,7 +96,7 @@ const [status , setStatus]  = useState()
        
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/reversal-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/reversal-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -132,7 +132,7 @@ const [status , setStatus]  = useState()
     const fetchData = async () => {
        
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -196,7 +196,7 @@ const [status , setStatus]  = useState()
     const userData = (uniID) => {
       
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {

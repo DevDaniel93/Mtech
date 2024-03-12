@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { logo, userImage, mtech } from './../../../Assets/images/'
+import { logo, userImage, mtech, mtechlogo } from './../../../Assets/images/'
+
 
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,16 +12,18 @@ import {
   faUser,
   faBars,
   faEllipsisV,
+
+  faUserPlus,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { notifications } from "../../../Config/Data";
 
 import "./style.css";
-
+// import { faUserPlus   } from "@fortawesome/react-fontawesome";
 
 export const Header = (props) => {
-  const [status , setStatus] = useState()
+  const [status, setStatus] = useState()
   const [notificationState, setNotificationState] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -30,7 +33,7 @@ export const Header = (props) => {
   const Continue = () => {
     setShowModal(false)
     setShowModal2(true)
-          setStatus(true)
+    setStatus(true)
   }
 
   const handleClickPopup = () => {
@@ -40,7 +43,7 @@ export const Header = (props) => {
 
   const handleRedirect = () => {
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/auth/logout`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/auth/logout`,
       {
         method: 'GET',
         headers: {
@@ -57,7 +60,7 @@ export const Header = (props) => {
         console.log(data)
         localStorage.removeItem('login');
         setStatus(data?.status)
- console.log("data?.status" , data?.status)
+        console.log("data?.status", data?.status)
 
         navigate('/');
       })
@@ -78,7 +81,7 @@ export const Header = (props) => {
         <Container fluid>
           <Link to={"/dashboard"} className="siteLogo order-2 order-lg-3 text-decoration-none">
             {/* <h1>Project <span>Camp</span></h1> */}
-            <img src={mtech} className="mw-100" />
+            <img src={mtechlogo} className="mw-100 authLogo" />
           </Link>
           <Navbar.Toggle className="order-4 order-lg-2 notButton">
             <FontAwesomeIcon className="bell-icon" icon={faEllipsisV} />
@@ -127,11 +130,15 @@ export const Header = (props) => {
                   className="notButton toggleButton"
                 >
                   <div className="userImage">
-                    <img
+                    <FontAwesomeIcon
+                      className="me-2 yellow-text"
+                      icon={faUser}
+                    />{" "}
+                    {/* <img
                       src={userImage}
                       alt=""
                       className="img-fluid"
-                    />
+                    /> */}
                   </div>
                   {/* <img src={images.profilePic} alt="" className="img-fluid" /> */}
                 </Dropdown.Toggle>
@@ -151,22 +158,17 @@ export const Header = (props) => {
                     />{" "}
                     Logout
                   </Link>
+
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
           </Navbar.Collapse>
-          <button className="notButton ms-md-2 order-lg-4 order-md-4 order-1">
-            <FontAwesomeIcon
-              className="bell-icon"
-              onClick={props.sidebarToggle}
-              icon={faBars}
-            />
-          </button>
+        
         </Container>
       </Navbar>
 
-      <CustomModal    status={status} show={showModal} close={() => { setShowModal(false) }} action={Continue} heading='Are you sure you want to logout?' />
-      <CustomModal    status={status} show={showModal2} close={handleRedirect} success heading='Successfully Logged Out' />
+      <CustomModal status={status} show={showModal} close={() => { setShowModal(false) }} action={Continue} heading='Are you sure you want to logout?' />
+      <CustomModal status={status} show={showModal2} close={handleRedirect} success heading='Successfully Logged Out' />
     </header>
   );
 };

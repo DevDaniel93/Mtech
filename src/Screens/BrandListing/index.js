@@ -48,7 +48,7 @@ export const BrandListing = () => {
     setCurrentPage(pageNumber);
   };
 
-
+  const [status, setStatus] = useState()
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -67,7 +67,7 @@ export const BrandListing = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing`,
       {
         method: 'GET',
         headers: {
@@ -129,7 +129,7 @@ export const BrandListing = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-add-edit`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-add-edit`,
       {
         method: 'POST',
         headers: {
@@ -147,6 +147,7 @@ export const BrandListing = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
         setShowModal(true)
+         setStatus(data?.status)
         setUser(false)
         setFormData({
           name: ''
@@ -163,7 +164,7 @@ export const BrandListing = () => {
   const brandID = (unitID) => {
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-brand/${unitID}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-brand/${unitID}`,
       {
         method: 'GET',
         headers: {
@@ -199,7 +200,7 @@ export const BrandListing = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
     const LogoutData = localStorage.getItem('login');
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/brand-add-edit/${idUser}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-add-edit/${idUser}`,
       {
         method: 'POST',
         headers: {
@@ -236,7 +237,7 @@ export const BrandListing = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/delete-brand/${catId}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/delete-brand/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -375,7 +376,7 @@ export const BrandListing = () => {
             <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleEditSubmit} />
           </CustomModal>
 
-          <CustomModal show={showModal} close={() => { setShowModal(false) }} success heading='Brand added Successfully.' />
+          <CustomModal   status={status} show={showModal} close={() => { setShowModal(false) }} success heading='Brand added Successfully.' />
 
 
         </div>

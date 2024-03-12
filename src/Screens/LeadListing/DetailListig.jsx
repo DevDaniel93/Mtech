@@ -33,7 +33,7 @@ export const DetailListing = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Lead Management Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${id}`,
             {
                 method: 'GET',
                 headers: {

@@ -167,7 +167,7 @@ export const UserTarget = () => {
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-Target-List`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-Target-List`,
       {
         method: 'GET',
         headers: {
@@ -199,7 +199,7 @@ export const UserTarget = () => {
   const fetchuserData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/usertarget-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/usertarget-listing`,
       {
         method: 'GET',
         headers: {
@@ -322,7 +322,7 @@ export const UserTarget = () => {
 
 
 
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/usertarget-add-edit`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/usertarget-add-edit`,
       {
         method: 'POST',
         headers: {
@@ -353,7 +353,7 @@ export const UserTarget = () => {
   const deleteTarget = async (id) => {
     try {
       const LogoutData = localStorage.getItem('login');
-      const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-targets-delete/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-targets-delete/${id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -387,7 +387,7 @@ export const UserTarget = () => {
   const fetchUserData = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${viewleads}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${viewleads}`,
       {
         method: 'GET',
         headers: {

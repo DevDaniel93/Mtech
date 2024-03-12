@@ -1,9 +1,14 @@
+/* #85a0ac; */
+ 
+
+
+
 .sidebar {
-    width: 260px;
+    width: 260px px;
     height: calc(100vh - 6rem);
     position: fixed;
     transition: all 0.35s ease-in-out, left 0.35s ease-in-out, margin-right 0.35s ease-in-out, right 0.35s ease-in-out;
-    background: #00293B;
+    background: #32302b;
     z-index: 2;
     top: 6rem;
     padding-bottom: 6rem;
@@ -23,6 +28,8 @@
     margin-left: 0;
 }
 
+
+
 .sideLink {
     font-size: 14px;
     font-weight: 600;
@@ -40,9 +47,12 @@
     margin: 20px 0;
 }
 
-.sideLink:hover, .sideLink.active {
+
+
+.sideLink:hover,
+.sideLink.active {
     color: #fff;
-    background: var(--primaryColor);
+    background: #638b84;
 }
 
 .sideIcon {
@@ -91,4 +101,12 @@
     .sidebar.collapsed .sideLink {
         display: none;
     }
+}
+
+
+
+.primaryButton {
+    background: #70c5b3;
+    color: #514f50;
+    border-color: #72c6b4;
 }

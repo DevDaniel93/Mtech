@@ -25,10 +25,18 @@ export const UserManagement = () => {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
+  const [editUser, setEditUser] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [inputValue, setInputValue] = useState('');
+  const [iduser, setIdUser] = useState(0);
+  const [userud, setUserud] = useState();
+  const [pass, setPass] = useState('');
 
+  const [formData, setFormData] = useState({
+    password: '',
+
+  });
   const navigate = useNavigate();
 
   const handlePageChange = (pageNumber) => {
@@ -64,7 +72,7 @@ export const UserManagement = () => {
   const usermanagement = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-listing`,
       {
         method: 'GET',
         headers: {
@@ -133,11 +141,11 @@ export const UserManagement = () => {
     },
   ];
 
-
+  const [userForm, setUserFrom] = useState(false);
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-delete/${catId}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-delete/${catId}`,
       {
         method: 'GET',
         headers: {
@@ -162,8 +170,136 @@ export const UserManagement = () => {
       })
   }
 
-  console.log("permission", permission)
+  const change_password = (unitID) => {
+    setEditUser(true)
+    localStorage.setItem('userid' , unitID);
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    // const LogoutData = localStorage.getItem('login');
+    // // fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-brand/${unitID}`,
+    // //   {
+    // //     method: 'GET',
+    // //     headers: {
+    // //       'Accept': 'application/json',
+    // //       'Content-Type': 'application/json',
+    // //       'Authorization': `Bearer ${LogoutData}`
+    // //     },
+    // //   },
+    // // )
+    //   .then((response) => {
+    //     return response.json()
+    //   })
+    //   .then((data) => {
 
+    //     document.querySelector('.loaderBox').classList.add("d-none");
+    //     setIdUser(unitID)
+    //     // setFormData({
+    //     //   ...formData,
+    //     //   name: data.brands.name,
+    //     //   status: data.status
+    //     // });
+    //     setEditUser(true)
+
+    //   })
+    //   .catch((error) => {
+    //     document.querySelector('.loaderBox').classList.add("d-none");
+
+    //   })
+  }
+  console.log("iduserdsds", userud)
+
+
+  // const handleEditSubmit = (event) => {
+  //   event.preventDefault();
+    
+    
+  //   console.log("handleEditpass", pass)
+  //   const formDataMethod = new FormData();
+  //   formDataMethod.append('userid', userud);
+  //   formDataMethod.append('newpassword', formData.password);
+  //   // document.querySelector('.loaderBox').classList.remove("d-none");
+  //   console.log("formDataMethod", userud)
+  //   console.log("handleEditSubmit", userud)
+  //   document.querySelector('.loaderBox').classList.remove("d-none");
+  //   const LogoutData = localStorage.getItem('login');
+  //   fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-pass-update`,
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${LogoutData}`
+  //       },
+  //       userid: userud,
+  //       newpassword: pass,
+  //     },
+  //   )
+  //     .then((response) => {
+  //       return response.json()
+  //     })
+  //     .then((data) => {
+
+  //       document.querySelector('.loaderBox').classList.add("d-none");
+  //       // setFormData({
+  //       //   userid: '',
+  //       //   password: ''
+  //       // })
+  //       // fetchData()
+  //       setEditUser(false)
+
+
+  //     })
+  //     .catch((error) => {
+  //       document.querySelector('.loaderBox').classList.add("d-none");
+  //     })
+  // }
+
+
+
+  const handleEditSubmit = (event) => {
+    event.preventDefault();
+  
+    const formDataMethod = new FormData();
+ 
+    const userid = localStorage.getItem('userid');
+    formDataMethod.append('userid', userid);
+    formDataMethod.append('newpassword', pass);  
+  
+    const LogoutData = localStorage.getItem('login');
+  
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LogoutData}`,
+      },
+      body: formDataMethod,
+    };
+  
+    document.querySelector('.loaderBox').classList.remove("d-none");
+  
+    fetch('${process.env.REACT_APP_API_URL}/public/api/admin/user-pass-update', requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+        setFormData({
+          userid: '',
+          password: ''
+        });
+        setEditUser(false);
+      })
+      .catch(error => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+        console.error('Error during password update:', error);
+        // Handle error as needed
+      });
+    
+    console.log("pass", pass);
+  };
+  console.log("pass", formData)
   return (
     <>
       <DashboardLayout>
@@ -177,8 +313,8 @@ export const UserManagement = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                    {permission?.users.create === true ?
-                      <CustomButton text="Add User" variant='primaryButton' onClick={hanldeRoute} />:"" }
+                      {permission?.users.create === true ?
+                        <CustomButton text="Add User" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -196,7 +332,7 @@ export const UserManagement = () => {
                             <td className="text-capitalize">
                               {item?.name}
                             </td>
-                              <td>{item?.email}</td>
+                            <td>{item?.email}</td>
                             <td>{
                               item?.unit_id && item?.unit_id.map((item) => (
                                 <span className="ps-1">{item?.name}</span>
@@ -204,22 +340,29 @@ export const UserManagement = () => {
                             }</td>
                             <td>{item?.role?.name}</td>
                             <td className={item?.status == 1 ? 'greenColor' : 'redColor'}>{item?.status == 1 ? 'Active' : 'Inactive'}</td>
-                              <td>
+                            <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                {permission?.users.read === true ?
-                                  <Link to={`/user-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> :"" }
+                                  {permission?.users.read === true ?
+                                    <Link to={`/user-detail/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View</Link> : ""}
 
-{permission?.users.update === true ?
-                                  <Link to={`/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> :"" }
-{/* {permission?.users.delete === true ?                               */}
+                                  {permission?.users.update === true ?
+                                    <Link to={`/edit-user/${item?.id}`} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</Link> : ""}
+                                  {/* {permission?.users.delete === true ?                               */}
                                   {item?.status == 0 ? <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}>  <FontAwesomeIcon icon={faCompass} />  Active </button>
 
                                     : <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}>  <FontAwesomeIcon icon={faCompass} style={{ decoration: 'line-through' }} /> Inactive </button>
                                   }
+                                  {permission?.users.update === true ?
+                                    <button onClick={() => {
+                                      change_password(item.id)
+                                      setUserud(item.id)
+                                      setUserFrom(true)
+                                    }} className="tableAction">Change Password</button> : ""}
+
                                 </Dropdown.Menu>
 
                               </Dropdown>
@@ -245,6 +388,41 @@ export const UserManagement = () => {
 
           <CustomModal show={showModal3} close={() => { setShowModal3(false) }} action={ActiveMale} heading='Are you sure you want to mark this user as Active?' />
           <CustomModal show={showModal4} close={() => { setShowModal4(false) }} success heading='Marked as Active' />
+
+
+          <CustomModal show={editUser} close={() => { setEditUser(false) }} >
+            <CustomInput
+              label=" Change Password"
+              type="text"
+              placeholder="Change Password  "
+              required
+              name="password"
+              id='pass'
+              //  type='password'
+              labelClass='mainLabel'
+              inputClass='mainInput'
+              value={pass}
+              onChange={(event) => {
+                setPass(event.target.value);
+              }}
+
+            />
+            {/* <CustomInput
+              label='Change Password'
+              required
+              id='pass'
+              type='password'
+              placeholder='Enter Password'
+              labelClass='mainLabel'
+              inputClass='mainInput'
+              onChange={(event) => {
+                setFormData({ ...formData, password: event.target.value });
+
+              }}
+            /> */}
+
+            <CustomButton variant='primaryButton' text='Update Password' type='button' onClick={handleEditSubmit} />
+          </CustomModal>
 
 
 

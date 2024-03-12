@@ -7,7 +7,7 @@ export const useApi = (endpoint) => {
 
   useEffect(() => {
     const LogoutData = localStorage.getItem('login');
-    const base_url = `https://mtrecordflow.com/mtrecords-api/public/api/`
+    const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     async function fetchData() {
       document.querySelector('.loaderBox').classList.remove("d-none");
       try {
@@ -54,7 +54,7 @@ export const usePost = (endpoint) => {
 
   useEffect(() => {
     const LogoutData = localStorage.getItem('login');
-    const base_url = `https://mtrecordflow.com/mtrecords-api/public/api/`
+    const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     document.querySelector('.loaderBox').classList.remove("d-none");
     async function fetchData() {
  
@@ -112,7 +112,7 @@ export const useEditpost = (endpoint) => {
   }
   useEffect(() => {
     const LogoutData = localStorage.getItem('login');
-    const base_url = `https://mtrecordflow.com/mtrecords-api/public/api/`
+    const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     document.querySelector('.loaderBox').classList.remove("d-none");
     async function fetchData() {
  
@@ -171,7 +171,7 @@ export const usePostUpdate = (endpoint) => {
 
   useEffect(() => {
     const LogoutData = localStorage.getItem('login');
-    const base_url = `https://mtrecordflow.com/mtrecords-api/public/api/`
+    const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     document.querySelector('.loaderBox').classList.remove("d-none");
     async function fetchData() {
       // Your loading indicator logic here

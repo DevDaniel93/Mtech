@@ -73,38 +73,38 @@ export const Permission = () => {
     console.log("initalRole", initalRole)
 
 
-    const leadData = () => {
+    // const leadData = () => {
 
 
 
-        const LogoutData = localStorage.getItem('login');
-        document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/get-permissions?role=4&child_role=1`,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${LogoutData}`
-                },
-            }
-        )
+    //     const LogoutData = localStorage.getItem('login');
+    //     document.querySelector('.loaderBox').classList.remove("d-none");
+    //     fetch(`${process.env.REACT_APP_API_URL}/public/api/get-permissions?role=4&child_role=1`,
+    //         {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${LogoutData}`
+    //             },
+    //         }
+    //     )
 
-            .then(response =>
-                response.json()
-            )
-            .then((data) => {
+    //         .then(response =>
+    //             response.json()
+    //         )
+    //         .then((data) => {
 
-                document.querySelector('.loaderBox').classList.add("d-none");
-                setData(data.leads);
-                setPermission(data?.permission)
-            })
-            .catch((error) => {
-                document.querySelector('.loaderBox').classList.add("d-none");
+    //             document.querySelector('.loaderBox').classList.add("d-none");
+    //             setData(data.leads);
+    //             setPermission(data?.permission)
+    //         })
+    //         .catch((error) => {
+    //             document.querySelector('.loaderBox').classList.add("d-none");
 
-            })
+    //         })
 
-    }
+    // }
 
 
 
@@ -115,7 +115,7 @@ export const Permission = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -150,7 +150,7 @@ export const Permission = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/get-permissions?role=${initalRoles}&child_role=${childrole}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/get-permissions?role=${initalRoles}&child_role=${childrole}`,
             {
                 method: 'GET',
                 headers: {
@@ -215,7 +215,7 @@ export const Permission = () => {
         formDataMethod.append('role', initalRoles);
         formDataMethod.append('child_role', childrole);
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/permission-modifiy`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/permission-modifiy`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -260,7 +260,7 @@ export const Permission = () => {
             }
         }
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

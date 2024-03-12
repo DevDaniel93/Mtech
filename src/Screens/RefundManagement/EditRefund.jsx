@@ -38,7 +38,7 @@ export const EditRefund = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -70,7 +70,7 @@ export const EditRefund = () => {
     const getUserData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-refund/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-refund/${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -128,7 +128,7 @@ export const EditRefund = () => {
          
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/refund-add-edit/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/refund-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -168,7 +168,7 @@ export const EditRefund = () => {
     const userData = (uniID) => {
          
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -220,7 +220,7 @@ export const EditRefund = () => {
     const fetchData = async () => {
         
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',

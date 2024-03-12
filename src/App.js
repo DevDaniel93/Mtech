@@ -6,155 +6,58 @@ import { useEffect } from 'react';
 import hotkeys from 'hotkeys-js';
 
 function App() {
-  useEffect(() => {
-    const disableRightClick = (event) => {
-      event.preventDefault();
-    };
-    document.body.addEventListener('contextmenu', disableRightClick);
-    return () => {
-      document.body.removeEventListener('contextmenu', disableRightClick);
-    };
-
-  }, []);
-
-
-  useEffect(() => {
-    const handleKeyUp = (e) => {
-      const keyCode = e.keyCode ? e.keyCode : e.which;
-      if (keyCode === 44) {
-        stopPrntScr();
-      }
-    };
-
-    document.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  const stopPrntScr = () => {
-    const inpFld = document.createElement("input");
-    inpFld.setAttribute("value", ".");
-    inpFld.setAttribute("width", "0");
-    inpFld.style.height = "0px";
-    inpFld.style.width = "0px";
-    inpFld.style.border = "0px";
-    document.body.appendChild(inpFld);
-    inpFld.select();
-    document.execCommand("copy");
-    inpFld.remove(inpFld);
-  };
-
-  const accessClipboardData = () => {
-    try {
-      window.clipboardData.setData('text', "Access Restricted");
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  setInterval(accessClipboardData, 300);
-
-
-
-
-
-
   // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-
-  //     if (event.key === 'S' && event.shiftKey && (event.ctrlKey || event.metaKey)) {
-  //       event.preventDefault(); // Prevent the default behavior
-  //       console.log('Window + Shift + S disabled');
-
-  //     }
-  //   //   if (event.keyCode === 'S' && event.shiftKey && (event.ctrlKey || event.metaKey)) {
-  //   //     event.preventDefault();
-  //   //     event.stopPropagation();
-  //   // }
+  //   const disableRightClick = (event) => {
+  //     event.preventDefault();
   //   };
-  //   // document.addEventListener('keydown', handleKeyDown, true); 
-  //     window.addEventListener('keydown', handleKeyDown , false);
-
-  //     return () => {
-  //     window.removeEventListener('keydown', handleKeyDown , false);
+  //   document.body.addEventListener('contextmenu', disableRightClick);
+  //   return () => {
+  //     document.body.removeEventListener('contextmenu', disableRightClick);
   //   };
+
   // }, []);
 
 
-
   // useEffect(() => {
-  //   // const handleKeyPress = (event) => {
-  //   //   // Check if the pressed keys are Windows key + Shift + S
-  //   //   if (event.metaKey && event.shiftKey && event.key === 'S') {
-  //   //     // Prevent the default action (taking a screenshot in Windows)
-  //   //     event.preventDefault();
-
-  //   //     // You can add your custom logic here if needed
-  //   //     console.log('Windows key + Shift + S pressed. Do something else.');
-  //   //   }
-  //   // };
-
-
-  //   const handleKeyPress = (event) => {
-  //     if (event.metaKey && event.shiftKey && event.key === 'S') {
-  //       // Prevent the default action (taking a screenshot in Windows)
-  //       event.preventDefault();
-
-  //       // You can add your custom logic here if needed
-  //       console.log('Windows key + Shift + S pressed. Do something else.');
+  //   const handleKeyUp = (e) => {
+  //     const keyCode = e.keyCode ? e.keyCode : e.which;
+  //     if (keyCode === 44) {
+  //       stopPrntScr();
   //     }
   //   };
 
-  //    // window.addEventListener('keydown', handleKeyPress , false);
-  //   document.body.addEventListener('keydown', handleKeyPress  , false);
-  //   // Remove the event listener when the component unmounts to avoid memory leaks
+  //   document.addEventListener("keyup", handleKeyUp);
+
   //   return () => {
-  //     document.body.removeEventListener('keydown', handleKeyPress , false);
-  //     // window.removeEventListener('keydown', handleKeyPress );
+  //     document.removeEventListener("keyup", handleKeyUp);
   //   };
-  // }, []);  
+  // }, []);
 
-  // useEffect(() => {
-  //   const handleKeyPress = (event) => {
+  // const stopPrntScr = () => {
+  //   const inpFld = document.createElement("input");
+  //   inpFld.setAttribute("value", ".");
+  //   inpFld.setAttribute("width", "0");
+  //   inpFld.style.height = "0px";
+  //   inpFld.style.width = "0px";
+  //   inpFld.style.border = "0px";
+  //   document.body.appendChild(inpFld);
+  //   inpFld.select();
+  //   document.execCommand("copy");
+  //   inpFld.remove(inpFld);
+  // };
 
-  //     if (event.shiftKey && event.key === 'S') {
-  //         event.preventDefault();
+  // const accessClipboardData = () => {
+  //   try {
+  //     window.clipboardData.setData('text', "Access Restricted");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-  //         console.log('Shift + S pressed. Do something else.');
-  //     }
-  //   };
-
-  //     window.addEventListener('keydown', handleKeyPress);
-
-  //     return () => {
-  //     window.removeEventListener('keydown', handleKeyPress , false);
-  //   };
-  // }, []); // Empty dependency array ensures that the effect runs only once when the component mounts
-
-
-
-
-
-  useEffect(() => {
-    const handleShortcut = () => {
-      // Your custom logic here
-      console.log('Windows key + Shift + S pressed. Do something else.');
-    };
-
-    hotkeys('shift+s, shift+s', function (event, handler) {
-      event.preventDefault();
+  // setInterval(accessClipboardData, 300);
 
 
-      handleShortcut();
-    });
-
-    return () => {
-      hotkeys.unbind('shift+s, shift+s');
-    };
-  }, []);
-
+ 
   return (
     <AdminRouter />
   );

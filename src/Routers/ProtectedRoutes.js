@@ -52,7 +52,7 @@ export const ProtectedRoutes = (props) => {
     formDataMethod.append('token', loginToken);
     document.querySelector('.loaderBox').classList.remove("d-none")
  
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/auth/check-token`, {
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/auth/check-token`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

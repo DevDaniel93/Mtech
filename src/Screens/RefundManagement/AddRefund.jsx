@@ -35,7 +35,7 @@ export const AddRefund = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -65,7 +65,7 @@ export const AddRefund = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -94,7 +94,7 @@ export const AddRefund = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -152,13 +152,13 @@ export const AddRefund = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/refund-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/refund-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${LogoutData}`
             },
-            body: formDataMethod // Use the FormData object as the request body
+            body: formDataMethod  
         })
             .then((response) => {
                 return response.json();
@@ -207,7 +207,7 @@ export const AddRefund = () => {
      
     const fetchData = async () => {
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -221,7 +221,14 @@ export const AddRefund = () => {
             if (data?.status) {
                 setMessageShow('Lead Verified')
                 setLeadStatus(true)
-                setView(data)
+                setFormData((prevData) => ({
+                    ...prevData,
+                    email: data?.leads?.email,
+                    name: data?.leads?.name,
+                    gross: data?.leads?.gross
+
+                }));
+                // setView(data)
             } else {
                 setMessageShow('Lead not exist')
                 setLeadStatus(false);
@@ -293,7 +300,8 @@ export const AddRefund = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="name"
-                                                    value={viewl?.leads?.name}
+                                                    value={formData?.name}
+                                                    // value={viewl?.leads?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -308,7 +316,7 @@ export const AddRefund = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="email"
-                                                    value={viewl?.leads?.email}
+                                                    value={formData?.email}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -323,7 +331,7 @@ export const AddRefund = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="net_amount"
-                                                    value={viewl?.leads?.gross}
+                                                    value={formData?.gross}
                                                     onChange={handleChange}
                                                 />
                                             </div>

@@ -13,6 +13,14 @@ td {
     position: relative;
 }
 
+.searchBtn {
+    padding: 8px 15px;
+}
+
+
+.md-0 .inputWrapper {
+    margin-bottom: 0;
+}
 
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
@@ -32,4 +40,17 @@ td {
 
 
 
+.addUser {
+    display: flex;
+    align-items: baseline;
+    /* gap: 10px; */
+    flex-wrap: wrap;
+}
 
+.searchBtn {
+    padding: 8px 15px;
+    min-width: auto;
+}
+.item-name{
+ background-color: orange;
+}

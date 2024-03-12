@@ -7,16 +7,16 @@ input[type=number]::-webkit-inner-spin-button {
     display: none;
 }
 
-.verification-box input {
+/* .verification-box input {
     width: 75px;
     height: 75px;
-}
+} */
 
-
+/* 
 @media(max-width: 640px) {
 
 .verification-box input {
     width: 50px;
     height: 50px;
 }
-}
+} */

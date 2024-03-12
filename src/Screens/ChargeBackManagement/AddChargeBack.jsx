@@ -11,7 +11,7 @@ export const AddChargeBack = () => {
     const [initalRole, setrole] = useState({});
     const [initialunit, setUnit] = useState({});
     const [merchant, setMerchant] = useState()
-    const [status , setStatus] = useState()
+    const [status, setStatus] = useState()
     const [showModal, setShowModal] = useState(false)
     const [formData, setFormData] = useState({});
     const [successStatus, setSuccessStatus] = useState('Server Error!');
@@ -53,7 +53,7 @@ export const AddChargeBack = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://mtrecordflow.com/mtrecords-api/public/api/admin/merchant-listing',
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/merchant-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -82,7 +82,7 @@ export const AddChargeBack = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch('https://mtrecordflow.com/mtrecords-api/public/api/admin/role-listing',
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/role-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -98,12 +98,12 @@ export const AddChargeBack = () => {
             )
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-                 
+
                 setrole(data.roles);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-               
+
             })
     }
 
@@ -111,7 +111,7 @@ export const AddChargeBack = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch('https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing',
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -126,13 +126,13 @@ export const AddChargeBack = () => {
                 response.json()
             )
             .then((data) => {
-                 
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setUnit(data.units);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-               
+
             })
     }
 
@@ -150,10 +150,10 @@ export const AddChargeBack = () => {
             formDataMethod.append(key, formData[key]);
         }
 
-         
+
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/chargeback-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/chargeback-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -165,7 +165,7 @@ export const AddChargeBack = () => {
                 return response.json();
             })
             .then((data) => {
-                 ;
+                ;
                 document.querySelector('.loaderBox').classList.add("d-none");
                 data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
                 setShowModal(true)
@@ -173,7 +173,7 @@ export const AddChargeBack = () => {
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-               
+
             })
     };
 
@@ -185,7 +185,7 @@ export const AddChargeBack = () => {
     }, [])
 
 
- 
+
 
 
 
@@ -200,7 +200,7 @@ export const AddChargeBack = () => {
     const navigate = useNavigate();
 
     const goBack = () => {
-      navigate(-1)
+        navigate(-1)
     };
 
 
@@ -220,9 +220,9 @@ export const AddChargeBack = () => {
 
 
     const userData = (uniID) => {
-         
+
         // document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -242,28 +242,15 @@ export const AddChargeBack = () => {
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-               
+
             })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     const [viewl, setView] = useState('');
     const [viewleads, setViewleads] = useState('');
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/view-leads/${viewleads}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -277,7 +264,14 @@ export const AddChargeBack = () => {
             if (data?.status) {
                 setMessageShow('Lead Verified')
                 setLeadStatus(true)
-                setView(data)
+                setFormData((prevData) => ({
+                    ...prevData,
+                    email: data?.leads?.email,
+                    name: data?.leads?.name,
+                    gross: data?.leads?.gross
+
+                }));
+                // setView(data)
             } else {
                 setMessageShow('Lead not exist')
                 setLeadStatus(false);
@@ -285,7 +279,7 @@ export const AddChargeBack = () => {
 
 
             userData(data?.leads.unit_id);
-              ;
+            ;
         } catch (error) {
             console.error('Error fetching data:', error);
             // userData(0);
@@ -298,7 +292,7 @@ export const AddChargeBack = () => {
             ...prevData,
             [name]: value,
         }));
-         ;
+        ;
     };
 
 
@@ -355,7 +349,7 @@ export const AddChargeBack = () => {
                                                     )
                                                 }
                                             </div>
-                                           
+
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label='Name'
@@ -366,7 +360,7 @@ export const AddChargeBack = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="name"
-                                                    value={viewl?.leads?.name}
+                                                    value={formData?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -375,13 +369,13 @@ export const AddChargeBack = () => {
                                                     label='Enter Email'
                                                     required
                                                     id='amount'
-                                                     
+
                                                     type='email'
                                                     placeholder='Enter Email'
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="email"
-                                                    value={viewl?.leads?.email}
+                                                    value={formData?.email}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -395,7 +389,7 @@ export const AddChargeBack = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="net_amount"
-                                                    value={viewl?.leads?.gross}
+                                                    value={formData?.gross}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -427,7 +421,7 @@ export const AddChargeBack = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                        
+
 
                                             <div className="col-md-4 mb-4">
                                                 <SelectBox
@@ -497,10 +491,10 @@ export const AddChargeBack = () => {
                         </div>
                     </div>
                 </div>
-                <CustomModal status={status} show={showModal}  close={() => {
-          setShowModal(false);
-          goBack();  
-        }} success heading={successStatus} />
+                <CustomModal status={status} show={showModal} close={() => {
+                    setShowModal(false);
+                    goBack();
+                }} success heading={successStatus} />
 
 
             </DashboardLayout>

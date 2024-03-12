@@ -33,7 +33,7 @@ export const RefundDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Refund Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/get-refund/${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-refund/${id}`,
             {
                 method: 'GET',
                 headers: {

@@ -18,9 +18,9 @@ export const AddLead = () => {
         source: '',
         brand: '',
         product: '',
-        email: '',
-        name: '',
-        phone: '',
+        email: "",
+        name: "",
+        phone: "",
         description: '',
         amount: '',
         received: '',
@@ -29,7 +29,7 @@ export const AddLead = () => {
         account_rep: '',
         date: ''
     });
-
+    console.log("lead_cac8a", formData)
     const sourcename = [
         {
             id: '1',
@@ -80,7 +80,7 @@ export const AddLead = () => {
     const fectchBrandData = (brandID) => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-brands/${brandID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-brands/${brandID}`,
             {
                 method: 'GET',
                 headers: {
@@ -108,7 +108,7 @@ export const AddLead = () => {
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/unit-listing`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
             {
                 method: 'GET',
                 headers: {
@@ -146,6 +146,7 @@ export const AddLead = () => {
 
     //     console.log(formData)
     // };
+    console.log("formDataemail", formData?.email)
 
     const [remainingWords, setRemainingWords] = useState(100);
 
@@ -190,11 +191,6 @@ export const AddLead = () => {
                 userData(value);
                 fectchBrandData(value)
 
-            } else if (name === 'email') {
-                setFormData((prevData) => ({
-                    ...prevData,
-                    [name]: value,
-                }));
             } else if (
                 name === 'phone' ||
                 name === 'quoted_amount' ||
@@ -216,18 +212,25 @@ export const AddLead = () => {
 
                 const defaultCharacterLimit = 20;
 
-                if (value.length <= defaultCharacterLimit) {
+                // source
+                // if (value.length <= defaultCharacterLimit) {
+                
                     setFormData((prevData) => ({
                         ...prevData,
                         [name]: value,
                     }));
-                }
+                // }
             }
         }
     };
     const isReceivedEmpty = formData.received === '';
     const isRecoveryEmpty = formData.recovery === '';
-
+    //  if (name === 'email') {
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value === " " ? value : viewl?.leads?.email,
+    //     }));
+    // }
 
     const [remainingNumber, setRemainingNumber] = useState(12);
 
@@ -238,7 +241,7 @@ export const AddLead = () => {
 
     const userData = (uniID) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -263,27 +266,28 @@ export const AddLead = () => {
             })
     }
 
-
-
+ 
     const handleSubmit = (event) => {
         event.preventDefault();
 
+
         for (const key in formData) {
             if (
-                formData.brand === '' ||
-                formData.product === '' ||
-                formData.email === '' ||
-                formData.name === '' ||
-                formData.phone === '' ||
-                formData.description === ''
-
+                formData.brand === '2323' ||
+                formData.product === '232' ||
+                formData.email === 'asass' ||
+                formData.name === 'asa' ||
+                formData.phone === '2323' ||
+                formData.description === '23'
+    
             ) {
-
-
+    
+                console.log("yes")
                 return;
+    
             }
         }
-
+    
 
 
         const formDataMethod = new FormData();
@@ -293,7 +297,7 @@ export const AddLead = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/leads-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -325,16 +329,104 @@ export const AddLead = () => {
         navigate(-1)
     };
 
+
+    const [messgaeShow, setMessageShow] = useState();
+    const [leadStatus, setLeadStatus] = useState(false);
+
+    const [viewl, setView] = useState('');
+    const [viewleads, setViewleads] = useState('');
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-leads/${viewleads}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            });
+
+            const data = await response.json();
+            console.log("data", data)
+            if (data?.status) {
+                setMessageShow('Lead Verified')
+                setLeadStatus(true)
+                setFormData((prevData) => ({
+                    ...prevData,
+                    email: data?.leads?.email,
+                    name: data?.leads?.name,
+                    phone: data?.leads?.phone
+                }));
+
+                console.log("data", data)
+                // setFormData(data.name)
+                // setFormData(data.email)
+                // setFormData(data.phone)
+            } else {
+                setMessageShow('Lead not exist')
+                setLeadStatus(false);
+            }
+
+
+            userData(data?.leads.unit_id);
+            ;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // userData(0);
+        }
+    };
+
+
+
+    const handleFetch = (event) => {
+        const { name, value } = event.target;
+        if (name === 'lead_code') {
+            setViewleads(value);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, [viewleads]);
+
+
+    console.log("formDataemail", formData)
     return (
         <>
             <DashboardLayout>
                 <div className="dashCard mb-4">
                     <div className="row mb-3">
-                        <div className="col-12 mb-2">
-                            <h2 className="mainTitle">
-                                <BackButton />
-                                Add Lead Form
-                            </h2>
+                        <div className="col-8">
+                            <div className="d-flex">
+                                <div className="col-12 mb-2">
+                                    <h2 className="mainTitle">
+                                        <BackButton />
+                                        Add Lead Form
+                                    </h2>
+
+                                </div>
+                                <div className="col-md-6 mb-4">
+                                    <CustomInput
+                                        label='Lead Code'
+                                        required
+                                        id='name'
+                                        type='text'
+                                        placeholder='Enter Lead Code'
+                                        labelClass='mainLabel'
+                                        inputClass='mainInput'
+                                        name="lead_code"
+                                        value={formData.lead_code}
+                                        onChange={handleChange}
+                                        onBlur={handleFetch}
+                                    />
+                                    {
+                                        messgaeShow && (
+                                            <p className={leadStatus ? 'text-dark' : 'text-danger'}>{messgaeShow}</p>
+                                        )
+                                    }
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div className="row mb-3">
@@ -343,7 +435,7 @@ export const AddLead = () => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="row">
-                                            <div className="col-md-4 mb-4">
+                                            <div className="col-md-5 mb-4">
 
 
                                                 <SelectBox
@@ -358,10 +450,10 @@ export const AddLead = () => {
 
                                             </div>
 
-                                            {/* {showRequiredMessage && <p style={{ color: 'red' }}>{showRequiredMessage}</p>} */}
 
 
-                                            <div className="col-md-4 mb-4">
+
+                                            <div className="col-md-5 mb-4">
                                                 <CustomInput
                                                     label='Enter Product'
                                                     required
@@ -379,20 +471,6 @@ export const AddLead = () => {
 
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
-                                                    label='Email'
-                                                    required
-                                                    id='email'
-                                                    type='email'
-                                                    placeholder='Enter Email'
-                                                    labelClass='mainLabel'
-                                                    inputClass='mainInput'
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                            <div className="col-md-4 mb-4">
-                                                <CustomInput
                                                     label='Name'
                                                     required
                                                     id='name'
@@ -401,10 +479,30 @@ export const AddLead = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="name"
-                                                    value={formData.name}
+                                                    value={formData?.name || ""}
+
+                                                    // value={formData.name == " " ? " " : viewl?.leads?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
+                                            <div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    label='Email'
+                                                    required
+                                                    id='email'
+                                                    type='email'
+                                                    placeholder='Enter Email'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="email"
+                                                    // value={viewl?.leads?.email}
+                                                    value={formData?.email || ""}
+
+                                                    // value={formData.email == " " ? " " : viewl?.leads?.email}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label="Phone"
@@ -415,9 +513,11 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="phone"
-                                                    value={formData.phone}
+                                                    value={formData.phone || ""}
+                                                    // value={viewl?.leads?.phone}
                                                     onChange={handleChange}
                                                 />
+                                                {/* viewl?.leads?.phone */}
                                             </div>
 
                                             <div className="col-md-4 mb-4">
@@ -469,7 +569,7 @@ export const AddLead = () => {
                                                 />
 
                                             </div>
-                                            <div className="col-md-4 mb-4">
+                                            <div className="col-md-3 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
                                                     name="unit_id"
@@ -480,7 +580,7 @@ export const AddLead = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            <div className="col-md-4 mb-4">
+                                            <div className="col-md-3 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
                                                     name="brand"
@@ -492,7 +592,7 @@ export const AddLead = () => {
                                                 />
 
                                             </div>
-                                            <div className="col-md-4 mb-4">
+                                            <div className="col-md-3 mb-4">
                                                 <SelectBox
                                                     selectClass="mainInput"
                                                     name="sales_rep"
@@ -504,7 +604,7 @@ export const AddLead = () => {
                                                 />
 
                                             </div>
-                                            <div className="col-md-4 mb-4">
+                                            <div className="col-md-3 mb-4">
                                                 <SelectBox
                                                     required
                                                     selectClass="mainInput"
@@ -531,7 +631,7 @@ export const AddLead = () => {
                                                     name="date"
                                                     value={formData.date}
                                                     onChange={handleChange}
- 
+
                                                 />
 
                                             </div>

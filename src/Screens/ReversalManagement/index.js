@@ -74,7 +74,7 @@ export const ReversalManagement = () => {
   const reversal = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/reversal-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/reversal-listing`,
       {
         method: 'GET',
         headers: {
@@ -115,7 +115,7 @@ export const ReversalManagement = () => {
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`https://mtrecordflow.com/mtrecords-api/public/api/admin/purchase-delete/${catId}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/reversal-delete/${catId}`,
       {
         method: 'GET',
         headers: {
