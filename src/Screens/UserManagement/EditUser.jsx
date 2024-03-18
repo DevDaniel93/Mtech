@@ -299,7 +299,7 @@ export const EditUser = () => {
             setPermission(false);
         }
     
-        // If the checkbox is unchecked, update its value to false
+ 
         if (name === 'currently_working_check' && !checked) {
             setFormData((prevData) => ({
                 ...prevData,

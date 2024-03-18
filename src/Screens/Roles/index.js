@@ -203,12 +203,12 @@ export const Roles = () => {
                         }
                       </tbody>
                     </CustomTable>
-                    <CustomPagination
+                    {/* <CustomPagination
                       itemsPerPage={itemsPerPage}
                       totalItems={data?.length}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
-                    />
+                    /> */}
                   </div>
                 </div>
 
