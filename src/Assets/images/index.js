@@ -25,14 +25,19 @@ import Merchant from './Merchant.png'
 import Permission from './Permissions.png'
 import Purchase from './Purchase.png'
 import Refund from './Refund.png'
-import Report from './Report.png'
+// import Report from './Report.png'
 import Reversal from './Reversal.png'
 import Roles from './Roles.png'
 import Users from './Users.png'
 import mtechlogo from './mtech_logo.png'
-
+import target from './target.png'
+import logout from './logput.png'
+import report from './report.png'
+import dashboard from './dashboard.png'
+import logput from './logput.png'
 
 export {
+    dashboard,
     Brands,
     ChargeBack,
     Leads,
@@ -40,7 +45,7 @@ export {
     Permission,
     Purchase,
     Refund,
-    Report,
+    report,
     Reversal,
     Roles,
     Users,
@@ -63,5 +68,9 @@ export {
     stats3,
     userImage,
     mtech,
-    mtechlogo
+    mtechlogo,
+    target,
+    logput
+
+
 }

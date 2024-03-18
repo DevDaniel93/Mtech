@@ -26,11 +26,11 @@ export const ChargeBackManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [copied, setCopied] = useState(false)
   const [copiedId, setCopiedId] = useState(null);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState();
   const [inputValue, setInputValue] = useState('');
 
   const navigate = useNavigate();
-
+console.log("itemsPerPage" , itemsPerPage)
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -98,13 +98,17 @@ export const ChargeBackManagement = () => {
 
         setPermission(data?.permission)
         setData(data?.data);
-        setItemsPerPage(data?.leads.length);
+        setItemsPerPage(data?.data?.length);
 
 
 
         setPermission(data?.permission)
         console.log("chargeback permission", permission?.chargeback)
+        setItemsPerPage(data?.data?.length);
 
+
+        console.log("chargeback permission", permission?.chargeback)
+        console.log("itemsPerPage lead"  , data?.chargebackuser.length) 
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");

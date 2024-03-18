@@ -1,5 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+
+// import dashboard from '../../'
+import { useNavigate } from "react-router-dom";
 import {
   Brands,
   ChargeBack,
@@ -8,12 +11,19 @@ import {
   Permission,
   Purchase,
   Refund,
-  Report,
+  report,
   Reversal,
   Roles,
   Users,
-  mtechlogo
+  mtechlogo,
+  target,
+  logput,
+  dashboard
 } from "../../../Assets/images";
+
+
+// import target
+import CustomModal from "../../CustomModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,7 +45,7 @@ export const Sidebar = (props) => {
 
   const [permission, setPermission] = useState();
   const [isShown, setIsShown] = useState(false);
-
+const navigate = useNavigate()
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
 
@@ -75,7 +85,53 @@ export const Sidebar = (props) => {
   const role = localStorage.getItem('role');
   console.log("role", role)
   console.log("permission", permission)
+
+
+
   const location = useLocation()
+  const [status, setStatus] = useState()
+  const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const handleClickPopup = () => {
+    setShowModal(true)
+    setStatus(true)
+  }
+  const Continue = () => {
+    setShowModal(false)
+    setShowModal2(true)
+    setStatus(true)
+  }
+
+
+  const handleRedirect = () => {
+    const LogoutData = localStorage.getItem('login');
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/auth/logout`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      },
+    )
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        console.log(data)
+        localStorage.removeItem('login');
+        setStatus(data?.status)
+        console.log("data?.status", data?.status)
+
+        navigate('/');
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+
   return (
     <>
       <img src={mtechlogo} className="mw-100 authLogo" />
@@ -84,8 +140,8 @@ export const Sidebar = (props) => {
           <li className="sidebar-li">
             <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
               <span className="sideIcon">
-                <FontAwesomeIcon icon={faBorderAll} />
-
+                {/* <FontAwesomeIcon icon={faBorderAll} /> */}
+                <img src={dashboard} className="sideBarIcon" />
               </span>
               <span className="sideLinkText">Dashboard</span>
             </Link>
@@ -93,13 +149,7 @@ export const Sidebar = (props) => {
 
           {/* {role == 1 || role == 4 ? */}
           <div>
-
-
-
-
-
-
-          </div>
+    </div>
           {/* : " "} */}
 
           {/* {role == 1 ? */}
@@ -217,7 +267,7 @@ export const Sidebar = (props) => {
             <li className="sidebar-li">
               {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
                 <span className="sideIcon">
-                  <FontAwesomeIcon icon={faMountainCity} />
+                <img src={report} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">User Report Management</span>
               </Link> : " "}
@@ -252,7 +302,8 @@ export const Sidebar = (props) => {
             <li className="sidebar-li">
               {permission?.unit_report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
                 <span className="sideIcon">
-                  <FontAwesomeIcon icon={faMoneyBill} />
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={report} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Unit Reports</span>
               </Link> : ""}
@@ -277,7 +328,9 @@ export const Sidebar = (props) => {
             <li className="sidebar-li">
               <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
                 <span className="sideIcon">
-                  <FontAwesomeIcon icon={faMoneyBill} />
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+ {/*  */}
+                  <img src={target} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Targets</span>
               </Link>
@@ -288,14 +341,33 @@ export const Sidebar = (props) => {
               {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
                 <span className="sideIcon">
                   {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
-                  <img src={Report} className="sideBarIcon" />
+                  <img src={report} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Report Management</span>
               </Link> : " "}
-            </li></div>
+            </li>
+            
+            
+            
+            
+            <li className="sidebar-li">
+            <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} onClick={handleClickPopup} >
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={logput} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Logout</span>
+              </Link> 
+            </li>
+            
+            </div>
 
         </ul>
       </div>
+
+
+      <CustomModal status={status} show={showModal} close={() => { setShowModal(false) }} action={Continue} heading='Are you sure you want to logout?' />
+      <CustomModal status={status} show={showModal2} close={handleRedirect} success heading='Successfully Logged Out' />
     </>
   );
 };

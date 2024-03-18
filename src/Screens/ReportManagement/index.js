@@ -104,54 +104,53 @@ export const ReportManagement = () => {
 
   const YearList = [
     {
-      code: 1,
+      code: 2019,
       name: '2019'
     },
     {
-      code: 2,
-      name: '2020'
+      code: 2019,
+      name: '2019'
     }, {
-      code: 3,
-      name: '2021'
+      code: 2019,
+      name: '2019'
     },
     {
-      code: 4,
+      code: 2022,
       name: '2022'
     },
     {
-      code: 5,
+      code: 2023,
       name: '2023'
     },
     {
-      code: 7,
+      code: 2024,
       name: '2024'
     },
     {
-      code: 8,
+      code: 2025,
       name: '2025'
     },
     {
-      code: 9,
+      code: 2026,
       name: '2026'
     },
     {
-      code: 10,
+      code: 2027,
       name: '2027'
     },
     {
-      code: 10,
+      code: 2028,
       name: '2028'
     },
     {
-      code: 10,
+      code: 2029,
       name: '2029'
     },
     {
-      code: 10,
+      code: 2030,
       name: '2030'
     },
     
-
   ]
 
   const handleChange = (e) => {
@@ -228,9 +227,16 @@ export const ReportManagement = () => {
       if (key == 'month') {
         formDataMethod.append(key, formData[key]);
       }
+
+      if (key == 'year') {
+        formDataMethod.append(key, formData[key]);
+      }
+
+      
     }
 
     formDataMethod.append('unit_id', JSON.stringify(formData?.unit_id));
+
 
     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate`,
       {
@@ -336,7 +342,7 @@ export const ReportManagement = () => {
                     <h2 className="mainTitle">Unit Sheets Reports</h2>
                   </div>
                   <div className="col-md-8 mb-2">
-                    <div className="addUser align-items-center">
+                    <div className="addUser align-items-end">
 
                       <div class="inputWrapper">
                         <label class="mainLabel">Add Units<span>*</span></label>

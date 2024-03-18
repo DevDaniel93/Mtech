@@ -35,7 +35,7 @@ export const LeadListing = () => {
   const [copied, setCopied] = useState(false)
   const [copiedId, setCopiedId] = useState(null);
   const navigate = useNavigate();
-
+console.log("itemsPerPage" , itemsPerPage)
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

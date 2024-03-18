@@ -28,7 +28,7 @@ export const UnitTarget = () => {
   const [data, setData] = useState([]);
   const [userinputValue, setuserInputValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState();
 
   const [userValue, setuserValue] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -196,7 +196,7 @@ export const UnitTarget = () => {
 
 
         setUnitpermission(data?.permission)
-        setItemsPerPage(data?.data.length);
+        setItemsPerPage(data?.data?.length);
         setData(data?.data);
       })
       .catch((error) => {
@@ -229,7 +229,8 @@ export const UnitTarget = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setUserpermission(data?.permission)
-        setItemsPerPage(data?.length);
+        // setItemsPerPage(data?.length);
+        setItemsPerPage(data?.data?.length);
         setUserdata(data?.data);
       })
       .catch((error) => {
@@ -242,7 +243,7 @@ export const UnitTarget = () => {
     document.title = 'Mt Records | Unit Target';
 
     fetchData()
-    fetchuserData()
+    
   }, []);
 
   const maleHeaders = [
@@ -512,6 +513,7 @@ export const UnitTarget = () => {
                       defaultActiveKey="unit"
                       id="uncontrolled-tab-example"
                       className="mb-3"
+                      onSelect={fetchuserData}
                     >
 
                       {unitpermission?.unit_targets.read && (
