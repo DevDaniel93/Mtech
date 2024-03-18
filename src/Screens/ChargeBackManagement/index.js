@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faTrash, faFile, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -92,18 +92,18 @@ export const ChargeBackManagement = () => {
         response.json()
       )
       .then((data) => {
- 
- 
+
+
         document.querySelector('.loaderBox').classList.add("d-none");
- 
+
         setPermission(data?.permission)
         setData(data?.data);
         setItemsPerPage(data?.leads.length);
-        
 
- 
+
+
         setPermission(data?.permission)
-        console.log("chargeback permission"  , permission?.chargeback)
+        console.log("chargeback permission", permission?.chargeback)
 
       })
       .catch((error) => {
@@ -201,7 +201,29 @@ export const ChargeBackManagement = () => {
       console.error('Unable to copy to clipboard.', err);
     }
   };
-  console.log("permission?.chargeback" , permission?.chargeback)
+  function handleChanges(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('csv', file);
+
+      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/chargeback-csv-data-handle`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          chargeback()
+          console.log('Upload successful:', data);
+        })
+        .catch(error => {
+
+          console.error('Error uploading file:', error);
+        });
+    }
+  }
+
   return (
     <>
       <DashboardLayout>
@@ -213,17 +235,46 @@ export const ChargeBackManagement = () => {
             <div className="col-12">
               <div className="dashCard">
                 <div className="row mb-3 justify-content-between">
-                  <div className="col-md-6 mb-2">
+                  <div className="col-md-4 mb-2">
                     <h2 className="mainTitle">Charge Back Management</h2>
                   </div>
-                  <div className="col-md-6 mb-2">
+                  {/* <div className="col-md-6 mb-2">
                     <div className="addUser">
                       {permission?.chargeback.create === true ?
                         <CustomButton text="Add New Charge Back" variant='primaryButton' onClick={hanldeRoute} /> 
                          : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
+                  </div> */}
+
+
+
+
+
+
+
+
+
+
+                  <div className="col-md-8 mb-2">
+                    <div className="row   align-items-center  justify-content-end ">
+                      <div className=" col-md-4 ">
+                        {/* {permission?.chargeback.create === true ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
+                      </div>
+                      <div className=" col-md-4 ">
+                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                      </div>
+
+                      <div className=" col-md-4 ">
+                        {permission?.chargeback.create === true ?
+                          <CustomButton text="Add  Charge Back" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+                      </div>
+
+                    </div>
+
                   </div>
+
+
                 </div>
 
                 <div className="row mb-3">

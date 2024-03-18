@@ -6,7 +6,7 @@ import ForgetPassword2 from "../Screens/Auth/ForgetPassword2";
 import ForgetPassword3 from "../Screens/Auth/ForgetPassword3";
 import { Dashboard } from "../Screens/Dashboard";
 import { Permission } from "../Screens/Permission";
- 
+ import {UserReportManagement} from '../Screens/UserReportManagement'
 import { LeadListing } from "../Screens/LeadListing";
 // import DepartDetails from "../Screens/LeadListing/DepartDetails";
 import { UnitListing } from "../Screens/UnitListing";
@@ -112,6 +112,9 @@ export default function AdminRouter() {
 
 
 
+        <Route path="/user-report-management" element={<ProtectedRoutes Components={UserReportManagement} />} />
+
+{/* user-report-management */}
 
 
 

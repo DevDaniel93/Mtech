@@ -557,12 +557,12 @@ export const UnitTarget = () => {
                             </tbody>
                           </CustomTable>
 
-                          <CustomPagination
+                          {/* <CustomPagination
                             itemsPerPage={itemsPerPage}
                             totalItems={data.length}
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
-                          />
+                          /> */}
 
 
 
@@ -660,12 +660,12 @@ export const UnitTarget = () => {
                               ))}
                             </tbody>
                           </CustomTable>
-                          <CustomPagination
+                          {/* <CustomPagination
                             itemsPerPage={itemsPerPage}
                             totalItems={userdata.length}
                             currentPage={currentPage}
                             onPageChange={handlePageChange}
-                          />
+                          /> */}
 
                           <CustomModal show={addUsers} close={() => { setUsers(false) }} heading="Set Target" >
 

@@ -22,6 +22,37 @@ td {
     margin-bottom: 0;
 }
 
+.addUser {
+    display: flex;
+    align-items: baseline;
+    /* gap: 10px; */
+    flex-wrap: wrap;
+}
+
+.searchBtn {
+    padding: 8px 15px;
+    min-width: auto;
+}
+.item-name{
+ background-color: orange;
+}
+
+
+.redColorBg {
+    background-color: #ed0000;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
+
+.orangeColorBg {
+    background-color: #de5f00;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
         border-color: #fff0;
@@ -40,17 +71,3 @@ td {
 
 
 
-.addUser {
-    display: flex;
-    align-items: baseline;
-    /* gap: 10px; */
-    flex-wrap: wrap;
-}
-
-.searchBtn {
-    padding: 8px 15px;
-    min-width: auto;
-}
-.item-name{
- background-color: orange;
-}

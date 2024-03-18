@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
- 
-   
+
+
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
 import CustomModal from "../../Components/CustomModal";
 
- import CustomButton from "../../Components/CustomButton";
+import CustomButton from "../../Components/CustomButton";
 import { SelectBox } from "../../Components/CustomSelect";
 
 
@@ -25,7 +25,7 @@ export const ReportManagement = () => {
   const [idUser, setIdUser] = useState(0);
   const [formData, setFormData] = useState({});
   const [brands, setBrands] = useState({});
-   const [initialunit, setUnit] = useState({});
+  const [initialunit, setUnit] = useState({});
 
 
   const SelectOptions = []
@@ -99,6 +99,60 @@ export const ReportManagement = () => {
     }
   ]
 
+
+
+
+  const YearList = [
+    {
+      code: 1,
+      name: '2019'
+    },
+    {
+      code: 2,
+      name: '2020'
+    }, {
+      code: 3,
+      name: '2021'
+    },
+    {
+      code: 4,
+      name: '2022'
+    },
+    {
+      code: 5,
+      name: '2023'
+    },
+    {
+      code: 7,
+      name: '2024'
+    },
+    {
+      code: 8,
+      name: '2025'
+    },
+    {
+      code: 9,
+      name: '2026'
+    },
+    {
+      code: 10,
+      name: '2027'
+    },
+    {
+      code: 10,
+      name: '2028'
+    },
+    {
+      code: 10,
+      name: '2029'
+    },
+    {
+      code: 10,
+      name: '2030'
+    },
+    
+
+  ]
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -309,7 +363,21 @@ export const ReportManagement = () => {
                         }}
                       />
 
-                     
+
+                      <SelectBox
+                        selectClass="mainInput"
+                        name="year"
+                        label="Year"
+                        value={formData.Year}
+                        required
+                        option={YearList}
+                        onChange={(event) => {
+                          setFormData({ ...formData, year: event.target.value });
+
+                        }}
+                      /> 
+
+
                       <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
                     </div>
                   </div>
@@ -340,9 +408,9 @@ export const ReportManagement = () => {
                         ))}
                       </tbody>
 
- 
+
                     </CustomTable>
-                  
+
                   </div>
                 </div>
               </div>

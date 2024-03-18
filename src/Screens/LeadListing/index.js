@@ -278,10 +278,10 @@ export const LeadListing = () => {
       key: "recovery",
       title: "RECOVERY Amount",
     },
-    {
-      key: "gross",
-      title: "Gross Amount",
-    },
+    // {
+    //   key: "gross",
+    //   title: "Gross Amount",
+    // },
     {
       key: "seles rep",
       title: "SALES REP",
@@ -460,6 +460,7 @@ export const LeadListing = () => {
 
   console.log("extra_data", extra_data)
   console.log("currentItems", currentItems)
+  const [amountstatus, setAmount] = useState()
 
   return (
     <>
@@ -474,15 +475,8 @@ export const LeadListing = () => {
                   </div>
                   <div className="col-md-8 mb-2">
                     <div className="row   align-items-center  justify-content-end ">
-
-
-                      {/* <div className="addUser g-0  " > */}
-
-
-
-
                       <div className=" col-md-4 ">
-                        {role == 1 ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "}
+                        {/* {role == 1 ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
                       </div>
                       <div className=" col-md-4 ">
                         <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
@@ -492,11 +486,6 @@ export const LeadListing = () => {
                         {permission?.leads.create === true ?
                           <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
                       </div>
-
-
-
-
-                      {/* </div> */}
 
                     </div>
 
@@ -594,8 +583,8 @@ export const LeadListing = () => {
                             <td  >{item?.getsource.name}</td>
                             <td >{item.getbrand?.name}</td>
                             <td>{item?.product}</td>
-                            <td   >
-                              <span className={item?.chargeback === true ? "  p-2     bg-danger    text-white  w-2" : "item-name p-2      w-2"}>   {item?.name}</span>
+                            <td>
+                              <span className={item?.chargeback === true && item?.refund === true ? "redColorBg" : item?.chargeback === false && item?.refund === false ? '' : item?.refund === true ? 'redColorBg' : 'orangeColorBg'}>   {item?.name}</span>
 
                             </td>
                             {/* <td>{item?.username}</td> */}
@@ -606,7 +595,7 @@ export const LeadListing = () => {
 
                             <td>{item?.received === null ? '$ 0' : `$${item?.received}`}</td>
                             <td> {`$${item?.recovery}`}</td>
-                            <td> {`$${item?.gross}`}</td>
+                            {/* <td> {`$${item?.gross}`}</td> */}
                             <td>{item?.salesrep?.name}</td>
 
                             <td>{item?.accountrepdetail?.name}</td>

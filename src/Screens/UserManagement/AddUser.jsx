@@ -117,12 +117,12 @@ export const AddUser = () => {
         if (initialunit.hasOwnProperty(key)) {
             const item = initialunit[key];
 
-             const option = {
-                value: item.id, 
-                label: item.name,  
+            const option = {
+                value: item.id,
+                label: item.name,
             };
 
-             SelectOptions.push(option);
+            SelectOptions.push(option);
         }
     }
 
@@ -158,13 +158,13 @@ export const AddUser = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-         fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-add-edit`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-add-edit`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${LogoutData}`
             },
-            body: formDataMethod  
+            body: formDataMethod
         })
             .then((response) => {
                 return response.json();
@@ -185,25 +185,49 @@ export const AddUser = () => {
         fectchBrandData()
         fetchUnitData()
     }, [])
+    // in react if checked  handle checg send true if unchecked send false
+
+    // const handleChange = (event ) => {
+    //     const { name, value , checked  } = event.target;
+    //     if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
+    //         setPermission(true)
+    //     }
+
+    //     if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
+    //         setPermission(false)
+    //     }
+
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value,
+    //     }));
 
 
+    // };
+
+    const [checkpermission, setCheckPermission] = useState(false);
+
+console.log("checkpermission" , checkpermission)
+    
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
-            setPermission(true)
-        }
+        const { name, value, checked } = event.target;
 
-        if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
-            setPermission(false)
+        if (name === 'currently_working_check') {
+            setCheckPermission(checked);
+        } else if (name === 'user_role' && (value === '2' || value === '4')) {
+            setPermission(true);
+        } else if (name === 'user_role' && (value === '1' || value === '3')) {
+            setPermission(false);
         }
 
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
-
-
     };
+    const handlecheck = () => {
+
+    }
 
 
 
@@ -309,6 +333,52 @@ export const AddUser = () => {
                                                     />
                                                 </div>
                                             </div>
+
+
+
+                                            <div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    label='Joining Date'
+                                                    required
+                                                    id='join_date'
+                                                    type='date'
+                                                    placeholder='Joining Date'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="join_date"
+                                                    value={formData.join_date}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+                                            {/* <p className=" gap-2  d-flex   ">Currently Working
+                                                <input   className="  m-lg-2  " onClick={handleChange} type="checkbox" id="currently_working_check" name="currently_working_check" />
+                                            </p> */}
+
+                                            <p className="gap-2 d-flex">
+                                                Currently Working
+                                                <input
+                                                    className="m-lg-2"
+                                                    onClick={handleChange}
+                                                    type="checkbox"
+                                                    id="currently_working_check"
+                                                    name="currently_working_check"
+                                                    checked={checkpermission} 
+                                                />
+                                            </p>
+                                            {checkpermission === false ? (<div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    label='Leaving Date'
+                                                    required
+                                                    id='joining_date'
+                                                    type='date'
+                                                    placeholder='Leaving Date'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="leave_date"
+                                                    value={formData.leave_date}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>) : ""}
                                             <div className="col-md-12">
                                                 <CustomButton variant='primaryButton' text='Submit' type='Add User' />
                                             </div>

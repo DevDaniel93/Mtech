@@ -1,23 +1,18 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
-import { Dropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faPencil, faCheck, faTimes, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
 import CustomModal from "../../Components/CustomModal";
 
-import CustomPagination from "../../Components/CustomPagination"
-import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 import { SelectBox } from "../../Components/CustomSelect";
-
+import CustomInput from "../../Components/CustomInput";
 
 import "./style.css";
+import Select from 'react-select'
 
-export const UnitReportManagement = () => {
+export const UserReportManagement = () => {
 
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,9 +25,24 @@ export const UnitReportManagement = () => {
   const [idUser, setIdUser] = useState(0);
   const [formData, setFormData] = useState({});
   const [brands, setBrands] = useState({});
-  const [unit, setUnit] = useState({});
-  const [total, setTotal] = useState();
+  const [initialunit, setUnit] = useState({});
 
+
+  const SelectOptions = []
+  for (const key in initialunit) {
+    if (initialunit.hasOwnProperty(key)) {
+      const item = initialunit[key];
+
+
+      const option = {
+        value: item.id,
+        label: item.name,
+      };
+
+
+      SelectOptions.push(option);
+    }
+  }
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -92,7 +102,6 @@ export const UnitReportManagement = () => {
 
 
 
-  
   const YearList = [
     {
       code: 1,
@@ -142,12 +151,28 @@ export const UnitReportManagement = () => {
       name: '2030'
     },
     
+
   ]
 
+  // const handleChange = (e) => {
+  //  setFormData(e.target.value);
+  // }
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  }
+
+
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+     
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+  };
+
+
 
   const fectchBrandData = () => {
     const LogoutData = localStorage.getItem('login');
@@ -167,12 +192,13 @@ export const UnitReportManagement = () => {
         response.json()
       )
       .then((data) => {
+
         document.querySelector('.loaderBox').classList.add("d-none");
         setBrands(data.brands);
-        setItemsPerPage(data?.brands.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
+
       })
   }
 
@@ -195,28 +221,29 @@ export const UnitReportManagement = () => {
         response.json()
       )
       .then((data) => {
+
         document.querySelector('.loaderBox').classList.add("d-none");
         setUnit(data.units);
-        setItemsPerPage(data?.units.length);
+        setItemsPerPage(data.units.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
+
       })
   }
 
 
-
-
+ 
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
     const formDataMethod = new FormData();
-    for (const key in formData) {
-      formDataMethod.append(key, formData[key]);
-    }
+    formDataMethod.append('user_name', formData.search) ;
+  
+ 
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-report-generate-1`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate-users`,
       {
         method: 'POST',
         headers: {
@@ -233,11 +260,12 @@ export const UnitReportManagement = () => {
       )
       .then((data) => {
         document.querySelector('.loaderBox').classList.add("d-none");
+
         setData(data?.data);
-        setTotal(data?.grand_total)
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
+
       })
   }
 
@@ -250,15 +278,55 @@ export const UnitReportManagement = () => {
 
   const maleHeaders = [
     {
-      key: "unit_name",
-      title: "Unit Name",
+      key: "date",
+      title: "Date",
+    },
+    // {
+    //   key: "agent",
+    //   title: "AGENT",
+    // },
+    {
+      key: "target",
+      title: "TARGET",
+    },
+    {
+      key: "gross",
+      title: "GROSS",
+    },
+    {
+      key: "refunt",
+      title: "REFUNDS & CB",
+    },
+    {
+      key: "reversals",
+      title: "REVERSALs",
+    },
+    {
+      key: "purchase",
+      title: "PURCHASE",
     },
     {
       key: "net",
       title: "Net",
     },
+    {
+      key: "acheived",
+      title: "ACHEIVED",
+    },
+    {
+      key: "should_be_at",
+      title: "SHOULD BE AT",
+    },
+
+
+
+
   ];
 
+
+
+
+console.log("data user" , data)
   return (
     <>
       <DashboardLayout>
@@ -266,44 +334,14 @@ export const UnitReportManagement = () => {
           <div className="row mb-3 align-items-end">
             <div className="col-12">
               <div className="dashCard">
-                <div className="row mb-3 justify-content-between">
-                  <div className="col-md-12 mb-2">
-                    <h2 className="mainTitle">Unit Report</h2>
+                <div className="row mb-3 justify-content-end">
+                  <div className="col-md-6 mb-2">
+                    <h2 className="mainTitle">User Reports Management</h2>
                   </div>
-                </div>
-                <div className="row justify-content-end">
                   <div className="col-md-6 mb-2">
                     <div className="addUser align-items-center">
-                      <SelectBox
-                        selectClass="mainInput"
-                        name="month"
-                        label="Month"
-                        value={formData.month}
-                        required
-                        option={monthList}
-                        onChange={(event) => {
-                          setFormData({ ...formData, month: event.target.value });
-
-                        }}
-                      />
-
-
-
-
-
-                      <SelectBox
-                        selectClass="mainInput"
-                        name="year"
-                        label="Year"
-                        value={formData.Year}
-                        required
-                        option={YearList}
-                        onChange={(event) => {
-                          setFormData({ ...formData, year: event.target.value });
-
-                        }}
-                      />
-                      <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
+                    <CustomInput type="text" placeholder="Search Here..." name="search" value={formData.search} inputClass="mainInput" onChange={handleChange} />
+   <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
                     </div>
                   </div>
                 </div>
@@ -317,18 +355,22 @@ export const UnitReportManagement = () => {
                         {data.map((item, index) => (
                           <tr>
                             <td className="text-capitalize">
-                              {item.unit_name}
+                              {item.date}
                             </td>
 
-                            <td>{item?.net}</td>
+ 
+                            <td>{`$ ${item?.target}`}</td>
+                            <td>{`$ ${item?.gross_sum}`}</td>
+                            <td>{`$ ${item?.refunds}`}</td>
+                            <td>{`$ ${item?.reversal}`}</td>
+                            <td>{`$ ${item?.purchase}`}</td>
+                            <td>{`$ ${item?.net}`}</td>
+                            <td>{item?.achived}</td>
+                            <td>{item?.should_be_at}</td>
                           </tr>
                         ))}
-
-                        <tr>
-                          <td className="font-weight-bold">Grand Total</td>
-                          <td>{`$ ${total}`}</td>
-                        </tr>
                       </tbody>
+
 
                     </CustomTable>
 

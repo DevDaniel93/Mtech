@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
+ 
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faTrash, faCopy , faFile } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -173,6 +174,31 @@ export const RefundManagement = () => {
     }, 1000);
   };
 
+
+
+
+  function handleChanges(event) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('csv', file);
+
+      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/refund-csv-data-handle`, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          refund()
+          console.log('Upload successful:', data);
+        })
+        .catch(error => {
+
+          console.error('Error uploading file:', error);
+        });
+    }
+  }
   console.log("currentItems", currentItems)
 
   return (
@@ -183,16 +209,39 @@ export const RefundManagement = () => {
             <div className="col-12">
               <div className="dashCard">
                 <div className="row mb-3 justify-content-between">
-                  <div className="col-md-6 mb-2">
+                  <div className="col-md-4 mb-2">
                     <h2 className="mainTitle">Refund Management</h2>
                   </div>
-                  <div className="col-md-6 mb-2">
+                  {/* <div className="col-md-6 mb-2">
                     <div className="addUser">
                       {permission?.refund.create === true ?
                         <CustomButton text="Add New Refund" variant='primaryButton' onClick={hanldeRoute} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
+                  </div> */}
+
+
+
+
+                  <div className="col-md-8 mb-2">
+                    <div className="row   align-items-center  justify-content-end ">
+                      <div className=" col-md-4 ">
+                      {/* {permission?.refund.create === true ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
+                      </div>
+                      <div className=" col-md-4 ">
+                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                      </div>
+
+                      <div className=" col-md-4 ">
+                      {permission?.refund.create === true ?
+                          <CustomButton text="Add New Refund" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+                      </div>
+
+                    </div>
+
                   </div>
+
+ 
                 </div>
                 <div className="row mb-3">
                   <div className="col-12">
@@ -245,12 +294,12 @@ export const RefundManagement = () => {
                         ))}
                       </tbody>
                     </CustomTable>
-                    <CustomPagination
+                    {/* <CustomPagination
                       itemsPerPage={itemsPerPage}
                       totalItems={data.length}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

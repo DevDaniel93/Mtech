@@ -230,22 +230,97 @@ export const EditUser = () => {
         }
     ]
 
+    // const handleChange = (event) => {
+    //     const { name, value } = event.target;
+    //     if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
+    //         setPermission(true)
+    //     }
+
+    //     if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
+    //         setPermission(false)
+    //     }
+
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value,
+    //     }));
+
+    // };
+
+
+
+
+
+
+
+    const [checkpermission, setCheckPermission] = useState(false);
+
+    console.log("checkpermission", checkpermission)
+
+    // const handleChange = (event) => {
+    //     const { name, value, checked } = event.target;
+
+    //     if (name === 'currently_working_check') {
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             currently_working_check: checkpermission
+
+
+    //         }));
+
+    //         setCheckPermission(checked);
+    //     } else if (name === 'user_role' && (value === '2' || value === '4')) {
+    //         setPermission(true);
+    //     } else if (name === 'user_role' && (value === '1' || value === '3')) {
+    //         setPermission(false);
+    //     }
+
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value,
+    //     }));
+    // };
+
+
+
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
-            setPermission(true)
+        const { name, value, checked } = event.target;
+    
+        if (name === 'currently_working_check') {
+            setFormData((prevData) => ({
+                ...prevData,
+                currently_working_check: checked,
+            }));
+    
+            setCheckPermission(checked);
+        } else if (name === 'user_role' && (value === '2' || value === '4')) {
+            setPermission(true);
+        } else if (name === 'user_role' && (value === '1' || value === '3')) {
+            setPermission(false);
         }
-
-        if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
-            setPermission(false)
+    
+        // If the checkbox is unchecked, update its value to false
+        if (name === 'currently_working_check' && !checked) {
+            setFormData((prevData) => ({
+                ...prevData,
+                currently_working_check: false,
+            }));
+            setCheckPermission(false);
         }
-
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-
+    
+        // For other input fields, update the form data
+        if (name !== 'currently_working_check') {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }));
+        }
     };
+    const handlecheck = () => {
+
+    }
+
+
 
 
     return (
@@ -348,6 +423,55 @@ export const EditUser = () => {
                                                     />
                                                 </div>
                                             </div>
+
+
+
+
+                                            <div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    label='Joining Date'
+                                                    required
+                                                    id='joining_date'
+                                                    type='date'
+                                                    placeholder='Joining Date'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="join_date"
+                                                    value={formData.join_date}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>
+{/* if user Want to uncheck doit   */}
+
+
+                                            <p className="gap-2 d-flex">
+                                                Currently Working
+                                                <input
+                                                    className="m-lg-2"
+                                                    onClick={handleChange}
+                                                    type="checkbox"
+                                                    id="currently_working_check"
+                                                    name="currently_working_check"
+                                                    // checked={checkpermission}
+                                                    checked={formData?.currently_working_check}
+                                                />
+                                            </p>
+
+                                            {formData?.currently_working_check === false ? (<div className="col-md-4 mb-4">
+                                                <CustomInput
+                                                    label='Leaving Date'
+                                                    required
+                                                    id='joining_date'
+                                                    type='date'
+                                                    placeholder='Leaving Date'
+                                                    labelClass='mainLabel'
+                                                    inputClass='mainInput'
+                                                    name="leave_date"
+                                                    value={formData.leave_date}
+                                                    onChange={handleChange}
+                                                />
+                                            </div>) : ""}
+
                                             <div className="col-md-12">
                                                 <CustomButton variant='primaryButton' text='Submit' type='Add User' />
                                             </div>

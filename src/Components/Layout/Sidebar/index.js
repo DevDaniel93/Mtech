@@ -116,7 +116,7 @@ export const Sidebar = (props) => {
           </li>
 
           <li className="sidebar-li">
-          {permission?.roles?.read === true ?    <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
+          {permission?.leads?.read === true ?    <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
               <span className="sideIcon">
                 {/* <FontAwesomeIcon icon={faEye} /> */}
                 <img src={Leads} className="sideBarIcon" />
@@ -206,6 +206,17 @@ export const Sidebar = (props) => {
                 <FontAwesomeIcon icon={faMountainCity} />
               </span>
               <span className="sideLinkText">Unit Management</span>
+            </Link> : " "}
+          </li>
+
+
+
+          <li className="sidebar-li">
+            {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
+              <span className="sideIcon">
+                <FontAwesomeIcon icon={faMountainCity} />
+              </span>
+              <span className="sideLinkText">User Report Management</span>
             </Link> : " "}
           </li>
 
