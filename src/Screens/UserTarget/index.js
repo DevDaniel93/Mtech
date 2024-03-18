@@ -22,6 +22,7 @@ import { useApi, usePost, usePostUpdate } from "../../Api";
 
 
 import "./style.css";
+import "./newStyle.css"
 
 export const UserTarget = () => {
   const [userdata, setUserdata] = useState([]);

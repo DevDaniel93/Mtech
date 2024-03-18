@@ -5,13 +5,13 @@
 
 .sidebar {
     width: 260px px;
-    height: calc(100vh - 6rem);
+    height: calc(100vh - 41px);
     position: fixed;
     transition: all 0.35s ease-in-out, left 0.35s ease-in-out, margin-right 0.35s ease-in-out, right 0.35s ease-in-out;
     background: #32302b;
     z-index: 2;
-    top: 6rem;
-    padding-bottom: 6rem;
+    top: 41px;
+    padding-bottom: 41px;
     scrollbar-width: thin;
     -ms-overflow-style: none;
     scrollbar-width: none;

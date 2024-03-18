@@ -36,7 +36,7 @@ export const DashboardLayout = (props) => {
   }
   return (
     <>
-      <Header sidebarToggle={sidebarToggle} />
+      {/* <Header sidebarToggle={sidebarToggle} /> */}
       <Sidebar sideClass={sideBarClass} sidebarToggle={sidebarToggle} />
       <div className="container-fluid ">
         <div className="row">

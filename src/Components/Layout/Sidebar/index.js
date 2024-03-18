@@ -11,7 +11,8 @@ import {
   Report,
   Reversal,
   Roles,
-  Users
+  Users,
+  mtechlogo
 } from "../../../Assets/images";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -72,226 +73,229 @@ export const Sidebar = (props) => {
   }, []);
 
   const role = localStorage.getItem('role');
-  console.log("role" , role)
+  console.log("role", role)
   console.log("permission", permission)
   const location = useLocation()
   return (
-    <div className={`sidebar  ${isShown ? '' : 'collapsed'} ${props.sideClass}`} id="sidebar">
-      <ul className="list-unstyled" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
-        <li className="sidebar-li">
-          <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
-            <span className="sideIcon">
-              <FontAwesomeIcon icon={faBorderAll} />
-             
-            </span>
-            <span className="sideLinkText">Dashboard</span>
-          </Link>
-        </li>
-
-        {/* {role == 1 || role == 4 ? */}
-        <div>
-
-
-
-
-
-
-        </div>
-        {/* : " "} */}
-
-        {/* {role == 1 ? */}
-        <div>
-
-
-
+    <>
+      <img src={mtechlogo} className="mw-100 authLogo" />
+      <div className={`sidebar  ${isShown ? '' : 'collapsed'} ${props.sideClass}`} id="sidebar">
+        <ul className="list-unstyled" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
           <li className="sidebar-li">
-          {role == 1 ?
-            <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
+            <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
               <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faMessage} /> */}
-                <img src={Permission} className="sideBarIcon" />
+                <FontAwesomeIcon icon={faBorderAll} />
+
               </span>
-              <span className="sideLinkText">Permission</span>
-            </Link> : " "}
-          </li>
-
-          <li className="sidebar-li">
-          {permission?.leads?.read === true ?    <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faEye} /> */}
-                <img src={Leads} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Lead Management</span>
-            </Link> : " "}
-          </li>
-          <li className="sidebar-li">
-            {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/role-management') ? 'active' : ''}`} to="/role-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faMessage} /> */}
-                <img src={Roles} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Roles Management</span>
-            </Link> : ""}
-          </li>
-
-
-
-
-
-          <li className="sidebar-li">
-            {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/brand-listing') ? 'active' : ''}`} to="/brand-listing">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faTasks} /> */}
-                <img src={Brands} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Brand Management</span>
-            </Link> : ""}
-          </li>
-
-
-
-        </div>
-        {/* : ""} */}
-
-        <li className="sidebar-li">
-
-          {permission?.refund?.read === true ?
-            <Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faEye} /> */}
-                <img src={Refund} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Refund Management</span>
-            </Link> : ""}
-        </li>
-
-        {/* {role == 2 ? */}
-        <div>
-
-          <li className="sidebar-li">
-            {permission?.users?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-management') ? 'active' : ''}`} to="/user-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faUser} /> */}
-                <img src={Users} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">User Management</span>
-            </Link> : " "}
-          </li>
-          <li className="sidebar-li">
-            {permission?.purchase?.read === true ? <Link className={`sideLink ${location.pathname.includes('/purchase-management') ? 'active' : ''}`} to="/purchase-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faEye} /> */}
-                <img src={Purchase} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Purchase Management</span>
-            </Link> : ""}
-          </li>
-
-
-          <li className="sidebar-li">
-            {permission?.chargeback?.read === true ? <Link className={`sideLink ${location.pathname.includes('/chargeback-management') ? 'active' : ''}`} to="/chargeback-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faEye} /> */}
-                <img src={ChargeBack} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Charge Back Management</span>
-            </Link> : ""}
-          </li>
-
-
-
-          <li className="sidebar-li">
-            {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/unit-listing') ? 'active' : ''}`} to="/unit-listing">
-              <span className="sideIcon">
-                <FontAwesomeIcon icon={faMountainCity} />
-              </span>
-              <span className="sideLinkText">Unit Management</span>
-            </Link> : " "}
-          </li>
-
-
-
-          <li className="sidebar-li">
-            {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
-              <span className="sideIcon">
-                <FontAwesomeIcon icon={faMountainCity} />
-              </span>
-              <span className="sideLinkText">User Report Management</span>
-            </Link> : " "}
-          </li>
-
-
-        </div>
-        {/* : ""} */}
-
-
-
-        {/* {role == 3 ? */}
-        <div>
-
-
-
-
-
-
-          <li className="sidebar-li">
-            {permission?.reversal.read === true ? <Link className={`sideLink ${location.pathname.includes('/reversal-management') ? 'active' : ''}`} to="/reversal-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faEye} /> */}
-                <img src={Reversal} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Reversal Management</span>
-            </Link> : ""}
-          </li>
-
-
-
-          <li className="sidebar-li">
-            {permission?.unit_report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
-              <span className="sideIcon">
-                <FontAwesomeIcon icon={faMoneyBill} />
-              </span>
-              <span className="sideLinkText">Unit Reports</span>
-            </Link> : ""}
-          </li>
-        </div>
-        {/* : ""} */}
-
-
-        {/* {role == 1 ?  */}
-        <div>
-
-
-          <li className="sidebar-li">
-            {permission?.merchant.read === true ? <Link className={`sideLink ${location.pathname.includes('/merchant-management') ? 'active' : ''}`} to="/merchant-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faMountainCity} /> */}
-                <img src={Merchant} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Merchant Management</span>
-            </Link> : " "}
-          </li>
-          <li className="sidebar-li">
-            <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
-              <span className="sideIcon">
-                <FontAwesomeIcon icon={faMoneyBill} />
-              </span>
-              <span className="sideLinkText">Targets</span>
+              <span className="sideLinkText">Dashboard</span>
             </Link>
           </li>
 
+          {/* {role == 1 || role == 4 ? */}
+          <div>
+
+
+
+
+
+
+          </div>
+          {/* : " "} */}
+
+          {/* {role == 1 ? */}
+          <div>
+
+
+
+            <li className="sidebar-li">
+              {role == 1 ?
+                <Link className={`sideLink ${location.pathname.includes('/permission') ? 'active' : ''}`} to="/permission">
+                  <span className="sideIcon">
+                    {/* <FontAwesomeIcon icon={faMessage} /> */}
+                    <img src={Permission} className="sideBarIcon" />
+                  </span>
+                  <span className="sideLinkText">Permission</span>
+                </Link> : " "}
+            </li>
+
+            <li className="sidebar-li">
+              {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/lead-listing') ? 'active' : ''}`} to="/lead-listing">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faEye} /> */}
+                  <img src={Leads} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Lead Management</span>
+              </Link> : " "}
+            </li>
+            <li className="sidebar-li">
+              {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/role-management') ? 'active' : ''}`} to="/role-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMessage} /> */}
+                  <img src={Roles} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Roles Management</span>
+              </Link> : ""}
+            </li>
+
+
+
+
+
+            <li className="sidebar-li">
+              {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/brand-listing') ? 'active' : ''}`} to="/brand-listing">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+                  <img src={Brands} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Brand Management</span>
+              </Link> : ""}
+            </li>
+
+
+
+          </div>
+          {/* : ""} */}
 
           <li className="sidebar-li">
-            {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
-                <img src={Report} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Report Management</span>
-            </Link> : " "}
-          </li></div>
 
-      </ul>
-    </div>
+            {permission?.refund?.read === true ?
+              <Link className={`sideLink ${location.pathname.includes('/refund-management') ? 'active' : ''}`} to="/refund-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faEye} /> */}
+                  <img src={Refund} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Refund Management</span>
+              </Link> : ""}
+          </li>
+
+          {/* {role == 2 ? */}
+          <div>
+
+            <li className="sidebar-li">
+              {permission?.users?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-management') ? 'active' : ''}`} to="/user-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faUser} /> */}
+                  <img src={Users} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">User Management</span>
+              </Link> : " "}
+            </li>
+            <li className="sidebar-li">
+              {permission?.purchase?.read === true ? <Link className={`sideLink ${location.pathname.includes('/purchase-management') ? 'active' : ''}`} to="/purchase-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faEye} /> */}
+                  <img src={Purchase} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Purchase Management</span>
+              </Link> : ""}
+            </li>
+
+
+            <li className="sidebar-li">
+              {permission?.chargeback?.read === true ? <Link className={`sideLink ${location.pathname.includes('/chargeback-management') ? 'active' : ''}`} to="/chargeback-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faEye} /> */}
+                  <img src={ChargeBack} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Charge Back Management</span>
+              </Link> : ""}
+            </li>
+
+
+
+            <li className="sidebar-li">
+              {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/unit-listing') ? 'active' : ''}`} to="/unit-listing">
+                <span className="sideIcon">
+                  <FontAwesomeIcon icon={faMountainCity} />
+                </span>
+                <span className="sideLinkText">Unit Management</span>
+              </Link> : " "}
+            </li>
+
+
+
+            <li className="sidebar-li">
+              {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
+                <span className="sideIcon">
+                  <FontAwesomeIcon icon={faMountainCity} />
+                </span>
+                <span className="sideLinkText">User Report Management</span>
+              </Link> : " "}
+            </li>
+
+
+          </div>
+          {/* : ""} */}
+
+
+
+          {/* {role == 3 ? */}
+          <div>
+
+
+
+
+
+
+            <li className="sidebar-li">
+              {permission?.reversal.read === true ? <Link className={`sideLink ${location.pathname.includes('/reversal-management') ? 'active' : ''}`} to="/reversal-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faEye} /> */}
+                  <img src={Reversal} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Reversal Management</span>
+              </Link> : ""}
+            </li>
+
+
+
+            <li className="sidebar-li">
+              {permission?.unit_report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/unit-report-management') ? 'active' : ''}`} to="/unit-report-management">
+                <span className="sideIcon">
+                  <FontAwesomeIcon icon={faMoneyBill} />
+                </span>
+                <span className="sideLinkText">Unit Reports</span>
+              </Link> : ""}
+            </li>
+          </div>
+          {/* : ""} */}
+
+
+          {/* {role == 1 ?  */}
+          <div>
+
+
+            <li className="sidebar-li">
+              {permission?.merchant.read === true ? <Link className={`sideLink ${location.pathname.includes('/merchant-management') ? 'active' : ''}`} to="/merchant-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMountainCity} /> */}
+                  <img src={Merchant} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Merchant Management</span>
+              </Link> : " "}
+            </li>
+            <li className="sidebar-li">
+              <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
+                <span className="sideIcon">
+                  <FontAwesomeIcon icon={faMoneyBill} />
+                </span>
+                <span className="sideLinkText">Targets</span>
+              </Link>
+            </li>
+
+
+            <li className="sidebar-li">
+              {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/report-management') ? 'active' : ''}`} to="/report-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={Report} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Report Management</span>
+              </Link> : " "}
+            </li></div>
+
+        </ul>
+      </div>
+    </>
   );
 };

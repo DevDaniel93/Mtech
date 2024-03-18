@@ -230,7 +230,7 @@ export const LeadListing = () => {
     },
     {
       key: "lead code",
-      title: "LEAD CODE",
+      title: "ID",
     },
 
     {
@@ -271,12 +271,12 @@ export const LeadListing = () => {
     },
     {
       key: "received",
-      title: "RECEIVED Amount",
+      title: "RECEIVED",
     },
 
     {
       key: "recovery",
-      title: "RECOVERY Amount",
+      title: "RECOVERY",
     },
     // {
     //   key: "gross",
@@ -469,7 +469,7 @@ export const LeadListing = () => {
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
-                <div className="row mb-3 ">
+                <div className="row mb-0">
                   <div className="col-md-4 mb-2">
                     <h2 className="mainTitle">Lead Management</h2>
                   </div>
@@ -493,7 +493,7 @@ export const LeadListing = () => {
 
 
                 </div>
-                <div className="align-items-end row mb-3 border-bottom pb-3">
+                <div className="align-items-end row mb-0 border-bottom pb-0">
 
 
 
@@ -564,7 +564,7 @@ export const LeadListing = () => {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
-                              {item?.code}
+                              {/* {item?.code} */}
                               <button
                                 onClick={() => coppied(item.id, item?.code)}
                                 className="bg-transparent border-0 text-secondary"
@@ -582,15 +582,15 @@ export const LeadListing = () => {
                             </td>
                             <td  >{item?.getsource.name}</td>
                             <td >{item.getbrand?.name}</td>
-                            <td>{item?.product}</td>
-                            <td>
+                            <td className="prodDField"><span>{item?.product}</span></td>
+                            <td className="nameField">
                               <span className={item?.chargeback === true && item?.refund === true ? "redColorBg" : item?.chargeback === false && item?.refund === false ? '' : item?.refund === true ? 'redColorBg' : 'orangeColorBg'}>   {item?.name}</span>
 
                             </td>
                             {/* <td>{item?.username}</td> */}
-                            <td>{item?.email}</td>
-                            <td>{item?.phone}</td>
-                            <td>{item?.description}</td>
+                            <td className="emailFiled"><span>{item?.email}</span></td>
+                            <td className="phoneFiled"><span>{item?.phone}</span></td>
+                            <td className="descField"><span>{item?.description}</span></td>
                             <td>{`$${item?.quoted_amount}`}</td>
 
                             <td>{item?.received === null ? '$ 0' : `$${item?.received}`}</td>
