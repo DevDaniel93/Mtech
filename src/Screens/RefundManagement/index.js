@@ -55,7 +55,7 @@ export const RefundManagement = () => {
   }
 
   const filterData = data.filter(item =>
-    item?.leaddetail?.name.toLowerCase().includes(inputValue.toLowerCase())
+    item?.refunduser?.name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
