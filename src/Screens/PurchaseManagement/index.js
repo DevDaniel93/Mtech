@@ -52,7 +52,7 @@ export const PurchaseManagement = () => {
   }
 
   const filterData = data.filter(item =>
-    item?.leaddetail?.name.toLowerCase().includes(inputValue.toLowerCase())
+    item?.purchaseuser?.name.toLowerCase().includes(inputValue.toLowerCase())
   );
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

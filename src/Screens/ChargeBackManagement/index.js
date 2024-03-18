@@ -66,7 +66,7 @@ export const ChargeBackManagement = () => {
     setInputValue(e.target.value);
   }
   const filterData = data.filter(item =>
-    item?.leaddetail?.name.toLowerCase().includes(inputValue.toLowerCase())
+    item?.chargebackuser?.name.toLowerCase().includes(inputValue.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
