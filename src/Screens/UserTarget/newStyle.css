@@ -100,6 +100,46 @@ td.descField span {
 }
 
 
-body {
+body, .tableAction {
     font-size: 12px;
+}
+
+a.tableAction ~ button {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.mainLabel {
+    font-size: 14px !important;
+    font-weight: 500;
+}
+
+.alignBox .css-13cymwt-control {
+    min-height: 28px;
+    height: 28px;
+    font-size: 12px;
+}
+
+.alignBox .css-13cymwt-control > div, .alignBox .css-t3ipsp-control > div {
+    position: relative;
+    bottom: 9px;
+    font-size: 12px;
+}
+
+.alignBox .css-t3ipsp-control  {
+    height: 28px !important;
+    min-height: 28px !important;
+    font-size: 12px;
+    /* overflow-y: auto; */
+}
+
+.totalAmountWorth {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.totalAmountWorth span {
+    font-weight: 800 !important;
+    padding-right: 8px;
+    text-transform: uppercase;
 }

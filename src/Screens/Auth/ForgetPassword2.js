@@ -65,7 +65,7 @@ const ForgetPassword2 = () => {
 
     return (
         <>
-            <AuthLayout authTitle='Verification Code' authPara='Please Check Your Email For Verification Code.' subauthPara='Your Cod is 4 digit in Length' backOption={true}>
+            <AuthLayout authTitle='Verification Code' authPara='Please Check Your Email For Verification Code.' subauthPara='Your Code is 4 digit in Length' backOption={true}>
                 <form onSubmit={handleClick}>
                     <div class="inputWrapper"><label for="verificationCode" class="mainLabel">Verification Code<span>*</span></label></div>
                     <div className='verification-box justify-content-between'>

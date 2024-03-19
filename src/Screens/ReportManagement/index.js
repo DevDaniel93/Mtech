@@ -26,7 +26,8 @@ export const ReportManagement = () => {
   const [formData, setFormData] = useState({});
   const [brands, setBrands] = useState({});
   const [initialunit, setUnit] = useState({});
-
+  const [total, setTotal] = useState();
+ 
 
   const SelectOptions = []
   for (const key in initialunit) {
@@ -104,15 +105,11 @@ export const ReportManagement = () => {
 
   const YearList = [
     {
-      code: 2019,
-      name: '2019'
-    },
-    {
-      code: 2019,
-      name: '2019'
+      code: 2020,
+      name: '2020'
     }, {
-      code: 2019,
-      name: '2019'
+      code: 2021,
+      name: '2021'
     },
     {
       code: 2022,
@@ -257,6 +254,7 @@ export const ReportManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setData(data?.data);
+        setTotal(data?.total);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -341,11 +339,11 @@ export const ReportManagement = () => {
                   <div className="col-md-12 mb-2">
                     <h2 className="mainTitle">Unit Sheets Reports</h2>
                   </div>
-                  <div className="col-md-8 mb-2">
+                  <div className="col-md-12 mb-2">
                     <div className="addUser align-items-end">
 
-                      <div class="inputWrapper">
-                        <label class="mainLabel">Add Units<span>*</span></label>
+                      <div class="inputWrapper alignBox">
+                        <label class="mainLabel">Units<span>*</span></label>
 
                         <Select
                           value={formData.unit_id}
@@ -359,7 +357,7 @@ export const ReportManagement = () => {
                       <SelectBox
                         selectClass="mainInput"
                         name="month"
-                        label="Status"
+                        label="Month"
                         value={formData.month}
                         required
                         option={monthList}
@@ -404,7 +402,7 @@ export const ReportManagement = () => {
                             <td>{item?.user_name}</td>
                             <td>{`$ ${item?.target}`}</td>
                             <td>{`$ ${item?.gross_sum}`}</td>
-                            <td>{`$ ${item?.refunds}`}</td>
+                            <td>{`$ ${item?.refunds + item?.chargeback}`}</td>
                             <td>{`$ ${item?.reversal}`}</td>
                             <td>{`$ ${item?.purchase}`}</td>
                             <td>{`$ ${item?.net}`}</td>
@@ -417,7 +415,16 @@ export const ReportManagement = () => {
 
                     </CustomTable>
 
+     
+
                   </div>
+                  <div className="d-flex justify-content-center">
+                      {
+                        total && (
+                          <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
+                        )
+                      }
+                    </div>
                 </div>
               </div>
             </div>

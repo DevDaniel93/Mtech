@@ -359,7 +359,7 @@ export const AddLead = () => {
                     phone: data?.leads?.phone
                 }));
 
-                console.log("data", data)
+                console.log("data", data?.leads?.phone)
                 // setFormData(data.name)
                 // setFormData(data.email)
                 // setFormData(data.phone)
@@ -508,7 +508,7 @@ export const AddLead = () => {
                                                     label="Phone"
                                                     required
                                                     id="phone"
-                                                    type="number"
+                                                    type="text"
                                                     placeholder="Enter phone"
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"

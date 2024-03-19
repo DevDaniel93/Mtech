@@ -95,15 +95,11 @@ export const UnitReportManagement = () => {
   
   const YearList = [
     {
-      code: 2019,
-      name: '2019'
-    },
-    {
-      code: 2019,
-      name: '2019'
+      code: 2020,
+      name: '2020'
     }, {
-      code: 2019,
-      name: '2019'
+      code: 2021,
+      name: '2021'
     },
     {
       code: 2022,

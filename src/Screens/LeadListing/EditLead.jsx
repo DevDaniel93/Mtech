@@ -413,7 +413,7 @@ console.log("formData" , formData)
                                 label='Phone'
                                 required
                                 id='phone'
-                                type='number'
+                                type='text'
                                 placeholder='Enter phone'
                                 labelClass='mainLabel'
                                 inputClass='mainInput'

@@ -75,7 +75,7 @@ console.log("itemsPerPage" , itemsPerPage)
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}&year=${formData?.year}`,
       {
         method: 'GET',
         headers: {
@@ -131,7 +131,7 @@ console.log("itemsPerPage" , itemsPerPage)
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}&year=${formData?.year}`,
       {
         method: 'GET',
         headers: {
@@ -304,6 +304,53 @@ console.log("itemsPerPage" , itemsPerPage)
       title: "Action",
     },
   ];
+
+  const YearList = [
+    {
+      code: 2020,
+      name: '2020'
+    }, {
+      code: 2021,
+      name: '2021'
+    },
+    {
+      code: 2022,
+      name: '2022'
+    },
+    {
+      code: 2023,
+      name: '2023'
+    },
+    {
+      code: 2024,
+      name: '2024'
+    },
+    {
+      code: 2025,
+      name: '2025'
+    },
+    {
+      code: 2026,
+      name: '2026'
+    },
+    {
+      code: 2027,
+      name: '2027'
+    },
+    {
+      code: 2028,
+      name: '2028'
+    },
+    {
+      code: 2029,
+      name: '2029'
+    },
+    {
+      code: 2030,
+      name: '2030'
+    },
+    
+  ]
 
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
@@ -497,9 +544,9 @@ console.log("itemsPerPage" , itemsPerPage)
 
 
 
-                  <div className="col-md-4 mb-2">
+                  <div className="col-md-5 mb-2">
                     <div className="row align-items-end md-0">
-                      <div className="col-md-5">
+                      <div className="col-md-3">
                         <SelectBox
                           selectClass="mainInput"
                           name="unit_id"
@@ -513,12 +560,12 @@ console.log("itemsPerPage" , itemsPerPage)
 
 
 
-                      <div className="col-md-5">
+                      <div className="col-md-3">
                         <div className="addUser align-items-center">
                           <SelectBox
                             selectClass="mainInput"
                             name="month"
-                            label="Status"
+                            label="Month"
                             value={formData.month}
                             required
                             option={monthList}
@@ -526,6 +573,20 @@ console.log("itemsPerPage" , itemsPerPage)
                           />
 
                         </div>
+                      </div>
+                      <div className="col-md-3">
+                      <SelectBox
+                        selectClass="mainInput"
+                        name="year"
+                        label="Year"
+                        value={formData.Year}
+                        required
+                        option={YearList}
+                        onChange={(event) => {
+                          setFormData({ ...formData, year: event.target.value });
+
+                        }}
+                      /> 
                       </div>
                       <div className="col-md-2">
                         <CustomButton variant='primaryButton' className="searchBtn " type='button' onClick={leadData} icon={faMagnifyingGlass} />
@@ -535,7 +596,7 @@ console.log("itemsPerPage" , itemsPerPage)
 
 
                   {showtable == true ? (
-                    <div className="col-md-8 text-center">
+                    <div className="col-md-7 text-center">
                       <CustomTable headers={unitHeaders}>
                         <tbody>
                           <tr>
