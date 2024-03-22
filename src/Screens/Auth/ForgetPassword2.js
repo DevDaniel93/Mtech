@@ -25,41 +25,44 @@ const ForgetPassword2 = () => {
 
     const handleClick = async (event) => {
         event.preventDefault();
-
+    
         const formDataMethod = new FormData();
         const email = localStorage.getItem('email');
-
-        formDataMethod.append('otp', formData.code);
+        const code = formData.code; // Assuming formData.code is defined somewhere
+    
+        formDataMethod.append('otp', code);
         formDataMethod.append('email', email);
-        localStorage.setItem('otp', formData.code);
+        localStorage.setItem('otp', code);
         document.querySelector('.loaderBox').classList.remove("d-none");
-
+    
         const apiUrl = `${process.env.REACT_APP_API_URL}/public/api/otp_verification`;
-
-
+    
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 body: formDataMethod
             });
-
+    
             if (response.ok) {
-
- 
+                const responseData = await response.json();
                 document.querySelector('.loaderBox').classList.add("d-none");
-                navigate('/forget-password3')
-
+                if (responseData.status === true) {
+                    navigate('/forget-password3');
+                } else {
+                    alert('Invalid Code');
+                    console.error('Login failed');
+                }
             } else {
                 document.querySelector('.loaderBox').classList.add("d-none");
-                alert('Invalid Code')
-
-                console.error('Login failed');
+                alert('Failed to verify OTP');
+                console.error('Verification failed');
             }
         } catch (error) {
             document.querySelector('.loaderBox').classList.add("d-none");
             console.error('Error:', error);
         }
     };
+    
 
 
 
@@ -68,8 +71,8 @@ const ForgetPassword2 = () => {
             <AuthLayout authTitle='Verification Code' authPara='Please Check Your Email For Verification Code.' subauthPara='Your Code is 4 digit in Length' backOption={true}>
                 <form onSubmit={handleClick}>
                     <div class="inputWrapper"><label for="verificationCode" class="mainLabel">Verification Code<span>*</span></label></div>
-                    <div className='verification-box justify-content-between'>
-                        <CustomInput required id='verificationCode' type='number' labelClass='mainLabel' inputClass='mainInput    ' onChange={(event) => {
+                    <div className='verification-box flex-grow-1 flex-column gap-0'>
+                        <CustomInput required id='verificationCode' type='number' labelClass='mainLabel' inputClass='mainInput' onChange={(event) => {
                             setFormData({ ...formData, code: event.target.value })
                         }} />
 

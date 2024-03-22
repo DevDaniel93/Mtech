@@ -19,6 +19,11 @@
     justify-content: end;
 }
 
+.customPagination li.active button {
+    background-color: #176657 !important;
+}
+
+
 .customPagination .page-item .page-link {
     font-size: 14px;
     color: #5D5D5D;

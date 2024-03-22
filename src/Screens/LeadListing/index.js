@@ -30,12 +30,15 @@ export const LeadListing = () => {
 
   const [showtable, setShowtable] = useState(false)
   const [extra_data, setExtra_Data] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(100);
   const [inputValue, setInputValue] = useState('');
   const [copied, setCopied] = useState(false)
   const [copiedId, setCopiedId] = useState(null);
   const navigate = useNavigate();
-console.log("itemsPerPage" , itemsPerPage)
+
+  console.log("itemsPerPage", itemsPerPage)
+
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -69,7 +72,8 @@ console.log("itemsPerPage" , itemsPerPage)
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filterData?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
+
   const [unit, setUnit] = useState({});
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
@@ -103,13 +107,13 @@ console.log("itemsPerPage" , itemsPerPage)
 
         setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
-        setItemsPerPage(data?.leads.length);
+        // setItemsPerPage(data?.leads.length);
         setShowtable(true)
 
         setExtra_Data(data?.extra_fileds);
 
         setPermission(data?.permission);
-        setItemsPerPage(data?.leads.length);
+        // setItemsPerPage(data?.leads.length);
         if (data?.extra_fileds?.net > 0) {
 
 
@@ -159,7 +163,7 @@ console.log("itemsPerPage" , itemsPerPage)
 
         setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
-        setItemsPerPage(data?.leads.length);
+        // setItemsPerPage(data?.leads.length);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -262,8 +266,8 @@ console.log("itemsPerPage" , itemsPerPage)
       title: "Phone",
     },
     {
-      key: "descripction",
-      title: "Descripction",
+      key: "Description",
+      title: "Description",
     },
     {
       key: "tamout",
@@ -349,7 +353,7 @@ console.log("itemsPerPage" , itemsPerPage)
       code: 2030,
       name: '2030'
     },
-    
+
   ]
 
   const removeItem = (catId) => {
@@ -575,18 +579,18 @@ console.log("itemsPerPage" , itemsPerPage)
                         </div>
                       </div>
                       <div className="col-md-3">
-                      <SelectBox
-                        selectClass="mainInput"
-                        name="year"
-                        label="Year"
-                        value={formData.Year}
-                        required
-                        option={YearList}
-                        onChange={(event) => {
-                          setFormData({ ...formData, year: event.target.value });
+                        <SelectBox
+                          selectClass="mainInput"
+                          name="year"
+                          label="Year"
+                          value={formData.Year}
+                          required
+                          option={YearList}
+                          onChange={(event) => {
+                            setFormData({ ...formData, year: event.target.value });
 
-                        }}
-                      /> 
+                          }}
+                        />
                       </div>
                       <div className="col-md-2">
                         <CustomButton variant='primaryButton' className="searchBtn " type='button' onClick={leadData} icon={faMagnifyingGlass} />
@@ -695,12 +699,12 @@ console.log("itemsPerPage" , itemsPerPage)
                         ))}
                       </tbody>
                     </CustomTable>
-                    {/* <CustomPagination
+                    <CustomPagination
                       itemsPerPage={itemsPerPage}
-                      totalItems={data.length}
+                      totalItems={filterData.length}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
-                    /> */}
+                    />
                   </div>
                 </div>
               </div>
