@@ -220,7 +220,12 @@ export const LeadListing = () => {
     {
       key: "refund_amount",
       title: "Refund Amount  ",
-    },]
+    },
+    {
+      key: "reversal_amount",
+      title: "Reversal Amount  ",
+    },
+  ]
 
 
 
@@ -611,6 +616,7 @@ export const LeadListing = () => {
                             <td> {`$${extra_data?.recovery}`}</td>
                             <td className="text-capitalize">  {`$${extra_data?.charge_back}`}</td>
                             <td className="text-capitalize">  {`$${extra_data?.refund_amount}`}</td>
+                            <td className="text-capitalize">  {`$${extra_data?.reversal_amount}`}</td>
                           </tr>
                         </tbody>
                       </CustomTable>

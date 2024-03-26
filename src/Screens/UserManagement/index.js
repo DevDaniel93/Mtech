@@ -172,100 +172,26 @@ export const UserManagement = () => {
 
   const change_password = (unitID) => {
     setEditUser(true)
-    localStorage.setItem('userid' , unitID);
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    // const LogoutData = localStorage.getItem('login');
-    // // fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-brand/${unitID}`,
-    // //   {
-    // //     method: 'GET',
-    // //     headers: {
-    // //       'Accept': 'application/json',
-    // //       'Content-Type': 'application/json',
-    // //       'Authorization': `Bearer ${LogoutData}`
-    // //     },
-    // //   },
-    // // )
-    //   .then((response) => {
-    //     return response.json()
-    //   })
-    //   .then((data) => {
+    localStorage.setItem('userid', unitID);
 
-    //     document.querySelector('.loaderBox').classList.add("d-none");
-    //     setIdUser(unitID)
-    //     // setFormData({
-    //     //   ...formData,
-    //     //   name: data.brands.name,
-    //     //   status: data.status
-    //     // });
-    //     setEditUser(true)
-
-    //   })
-    //   .catch((error) => {
-    //     document.querySelector('.loaderBox').classList.add("d-none");
-
-    //   })
   }
   console.log("iduserdsds", userud)
 
 
-  // const handleEditSubmit = (event) => {
-  //   event.preventDefault();
-    
-    
-  //   console.log("handleEditpass", pass)
-  //   const formDataMethod = new FormData();
-  //   formDataMethod.append('userid', userud);
-  //   formDataMethod.append('newpassword', formData.password);
-  //   // document.querySelector('.loaderBox').classList.remove("d-none");
-  //   console.log("formDataMethod", userud)
-  //   console.log("handleEditSubmit", userud)
-  //   document.querySelector('.loaderBox').classList.remove("d-none");
-  //   const LogoutData = localStorage.getItem('login');
-  //   fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-pass-update`,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${LogoutData}`
-  //       },
-  //       userid: userud,
-  //       newpassword: pass,
-  //     },
-  //   )
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((data) => {
-
-  //       document.querySelector('.loaderBox').classList.add("d-none");
-  //       // setFormData({
-  //       //   userid: '',
-  //       //   password: ''
-  //       // })
-  //       // fetchData()
-  //       setEditUser(false)
-
-
-  //     })
-  //     .catch((error) => {
-  //       document.querySelector('.loaderBox').classList.add("d-none");
-  //     })
-  // }
 
 
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
-  
+
     const formDataMethod = new FormData();
- 
+
     const userid = localStorage.getItem('userid');
     formDataMethod.append('userid', userid);
-    formDataMethod.append('newpassword', pass);  
-  
+    formDataMethod.append('newpassword', pass);
+
     const LogoutData = localStorage.getItem('login');
-  
+
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -273,10 +199,10 @@ export const UserManagement = () => {
       },
       body: formDataMethod,
     };
-  
+
     document.querySelector('.loaderBox').classList.remove("d-none");
-  
-    fetch('${process.env.REACT_APP_API_URL}/public/api/admin/user-pass-update', requestOptions)
+
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-pass-update`, requestOptions)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -296,7 +222,7 @@ export const UserManagement = () => {
         console.error('Error during password update:', error);
         // Handle error as needed
       });
-    
+
     console.log("pass", pass);
   };
   console.log("pass", formData)
@@ -357,11 +283,13 @@ export const UserManagement = () => {
                                     : <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}>  <FontAwesomeIcon icon={faCompass} style={{ decoration: 'line-through' }} /> Inactive </button>
                                   }
                                   {permission?.users.update === true ?
-                                    <button onClick={() => {
-                                      change_password(item.id)
-                                      setUserud(item.id)
-                                      setUserFrom(true)
-                                    }} className="tableAction">Change Password</button> : ""}
+                                    <>
+                                      <button onClick={() => {
+                                        change_password(item.id)
+                                        setUserud(item.id)
+                                        setUserFrom(true)
+                                      }} className="tableAction"><FontAwesomeIcon icon={faEye} className="tableActionIcon" />Change Password</button>
+                                    </> : ""}
 
                                 </Dropdown.Menu>
 
@@ -407,19 +335,6 @@ export const UserManagement = () => {
               }}
 
             />
-            {/* <CustomInput
-              label='Change Password'
-              required
-              id='pass'
-              type='password'
-              placeholder='Enter Password'
-              labelClass='mainLabel'
-              inputClass='mainInput'
-              onChange={(event) => {
-                setFormData({ ...formData, password: event.target.value });
-
-              }}
-            /> */}
 
             <CustomButton variant='primaryButton' text='Update Password' type='button' onClick={handleEditSubmit} />
           </CustomModal>

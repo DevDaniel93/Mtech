@@ -21,7 +21,8 @@ export const EditUser = () => {
         name: '',
         email: '',
         unit_id: [],
-        user_role: ''
+        user_role: '',
+        show_reports: ''
     });
     const navigate = useNavigate();
     const goBack = () => {
@@ -285,21 +286,23 @@ export const EditUser = () => {
 
     const handleChange = (event) => {
         const { name, value, checked } = event.target;
-    
+
         if (name === 'currently_working_check') {
             setFormData((prevData) => ({
                 ...prevData,
                 currently_working_check: checked,
             }));
-    
+
             setCheckPermission(checked);
-        } else if (name === 'user_role' && (value === '2' || value === '4')) {
+        }
+
+        else if (name === 'user_role' && (value === '2' || value === '4')) {
             setPermission(true);
         } else if (name === 'user_role' && (value === '1' || value === '3')) {
             setPermission(false);
         }
-    
- 
+
+
         if (name === 'currently_working_check' && !checked) {
             setFormData((prevData) => ({
                 ...prevData,
@@ -307,7 +310,7 @@ export const EditUser = () => {
             }));
             setCheckPermission(false);
         }
-    
+
         // For other input fields, update the form data
         if (name !== 'currently_working_check') {
             setFormData((prevData) => ({
@@ -315,8 +318,16 @@ export const EditUser = () => {
                 [name]: value,
             }));
         }
+        console.log(formData);
     };
-    const handlecheck = () => {
+
+
+    const handleChecked = (event) => {
+        const {name, checked} = event.target
+        setFormData({
+            ...formData,
+            show_reports: checked ? 1 : 0 // Convert checked value to 1 or 0
+        });
 
     }
 
@@ -441,10 +452,10 @@ export const EditUser = () => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-{/* if user Want to uncheck doit   */}
+                                            {/* if user Want to uncheck doit   */}
 
 
-                                            <p className="gap-2 d-flex">
+                                            <div className="col-md-4 mb-4">
                                                 Currently Working
                                                 <input
                                                     className="m-lg-2"
@@ -454,8 +465,21 @@ export const EditUser = () => {
                                                     name="currently_working_check"
                                                     // checked={checkpermission}
                                                     checked={formData?.currently_working_check}
+
                                                 />
-                                            </p>
+                                            </div>
+
+                                            <div className="col-md-4 mb-4">
+                                                Show Reports
+                                                <input
+                                                    className="m-lg-2"
+                                                    onChange={handleChecked}
+                                                    type="checkbox"
+                                                    id="show_reports"
+                                                    name="show_reports"
+                                                    checked={formData?.show_reports == 1 ? true : false}
+                                                />
+                                            </div>
 
                                             {formData?.currently_working_check === false ? (<div className="col-md-4 mb-4">
                                                 <CustomInput

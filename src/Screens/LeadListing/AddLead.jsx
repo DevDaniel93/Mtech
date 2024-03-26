@@ -14,6 +14,7 @@ export const AddLead = () => {
     const [unit, setUnit] = useState({});
 
     const [user, setUser] = useState();
+    const [sourcename, setSorceName] = useState();
     const [formData, setFormData] = useState({
         source: '',
         brand: '',
@@ -30,50 +31,50 @@ export const AddLead = () => {
         date: ''
     });
     console.log("lead_cac8a", formData)
-    const sourcename = [
-        {
-            id: '1',
-            name: 'PPC'
-        },
-        {
-            id: '2',
-            name: 'Organic  '
-        },
-        {
-            id: '3',
-            name: 'SMS'
-        },
-        {
-            id: '4',
-            name: 'OB'
-        },
-        {
-            id: '5',
-            name: 'SMM'
-        },
-        {
-            id: '6',
-            name: 'Up-Sell'
-        },
-        {
-            id: '7',
-            name: 'Org-Up-Sell'
-        },
-        {
-            id: '8',
-            name: 'OB-Up-Sell'
-        },
-        {
-            id: '9',
-            name: 'SMM-Up-Sell'
-        }
-        ,
-        {
-            id: '10',
-            name: 'Other'
-        }
+    // const sourcename = [
+    //     {
+    //         id: '1',
+    //         name: 'PPC'
+    //     },
+    //     {
+    //         id: '2',
+    //         name: 'Organic'
+    //     },
+    //     {
+    //         id: '3',
+    //         name: 'SMS'
+    //     },
+    //     {
+    //         id: '4',
+    //         name: 'OB'
+    //     },
+    //     {
+    //         id: '5',
+    //         name: 'SMM'
+    //     },
+    //     {
+    //         id: '6',
+    //         name: 'Up-Sell'
+    //     },
+    //     {
+    //         id: '7',
+    //         name: 'Org-Up-Sell'
+    //     },
+    //     {
+    //         id: '8',
+    //         name: 'OB-Up-Sell'
+    //     },
+    //     {
+    //         id: '9',
+    //         name: 'SMM-Up-Sell'
+    //     }
+    //     ,
+    //     {
+    //         id: '10',
+    //         name: 'Other'
+    //     }
 
-    ]
+    // ]
     const [successStatus, setSuccessStatus] = useState('Server Error!');
 
 
@@ -97,6 +98,34 @@ export const AddLead = () => {
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setBrands(data?.data);
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+            })
+    }
+
+
+    const fetchSourceData = () => {
+        const LogoutData = localStorage.getItem('login');
+        document.querySelector('.loaderBox').classList.remove("d-none");
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-sources`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            }
+        )
+
+            .then(response =>
+                response.json()
+            )
+            .then((data) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                setSorceName(data?.sources);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -133,19 +162,7 @@ export const AddLead = () => {
             })
     }
 
-    // const handleChange = (event) => {
 
-    //     const { name, value } = event.target;
-    //     if (name === 'unit_id') {
-    //         userData(value)
-    //     }
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-
-    //     console.log(formData)
-    // };
     console.log("formDataemail", formData?.email)
 
     const [remainingWords, setRemainingWords] = useState(100);
@@ -320,6 +337,7 @@ export const AddLead = () => {
 
     useEffect(() => {
         fetchUnitData()
+        fetchSourceData()
     }, [])
 
 

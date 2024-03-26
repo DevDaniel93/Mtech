@@ -24,6 +24,7 @@ export const EditLead = () => {
     const [user, setUser] = useState();
     const [brands, setBrands] = useState({});
     const [unit, setUnit] = useState({});
+    const [sourcename, setSorceName] = useState();
 
    
 
@@ -55,6 +56,33 @@ export const EditLead = () => {
             })
     }
 
+
+    const fetchSourceData = () => {
+        const LogoutData = localStorage.getItem('login');
+        document.querySelector('.loaderBox').classList.remove("d-none");
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-sources`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            }
+        )
+
+            .then(response =>
+                response.json()
+            )
+            .then((data) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+                setSorceName(data?.sources);
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+            })
+    }
 
     const fetchUnitData = () => {
         const LogoutData = localStorage.getItem('login');
@@ -179,6 +207,7 @@ export const EditLead = () => {
         getUserData()
         // fectchBrandData()
         fetchUnitData()
+        fetchSourceData()
 
     }, [])
  
@@ -211,51 +240,6 @@ export const EditLead = () => {
             })
     }
 
-
-    const sourcename = [
-        {
-            id: '1',
-            name: 'PPC'
-        },
-        {
-            id: '2',
-            name: 'Organic  '
-        },
-        {
-            id: '3',
-            name: 'SMS'
-        },
-        {
-            id: '4',
-            name: 'OB'
-        },
-        {
-            id: '5',
-            name: 'SMM'
-        },
-        {
-            id: '6',
-            name: 'Up-Sell'
-        },
-        {
-            id: '7',
-            name: 'Org-Up-Sell'
-        },
-        {
-            id: '8',
-            name: 'OB-Up-Sell'
-        },
-        {
-            id: '9',
-            name: 'SMM-Up-Sell'
-        }
-        ,
-        {
-            id: '10',
-            name: 'Other'
-        }
-
-    ]
 
 
 
