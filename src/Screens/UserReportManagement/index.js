@@ -26,6 +26,7 @@ export const UserReportManagement = () => {
   const [formData, setFormData] = useState({});
   const [brands, setBrands] = useState({});
   const [initialunit, setUnit] = useState({});
+  const [total, setTotal] = useState();
 
 
   const SelectOptions = []
@@ -87,7 +88,7 @@ export const UserReportManagement = () => {
     },
     {
       code: 10,
-      name: 'Octuber'
+      name: 'October'
     },
     {
       code: 11,
@@ -146,7 +147,7 @@ export const UserReportManagement = () => {
       code: 2030,
       name: '2030'
     },
-    
+
   ]
 
   // const handleChange = (e) => {
@@ -155,11 +156,11 @@ export const UserReportManagement = () => {
 
 
 
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-     
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -228,15 +229,15 @@ export const UserReportManagement = () => {
   }
 
 
- 
+
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
     const formDataMethod = new FormData();
-    formDataMethod.append('user_name', formData.search) ;
-  
- 
+    formDataMethod.append('user_name', formData.search);
+
+
 
     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate-users`,
       {
@@ -257,6 +258,7 @@ export const UserReportManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setData(data?.data);
+        setTotal(data?.total);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -321,7 +323,7 @@ export const UserReportManagement = () => {
 
 
 
-console.log("data user" , data)
+  console.log("data user", data)
   return (
     <>
       <DashboardLayout>
@@ -335,8 +337,8 @@ console.log("data user" , data)
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser align-items-center">
-                    <CustomInput type="text" placeholder="Search Here..." name="search" value={formData.search} inputClass="mainInput" onChange={handleChange} />
-   <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
+                      <CustomInput type="text" placeholder="Search Here..." name="search" value={formData.search} inputClass="mainInput" onChange={handleChange} />
+                      <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
                     </div>
                   </div>
                 </div>
@@ -353,7 +355,7 @@ console.log("data user" , data)
                               {item.date}
                             </td>
 
- 
+
                             <td>{`$ ${item?.target}`}</td>
                             <td>{`$ ${item?.gross_sum}`}</td>
                             <td>{`$ ${item?.refunds}`}</td>
@@ -369,6 +371,13 @@ console.log("data user" , data)
 
                     </CustomTable>
 
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    {
+                      total && (
+                        <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
+                      )
+                    }
                   </div>
                 </div>
               </div>

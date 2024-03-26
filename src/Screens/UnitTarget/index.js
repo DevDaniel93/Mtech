@@ -128,7 +128,7 @@ export const UnitTarget = () => {
     },
     {
       code: 10,
-      name: 'Octuber'
+      name: 'October'
     },
     {
       code: 11,
@@ -654,7 +654,7 @@ export const UnitTarget = () => {
                                       <Dropdown.Menu align="end" className="tableDropdownMenu">
 
 
-                                        {userpermission?.user_targets.reade === true ? <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
+                                        {userpermission?.user_targets.read === true ? <Link className="tableAction" to={`usertarget-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link> : ""}
                                       </Dropdown.Menu>
                                     </Dropdown>
                                   </td>

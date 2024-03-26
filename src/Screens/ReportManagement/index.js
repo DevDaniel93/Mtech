@@ -27,7 +27,7 @@ export const ReportManagement = () => {
   const [brands, setBrands] = useState({});
   const [initialunit, setUnit] = useState({});
   const [total, setTotal] = useState();
- 
+
 
   const SelectOptions = []
   for (const key in initialunit) {
@@ -88,7 +88,7 @@ export const ReportManagement = () => {
     },
     {
       code: 10,
-      name: 'Octuber'
+      name: 'October'
     },
     {
       code: 11,
@@ -147,7 +147,7 @@ export const ReportManagement = () => {
       code: 2030,
       name: '2030'
     },
-    
+
   ]
 
   const handleChange = (e) => {
@@ -229,7 +229,7 @@ export const ReportManagement = () => {
         formDataMethod.append(key, formData[key]);
       }
 
-      
+
     }
 
     formDataMethod.append('unit_id', JSON.stringify(formData?.unit_id));
@@ -379,7 +379,7 @@ export const ReportManagement = () => {
                           setFormData({ ...formData, year: event.target.value });
 
                         }}
-                      /> 
+                      />
 
 
                       <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
@@ -415,16 +415,16 @@ export const ReportManagement = () => {
 
                     </CustomTable>
 
-     
+
 
                   </div>
                   <div className="d-flex justify-content-center">
-                      {
-                        total && (
-                          <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
-                        )
-                      }
-                    </div>
+                    {
+                      total && (
+                        <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
+                      )
+                    }
+                  </div>
                 </div>
               </div>
             </div>

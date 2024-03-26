@@ -44,7 +44,7 @@ export const Dashboard = () => {
         <div className="container-fluid">
           <div className="row mb-3">
             <div className="col-12">
-              <div className="dashCard">
+              {/* <div className="dashCard">
                 <div className="row">
                   <div className="col-xl-4 col-md-6 stats">
                     <div className="statsCard">
@@ -112,7 +112,7 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="row mb-3">

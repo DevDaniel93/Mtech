@@ -453,7 +453,7 @@ export const LeadListing = () => {
     },
     {
       code: 10,
-      name: 'Octuber'
+      name: 'October'
     },
     {
       code: 11,

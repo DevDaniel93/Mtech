@@ -77,7 +77,7 @@ export const UnitReportManagement = () => {
     },
     {
       code: 10,
-      name: 'Octuber'
+      name: 'October'
     },
     {
       code: 11,

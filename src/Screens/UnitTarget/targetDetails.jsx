@@ -59,7 +59,7 @@ export const TargetDetails = () => {
         "July",
         "August",
         "September",
-        "Octuber",
+        "October",
         "November",
         "December"
     ]
@@ -151,7 +151,7 @@ export const TargetDetails = () => {
         },
         {
             code: 10,
-            name: 'Octuber'
+            name: 'October'
         },
         {
             code: 11,
