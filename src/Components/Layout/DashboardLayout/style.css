@@ -17,5 +17,36 @@
     }
 
     
+    ul.list-unstyled, ul.list-unstyled > div {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-bottom: 0;
+    }
+    
+    ul.list-unstyled {
+        overflow-x: auto !important;
+    }
+    
+    div#sidebar {
+        width: 100%;
+        bottom: 0 !important;
+        top: unset !important;
+        height: auto;
+        padding-bottom: 0;
+    }
+
+    .sidebar.collapsed .sideLink {
+        display: block;
+    }
+
+    .authLogo {
+        width: 60px !important;
+        margin-bottom: 0;
+        position: relative !important;
+        text-align: center;
+        display: block;
+        margin: auto;
+        padding: 10px 0 0 0;
+    }
 
 }

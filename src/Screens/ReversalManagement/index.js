@@ -167,7 +167,14 @@ export const ReversalManagement = () => {
       title: "reversal Type",
     },
 
-
+    {
+      key: "customer",
+      title: "Customer Name",
+    },
+    {
+      key: "unit",
+      title: "Unit",
+    },
     {
       key: "action",
       title: "Action",
@@ -271,6 +278,8 @@ export const ReversalManagement = () => {
                             <td>{item?.reversal_date}</td>
                             <td>{item?.reversaluser?.name}</td>
                             <td>{item?.reversal_type}</td>
+                            <td>{item?.leaddetail?.name}</td>
+                            <td>{item?.unit?.name}</td>
 
                             <td>
                               <Dropdown className="tableDropdown">

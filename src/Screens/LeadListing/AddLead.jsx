@@ -165,7 +165,7 @@ export const AddLead = () => {
 
     console.log("formDataemail", formData?.email)
 
-    const [remainingWords, setRemainingWords] = useState(100);
+    const [remainingWords, setRemainingWords] = useState(1000);
 
 
     const [showRequiredMessage, setShowRequiredMessage] = useState(false);
@@ -175,7 +175,7 @@ export const AddLead = () => {
         const { name, value } = event.target;
 
         if (event.target.tagName === "TEXTAREA") {
-            const wordLimit = 100;
+            const wordLimit = 1000;
             const wordCount = value.trim().split(/\s+/).length;
 
             if (wordCount <= wordLimit) {

@@ -152,6 +152,16 @@ console.log("itemsPerPage" , itemsPerPage)
       key: "merchant",
       title: "Merchant",
     },
+
+    {
+      key: "customer",
+      title: "Customer Name",
+    },
+    {
+      key: "unit",
+      title: "Unit",
+    },
+
     {
       key: "action",
       title: "Action",
@@ -306,6 +316,8 @@ console.log("itemsPerPage" , itemsPerPage)
                             <td>{item?.chargebackuser?.name}</td>
                             <td>{item?.chargeback_type}</td>
                             <td>{item?.merchantdetail?.name}</td>
+                            <td>{item?.leaddetail?.name}</td>
+                            <td>{item?.unit?.name}</td>
 
                             <td>
                               <Dropdown className="tableDropdown">

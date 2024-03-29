@@ -131,6 +131,14 @@ export const RefundManagement = () => {
       title: "Merchant",
     },
     {
+      key: "customer",
+      title: "Customer Name",
+    },
+    {
+      key: "unit",
+      title: "Unit",
+    },
+    {
       key: "action",
       title: "Action",
     },
@@ -272,6 +280,8 @@ export const RefundManagement = () => {
                             <td>{item?.refunduser?.name}</td>
                             <td>{item?.refund_type}</td>
                             <td>{item?.merchantdetail?.name}</td>
+                            <td>{item?.leaddetail?.name}</td>
+                            <td>{item?.unit?.name}</td>
                             <td>
                               <Dropdown className="tableDropdown">
                                 <Dropdown.Toggle variant="transparent" className="notButton classicToggle">

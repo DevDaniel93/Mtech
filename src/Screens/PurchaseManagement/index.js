@@ -180,7 +180,14 @@ export const PurchaseManagement = () => {
       title: "Purchase Type",
     },
 
-
+    {
+      key: "customer",
+      title: "Customer Name",
+    },
+    {
+      key: "unit",
+      title: "Unit",
+    },
     {
       key: "action",
       title: "Action",
@@ -289,6 +296,8 @@ export const PurchaseManagement = () => {
                             <td>{item?.purchase_date}</td>
                             <td>{item?.purchaseuser?.name}</td>
                             <td>{item?.purchase_type}</td>
+                            <td>{item?.leaddetail?.name}</td>
+                            <td>{item?.unit?.name}</td>
                             {/* <td>{item?.merchantdetail?.name}</td>  */}
                             {/* <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td> */}
                             <td>
