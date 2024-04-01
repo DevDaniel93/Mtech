@@ -44,8 +44,9 @@ const AdminLogin = () => {
             if (response.ok) {
                
                 const responseData = await response.json();
-                localStorage.setItem('login' , responseData.data.token );
-                localStorage.setItem('role' , responseData.data.role );
+                localStorage.setItem('login' , responseData?.data?.token );
+                localStorage.setItem('role' , responseData?.data?.role );
+                localStorage.setItem('rolesPermission', JSON.stringify(responseData?.data?.permission))
 
                 document.querySelector('.loaderBox').classList.add("d-none");
                 navigate('/dashboard')
