@@ -43,6 +43,7 @@ import { ReportManagement } from "../Screens/ReportManagement";
 import { UnitReportManagement } from "../Screens/UnitReportManagement";
 
 import { BrandListing } from "../Screens/BrandListing";
+import { SourceManagement } from "../Screens/SourceManagement";
 import { Roles } from "../Screens/Roles";
 
 import { UnitTarget } from "../Screens/UnitTarget";
@@ -99,6 +100,7 @@ export default function AdminRouter() {
 
         <Route path="/unit-listing" element={<ProtectedRoutes Components={UnitListing} />} />
         <Route path="/brand-listing" element={<ProtectedRoutes Components={BrandListing} />} />
+        <Route path="/source-management" element={<ProtectedRoutes Components={SourceManagement} />} />
  
 
         <Route path="/target-listing" element={<ProtectedRoutes Components={UnitTarget} />} />

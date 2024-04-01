@@ -45,43 +45,52 @@ export const Sidebar = (props) => {
 
   const [permission, setPermission] = useState();
   const [isShown, setIsShown] = useState(false);
-const navigate = useNavigate()
-  const leadData = () => {
-    const LogoutData = localStorage.getItem('login');
+  const navigate = useNavigate()
+  // const leadData = () => {
+  //   const LogoutData = localStorage.getItem('login');
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
+  //   fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing`,
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${LogoutData}`
+  //       },
+  //     }
+  //   )
 
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-        console.log("permission", data)
-        // document.querySelector('.loaderBox').classList.add("d-none");
-        // setData(data.leads);
-        setPermission(data?.permission)
-      })
-      .catch((error) => {
-        // document.querySelector('.loaderBox').classList.add("d-none");
+  //     .then(response =>
+  //       response.json()
+  //     )
+  //     .then((data) => {
+  //       console.log("permission", data)
+  //       // document.querySelector('.loaderBox').classList.add("d-none");
+  //       // setData(data.leads);
+  //       setPermission(data?.permission)
+  //     })
+  //     .catch((error) => {
+  //       // document.querySelector('.loaderBox').classList.add("d-none");
 
-      })
+  //     })
 
-  }
+  // }
+
+
+
 
   useEffect(() => {
     // document.title = 'Mt Records | Lead Management';
-    leadData()
+    // leadData()
+    const permissionData = localStorage.getItem('rolesPermission');
+
+    setPermission(JSON.parse(permissionData))
+  
 
   }, []);
 
+
+  
   const role = localStorage.getItem('role');
   console.log("role", role)
   console.log("permission", permission)
@@ -121,6 +130,7 @@ const navigate = useNavigate()
       .then((data) => {
         console.log(data)
         localStorage.removeItem('login');
+        localStorage.removeItem('rolesPermission');
         setStatus(data?.status)
         console.log("data?.status", data?.status)
 
@@ -149,7 +159,7 @@ const navigate = useNavigate()
 
           {/* {role == 1 || role == 4 ? */}
           <div>
-    </div>
+          </div>
           {/* : " "} */}
 
           {/* {role == 1 ? */}
@@ -184,6 +194,17 @@ const navigate = useNavigate()
                   <img src={Roles} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Roles Management</span>
+              </Link> : ""}
+            </li>
+
+
+            <li className="sidebar-li">
+              {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/source-management') ? 'active' : ''}`} to="/source-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMessage} /> */}
+                  <img src={report} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Source Management</span>
               </Link> : ""}
             </li>
 
@@ -267,7 +288,7 @@ const navigate = useNavigate()
             <li className="sidebar-li">
               {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
                 <span className="sideIcon">
-                <img src={report} className="sideBarIcon" />
+                  <img src={report} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">User Report Management</span>
               </Link> : " "}
@@ -329,7 +350,7 @@ const navigate = useNavigate()
               <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
                 <span className="sideIcon">
                   {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
- {/*  */}
+                  {/*  */}
                   <img src={target} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Targets</span>
@@ -346,21 +367,21 @@ const navigate = useNavigate()
                 <span className="sideLinkText">Report Management</span>
               </Link> : " "}
             </li>
-            
-            
-            
-            
+
+
+
+
             <li className="sidebar-li">
-            <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} onClick={handleClickPopup} >
+              <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} onClick={handleClickPopup} >
                 <span className="sideIcon">
                   {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
                   <img src={logput} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Logout</span>
-              </Link> 
+              </Link>
             </li>
-            
-            </div>
+
+          </div>
 
         </ul>
       </div>
