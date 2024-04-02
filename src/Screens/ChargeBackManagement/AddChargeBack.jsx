@@ -410,7 +410,7 @@ export const AddChargeBack = () => {
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label='Charge Back Date'
-                                                    // required
+                                                    required
                                                     id='date'
                                                     type='date'
                                                     placeholder='Enter Charge Back Date'

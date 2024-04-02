@@ -373,7 +373,7 @@ export const AddPurchase = () => {
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label='Purchase Date'
-                                                    // required
+                                                    required
                                                     id='date'
                                                     type='date'
                                                     placeholder='Enter Purchase Date'
@@ -416,7 +416,7 @@ export const AddPurchase = () => {
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">
                                                     <label>Reason*</label>
-                                                    <textarea value={formData?.reason} name="reason" className="mainInput" onChange={handleChange}></textarea>
+                                                    <textarea value={formData?.reason} name="reason" required className="mainInput" onChange={handleChange}></textarea>
                                                 </div>
                                             </div>
                                             <div className="col-md-12">

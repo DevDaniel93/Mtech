@@ -65,9 +65,11 @@ console.log("itemsPerPage" , itemsPerPage)
   const handleChange = (e) => {
     setInputValue(e.target.value);
   }
+
   const filterData = data.filter(item =>
-    item?.chargebackuser?.name.toLowerCase().includes(inputValue.toLowerCase())
-  );
+    (item?.chargebackuser?.name && item?.chargebackuser?.name.toLowerCase().includes(inputValue.toLowerCase())) ||
+    (item?.leaddetail?.name && item?.leaddetail?.name.toLowerCase().includes(inputValue.toLowerCase()))
+  )
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -276,7 +278,7 @@ console.log("itemsPerPage" , itemsPerPage)
                         {/* {permission?.chargeback.create === true ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
                       </div>
                       <div className=" col-md-4 ">
-                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                        <CustomInput type="text" placeholder="Search by user, customer name..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
                       </div>
 
                       <div className=" col-md-4 ">

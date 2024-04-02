@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil , faFile , faChainSlash, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faPencil, faFile, faChainSlash, faTrash, faCopy } from "@fortawesome/free-solid-svg-icons";
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -51,9 +51,13 @@ export const PurchaseManagement = () => {
     setInputValue(e.target.value);
   }
 
+
   const filterData = data.filter(item =>
-    item?.purchaseuser?.name.toLowerCase().includes(inputValue.toLowerCase())
-  );
+    (item?.purchaseuser?.name && item?.purchaseuser?.name.toLowerCase().includes(inputValue.toLowerCase())) ||
+    (item?.leaddetail?.name && item?.leaddetail?.name.toLowerCase().includes(inputValue.toLowerCase()))
+  )
+
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
@@ -251,14 +255,14 @@ export const PurchaseManagement = () => {
                   <div className="col-md-8 mb-2">
                     <div className="row   align-items-center  justify-content-end ">
                       <div className=" col-md-4 ">
-                         {/* {permission?.purchase.create === true ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
+                        {/* {permission?.purchase.create === true ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
                       </div>
                       <div className=" col-md-4 ">
-                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                        <CustomInput type="text" placeholder="Search by user, customer name..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
                       </div>
 
                       <div className=" col-md-4 ">
-                         {permission?.purchase.create === true ?
+                        {permission?.purchase.create === true ?
                           <CustomButton text="Add New Purchase" variant='primaryButton' onClick={hanldeRoute} /> : " "}
                       </div>
 

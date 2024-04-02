@@ -651,7 +651,7 @@ export const LeadListing = () => {
                             <td className="text-capitalize">
                               {item?.date}
                             </td>
-                            <td  >{item?.getsource.name}</td>
+                            <td  >{item?.getsource?.name}</td>
                             <td >{item.getbrand?.name}</td>
                             <td className="prodDField"><span>{item?.product}</span></td>
                             <td className="nameField">
@@ -670,7 +670,7 @@ export const LeadListing = () => {
                             <td>{item?.salesrep?.name}</td>
 
                             <td>{item?.accountrepdetail?.name}</td>
-                            <td>{item?.unitdetail.name}</td>
+                            <td>{item?.unitdetail?.name}</td>
 
 
 

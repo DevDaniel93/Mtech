@@ -357,7 +357,7 @@ export const AddRefund = () => {
                                             <div className="col-md-4 mb-4">
                                                 <CustomInput
                                                     label='Refund Date'
-                                                    // required
+                                                    required
                                                     id='date'
                                                     type='date'
                                                     placeholder='Enter Refund Date'
@@ -398,7 +398,7 @@ export const AddRefund = () => {
                                             <div className="col-md-12 mb-4">
                                                 <div className="inputWrapper">
                                                     <label>Reason*</label>
-                                                    <textarea value={formData?.reason} name="reason" className="mainInput" onChange={handleChange}></textarea>
+                                                    <textarea value={formData?.reason} required name="reason" className="mainInput" onChange={handleChange}></textarea>
                                                 </div>
                                             </div>
                                             <div className="col-md-12">
