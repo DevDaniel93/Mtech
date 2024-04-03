@@ -287,7 +287,7 @@ export const EditLead = () => {
                     [name]: value,
                 }));
             } else if (
-                name === 'phone' ||
+                // name === 'phone' ||
                 name === 'quoted_amount' ||
                 name === 'received' ||
                 name === 'recovery'

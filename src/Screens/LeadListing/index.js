@@ -29,6 +29,8 @@ export const LeadListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [showtable, setShowtable] = useState(false)
+  const [clear, setClear] = useState(false)
+
   const [extra_data, setExtra_Data] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(100);
   const [inputValue, setInputValue] = useState('');
@@ -79,7 +81,7 @@ export const LeadListing = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}&year=${formData?.year}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}`,
       {
         method: 'GET',
         headers: {
@@ -105,7 +107,7 @@ export const LeadListing = () => {
 
         setData(data.leads);
 
-        setExtra_Data(data?.extra_fileds)
+        // setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
         // setItemsPerPage(data?.leads.length);
         setShowtable(true)
@@ -114,7 +116,7 @@ export const LeadListing = () => {
 
         setPermission(data?.permission);
         // setItemsPerPage(data?.leads.length);
-        if (data?.extra_fileds?.net > 0) {
+        if (data?.extra_fileds?.net != "") {
 
 
           setShowtable(true);
@@ -182,6 +184,22 @@ export const LeadListing = () => {
     leadlist()
 
   }, []);
+
+  const clearFilter = () => {
+    // // Clearing filter fields in formData
+    //  setFormData({
+    //     ...formData,
+    //     unit_id: '',
+    //     month: '',
+    //     year: ''
+    // });
+
+    // // Triggering leadData function to update or retrieve data based on cleared filters
+    //  leadData();
+    setClear(false);
+    window.location.reload()
+};
+
 
 
 
@@ -391,28 +409,28 @@ export const LeadListing = () => {
 
 
 
-  function handleChanges(event) {
-    const file = event.target.files[0];
+  // function handleChanges(event) {
+  //   const file = event.target.files[0];
 
-    if (file) {
-      const formData = new FormData();
-      formData.append('csv', file);
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append('csv', file);
 
-      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/csv-data-handle`, {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => {
-          leadData()
-          console.log('Upload successful:', data);
-        })
-        .catch(error => {
+  //     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/csv-data-handle`, {
+  //       method: 'POST',
+  //       body: formData,
+  //     })
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         leadData()
+  //         console.log('Upload successful:', data);
+  //       })
+  //       .catch(error => {
 
-          console.error('Error uploading file:', error);
-        });
-    }
-  }
+  //         console.error('Error uploading file:', error);
+  //       });
+  //   }
+  // }
 
 
   const monthList = [
@@ -512,6 +530,8 @@ export const LeadListing = () => {
       [name]: value,
     }));
 
+    setClear(true)
+
   };
 
   console.log("extra_data", extra_data)
@@ -599,6 +619,11 @@ export const LeadListing = () => {
                       </div>
                       <div className="col-md-2">
                         <CustomButton variant='primaryButton' className="searchBtn " type='button' onClick={leadData} icon={faMagnifyingGlass} />
+                        {
+                          clear && (
+                            <button className="clearFilter bg-transparent border-0" onClick={clearFilter}>Clear</button>
+                          )
+                        }
                       </div>
                     </div>
                   </div>

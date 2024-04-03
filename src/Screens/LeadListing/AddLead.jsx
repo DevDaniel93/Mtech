@@ -209,7 +209,7 @@ export const AddLead = () => {
                 fectchBrandData(value)
 
             } else if (
-                name === 'phone' ||
+                // name === 'phone' ||
                 name === 'quoted_amount' ||
                 name === 'received' ||
                 name === 'recovery'
@@ -228,6 +228,7 @@ export const AddLead = () => {
             } else {
 
                 const defaultCharacterLimit = 20;
+
 
                 // source
                 // if (value.length <= defaultCharacterLimit) {
@@ -374,7 +375,11 @@ export const AddLead = () => {
                     ...prevData,
                     email: data?.leads?.email,
                     name: data?.leads?.name,
-                    phone: data?.leads?.phone
+                    phone: data?.leads?.phone,
+                    unit_id: data?.leads?.unit_id,
+                    brand: data?.leads?.brand,
+                    sales_rep: data?.leads?.sales_rep,
+                    account_rep: data?.leads?.account_rep,
                 }));
 
                 console.log("data", data?.leads?.phone)
@@ -388,6 +393,7 @@ export const AddLead = () => {
 
 
             userData(data?.leads.unit_id);
+            fectchBrandData(data?.leads?.unit_id)
             ;
         } catch (error) {
             console.error('Error fetching data:', error);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import CustomTable from "../../Components/CustomTable";
@@ -27,6 +27,7 @@ export const UserReportManagement = () => {
   const [brands, setBrands] = useState({});
   const [initialunit, setUnit] = useState({});
   const [total, setTotal] = useState();
+  const [allTotal, setAllTotal] = useState();
 
 
   const SelectOptions = []
@@ -259,6 +260,7 @@ export const UserReportManagement = () => {
 
         setData(data?.data);
         setTotal(data?.total);
+        setAllTotal(data?.total_all);
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
@@ -356,7 +358,7 @@ export const UserReportManagement = () => {
                             </td>
 
 
-                            <td>{`$ ${item?.target}`}</td>
+                            <td>{`$ ${item?.target}`}</td>  
                             <td>{`$ ${item?.gross_sum}`}</td>
                             <td>{`$ ${item?.refunds}`}</td>
                             <td>{`$ ${item?.reversal}`}</td>
@@ -368,17 +370,37 @@ export const UserReportManagement = () => {
                         ))}
                       </tbody>
 
+                      <tbody>
+                        {allTotal?.map((item, index) => (
+                          <tr>
+                            <td className="text-capitalize">
+                            <p className="totalAmountWorth"><span className="font-weight-bold">Total</span></p>
+                            </td>
+
+
+                            <td>{`$ ${item?.target_total}`}</td>  
+                            <td>{`$ ${item?.gross_sum_total}`}</td>
+                            <td>{`$ ${item?.refunds_total + item?.chargeback_total}`}</td>
+                            <td>{`$ ${item?.reversal_total}`}</td>
+                            <td>{`$ ${item?.purchase_total}`}</td>
+                            <td>{`$ ${item?.net_total}`}</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        ))}
+                      </tbody>
+
 
                     </CustomTable>
 
                   </div>
-                  <div className="d-flex justify-content-center">
+                  {/* <div className="d-flex justify-content-center">
                     {
                       total && (
                         <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
                       )
                     }
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

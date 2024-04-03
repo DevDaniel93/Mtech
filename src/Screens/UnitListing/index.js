@@ -424,7 +424,7 @@ export const UnitListing = () => {
                 onChange={handleChangeSelect}
               />
             </div>
-            <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleEditSubmit} />
+            <CustomButton variant='primaryButton' text='Update' type='button' onClick={handleEditSubmit} />
           </CustomModal>
 
 
