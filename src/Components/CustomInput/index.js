@@ -35,6 +35,7 @@ const CustomInput = (props) => {
           onFocus={props?.onFocus} 
           onBlur={props?.onBlur} 
           accept={props.accept}
+          onKeyDown={props?.onKeyDown}
           value={props.value} />
         }
       </div>

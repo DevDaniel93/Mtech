@@ -112,31 +112,7 @@ export const UnitReportManagement = () => {
     {
       code: 2024,
       name: '2024'
-    },
-    {
-      code: 2025,
-      name: '2025'
-    },
-    {
-      code: 2026,
-      name: '2026'
-    },
-    {
-      code: 2027,
-      name: '2027'
-    },
-    {
-      code: 2028,
-      name: '2028'
-    },
-    {
-      code: 2029,
-      name: '2029'
-    },
-    {
-      code: 2030,
-      name: '2030'
-    },
+    }
     
   ]
 

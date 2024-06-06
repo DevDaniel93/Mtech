@@ -19,7 +19,7 @@ export const SelectBox = (props) => {
                     <option value={''}>{`Select ${props?.name}`}</option>
                     {Array.isArray(props.option) && props.option.map(item => (
                        
-                        <option value={!item.code ? item.id : item.code } >{item.name}</option>
+                        <option value={!item.code ? item?.id : item.code } >{item?.name}</option>
                     ))
                     }
                 </select>   

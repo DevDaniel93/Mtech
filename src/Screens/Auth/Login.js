@@ -49,7 +49,13 @@ const AdminLogin = () => {
                 localStorage.setItem('rolesPermission', JSON.stringify(responseData?.data?.permission))
 
                 document.querySelector('.loaderBox').classList.add("d-none");
-                navigate('/dashboard')
+                if(responseData?.data?.role == '6') {
+                    navigate('/user-management')
+                }
+                else {
+                    navigate('/dashboard')
+                }
+                
                 
             } else {
                 document.querySelector('.loaderBox').classList.add("d-none");

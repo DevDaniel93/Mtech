@@ -15,7 +15,7 @@ export const useApi = (endpoint) => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${LogoutData}`  
+            'Authorization': `Bearer ${LogoutData}`
           }
         });
 
@@ -47,7 +47,7 @@ export const usePost = (endpoint) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dataForm, setDataForm] = useState({});
- 
+
   const updateDataForm = (newData) => {
     setDataForm(newData);
   };
@@ -57,7 +57,7 @@ export const usePost = (endpoint) => {
     const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     document.querySelector('.loaderBox').classList.remove("d-none");
     async function fetchData() {
- 
+
 
       try {
         const response = await fetch(base_url + endpoint, {
@@ -72,30 +72,30 @@ export const usePost = (endpoint) => {
 
         if (!response.ok) {
           document.querySelector('.loaderBox').classList.add("d-none");
- 
+
           throw new Error('Network response was not ok');
         }
 
         const result = await response.json();
 
- 
+
         document.querySelector('.loaderBox').classList.add("d-none");
         setApiData(result);
 
- 
+
         setLoading(false);
       } catch (err) {
         document.querySelector('.loaderBox').classList.add("d-none");
- 
+
         setError(err);
       }
     }
 
- 
+
     fetchData();
   }, [endpoint, dataForm]);
 
- 
+
   return { apiData, loading, error, updateDataForm };
 };
 
@@ -108,14 +108,14 @@ export const useEditpost = (endpoint) => {
   const [editData, setEditData] = useState('');
 
   const editParam = (editValue) => {
-        setEditData(editValue)
+    setEditData(editValue)
   }
   useEffect(() => {
     const LogoutData = localStorage.getItem('login');
     const base_url = `${process.env.REACT_APP_API_URL}/public/api/`
     document.querySelector('.loaderBox').classList.remove("d-none");
     async function fetchData() {
- 
+
 
       try {
         const response = await fetch(base_url + endpoint + editData, {
@@ -123,7 +123,7 @@ export const useEditpost = (endpoint) => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${LogoutData}`  
+            'Authorization': `Bearer ${LogoutData}`
           },
         });
 
@@ -135,21 +135,21 @@ export const useEditpost = (endpoint) => {
 
         const result = await response.json();
 
- 
+
         document.querySelector('.loaderBox').classList.add("d-none");
         setApiData(result);
 
-         setLoading(false);
+        setLoading(false);
       } catch (err) {
         document.querySelector('.loaderBox').classList.add("d-none");
-          setError(err);
+        setError(err);
       }
     }
 
-      fetchData();
+    fetchData();
   }, [endpoint, editData]);
 
- 
+
   return { apiData, loading, error, editParam };
 };
 
@@ -162,9 +162,9 @@ export const usePostUpdate = (endpoint) => {
   const [editData, setEditData] = useState('');
 
   const editParam = (editValue) => {
-        setEditData(editValue)
+    setEditData(editValue)
   }
- 
+
   const updateDataForm = (newData) => {
     setDataForm(newData);
   };
@@ -182,33 +182,33 @@ export const usePostUpdate = (endpoint) => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${LogoutData}` 
+            'Authorization': `Bearer ${LogoutData}`
           },
           body: JSON.stringify(dataForm)
         });
 
         if (!response.ok) {
           document.querySelector('.loaderBox').classList.add("d-none");
- 
+
           throw new Error('Network response was not ok');
         }
 
         const result = await response.json();
- 
+
         document.querySelector('.loaderBox').classList.add("d-none");
         setApiData(result);
- 
+
         setLoading(false);
       } catch (err) {
         document.querySelector('.loaderBox').classList.add("d-none");
-          setError(err);
+        setError(err);
       }
     }
 
- 
+
     fetchData();
   }, [endpoint, dataForm]);
- 
+
   return { apiData, loading, error, updateDataForm, editParam };
 };
 

@@ -29,11 +29,11 @@ export const UnitListing = () => {
   const [userForm, setUserFrom] = useState(false);
   const [idUser, setIdUser] = useState(0);
   const [brands, setBrands] = useState({});
-  const [status , setStatus] = useState() 
+  const [status, setStatus] = useState()
   const editBrandList = [];
   const [formData, setFormData] = useState({
     name: '',
-    // status: 1,
+    // status: "true",
     brands: []
   });
 
@@ -46,11 +46,11 @@ export const UnitListing = () => {
   const optionData = [
     {
       name: "Active",
-      code: "1"
+      id: 1
     },
     {
       name: "Inactive",
-      code: "0"
+      id: 0
     },
   ]
 
@@ -62,7 +62,7 @@ export const UnitListing = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing?active=true`,
       {
         method: 'GET',
         headers: {
@@ -122,11 +122,11 @@ export const UnitListing = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setItemsPerPage(data?.units.length);
         setData(data.units);
-        
+
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
-   
+
       })
   }
 
@@ -171,13 +171,13 @@ export const UnitListing = () => {
     if (brands.hasOwnProperty(key)) {
       const item = brands[key];
 
-   
+
       const option = {
-        value: item.id, 
-        label: item.name, 
+        value: item.id,
+        label: item.name,
       };
 
-    SelectOptions.push(option);
+      SelectOptions.push(option);
     }
   }
 
@@ -233,20 +233,20 @@ export const UnitListing = () => {
         return response.json()
       })
       .then((data) => {
-    
+
         setIdUser(unitID)
- 
-        data.unit[0].unit_brands.map((item)=>{
+
+        data.unit[0].unit_brands.map((item) => {
           const editData = {
-            value: item.brands.id, 
-            label: item.brands.name, 
+            value: item.brands.id,
+            label: item.brands.name,
           };
           editBrandList.push(editData)
         })
         setFormData({
           ...formData,
           name: data.unit[0].name,
-          status: data.status,
+          status: data.unit[0].status,
           brands: editBrandList
         });
 
@@ -286,7 +286,7 @@ export const UnitListing = () => {
       })
       .catch((error) => {
         document.querySelector('.loaderBox').classList.add("d-none");
-   
+
       })
   }
 
@@ -306,10 +306,10 @@ export const UnitListing = () => {
                   </div>
                   <div className="col-md-6 mb-2">
                     <div className="addUser">
-                     {permission?.units.create === true ? 
-                      <CustomButton text="Add Unit" variant='primaryButton' onClick={() => {
-                        setUser(true)
-                      }} /> : ""} 
+                      {permission?.units.create === true ?
+                        <CustomButton text="Add Unit" variant='primaryButton' onClick={() => {
+                          setUser(true)
+                        }} /> : ""}
                       <CustomInput type="text" placeholder="Search Here..." value={inputValue} inputClass="mainInput" onChange={handleChange} />
                     </div>
                   </div>
@@ -329,7 +329,7 @@ export const UnitListing = () => {
                             </td>
                             <td className="text-capitalize">
                               {item?.unit__brands.map((brandItem, i, array) => (
-                                <span className={i === array.length - 1 && i != 0 ? '' : 'p-2'} key={i}>{brandItem.brands.name}</span>
+                                <span className={i === array.length - 1 && i != 0 ? '' : 'p-2'} key={i}>{brandItem?.brands?.name}</span>
                               )
 
                               )}
@@ -341,10 +341,10 @@ export const UnitListing = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-{permission?.units.update ?                                  <button onClick={() => {
+                                  {permission?.units.update ? <button onClick={() => {
                                     editUnit(item.id)
                                     setUserFrom(true)
-                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>:" "}
+                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button> : " "}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
@@ -378,7 +378,7 @@ export const UnitListing = () => {
               value={formData.name}
               onChange={(event) => {
                 setFormData({ ...formData, name: event.target.value });
-        
+
               }}
 
 
@@ -409,7 +409,7 @@ export const UnitListing = () => {
               value={formData.name}
               onChange={(event) => {
                 setFormData({ ...formData, name: event.target.value });
-        
+
               }}
 
             />
@@ -424,11 +424,22 @@ export const UnitListing = () => {
                 onChange={handleChangeSelect}
               />
             </div>
+            <SelectBox
+              label="Select Status"
+              value={formData?.status}
+              option={optionData}
+              name="status"
+              selectClass="mainInput"
+              onChange={(event) => {
+                setFormData({ ...formData, status: event.target.value });
+
+              }}
+            />
             <CustomButton variant='primaryButton' text='Update' type='button' onClick={handleEditSubmit} />
           </CustomModal>
 
 
-          <CustomModal show={showModal} status={status}  close={() => { setShowModal(false) }} success heading='Unit added Successfully.' />
+          <CustomModal show={showModal} status={status} close={() => { setShowModal(false) }} success heading='Unit added Successfully.' />
 
         </div>
       </DashboardLayout>

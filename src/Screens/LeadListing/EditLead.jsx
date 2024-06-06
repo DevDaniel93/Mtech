@@ -12,7 +12,7 @@ export const EditLead = () => {
     const [remainingWords, setRemainingWords] = useState(1000);
 
     const [remainingNumber, setRemainingNumber] = useState(12);
-    const [status , setStatus] = useState()
+    const [status, setStatus] = useState()
 
     const [successStatus, setSuccessStatus] = useState('Server Error!');
     const { id } = useParams();
@@ -26,7 +26,7 @@ export const EditLead = () => {
     const [unit, setUnit] = useState({});
     const [sourcename, setSorceName] = useState();
 
-   
+
 
     const fectchBrandData = (brandID) => {
         const LogoutData = localStorage.getItem('login');
@@ -145,7 +145,7 @@ export const EditLead = () => {
 
             })
     }
- 
+
 
     const LogoutData = localStorage.getItem('login');
 
@@ -156,17 +156,17 @@ export const EditLead = () => {
         for (const key in formData) {
             if (
                 //    formData[key] == formData.source =='' ||
-            // formData.amount == '' ||
+                // formData.amount == '' ||
                 formData.brand === '' ||
                 formData.product === '' ||
                 formData.email === '' ||
                 formData.name === '' ||
                 formData.phone === '' ||
-                formData.description === '' 
-   
+                formData.description === ''
+
             ) {
-              
- 
+
+
                 return;
             }
         }
@@ -178,13 +178,13 @@ export const EditLead = () => {
 
 
         document.querySelector('.loaderBox').classList.remove("d-none");
-         fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-add-edit/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-add-edit/${id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${LogoutData}`
             },
-            body: formDataMethod  
+            body: formDataMethod
         })
             .then((response) => {
                 return response.json();
@@ -194,7 +194,7 @@ export const EditLead = () => {
                 data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
                 setShowModal(true)
                 setStatus(data?.status)
- 
+
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -210,7 +210,7 @@ export const EditLead = () => {
         fetchSourceData()
 
     }, [])
- 
+
 
 
     const userData = (uniID) => {
@@ -287,7 +287,7 @@ export const EditLead = () => {
                     [name]: value,
                 }));
             } else if (
-                // name === 'phone' ||
+                name === 'phone' ||
                 name === 'quoted_amount' ||
                 name === 'received' ||
                 name === 'recovery'
@@ -304,22 +304,22 @@ export const EditLead = () => {
                     setRemainingNumber(0);
                 }
             } else {
-                 const defaultCharacterLimit = 20;
+                const defaultCharacterLimit = 20;
 
                 if (value.length <= defaultCharacterLimit) {
                     setFormData((prevData) => ({
                         ...prevData,
                         [name]: value,
                     }));
-                  
+
                 }
             }
         }
     };
-    const isReceivedEmpty = formData.received === '';
-    const isRecoveryEmpty = formData.recovery === '';
+    const isReceivedEmpty = formData.received == '';
+    const isRecoveryEmpty = formData.recovery == '';
 
-console.log("formData" , formData)
+    console.log("formData", formData)
     return (
         <>
             <DashboardLayout>
@@ -333,7 +333,7 @@ console.log("formData" , formData)
                         </div>
                     </div>
                     <div className="row">
-                      
+
                         <div className="col-md-4 mb-4">
                             <SelectBox
                                 type='text'
@@ -503,6 +503,22 @@ console.log("formData" , formData)
                             />
 
                         </div>
+                        <div className="col-md-4 mb-4">
+                            <CustomInput
+                                required
+                                label="Date"
+                                id="date"
+                                type="date"
+                                placeholder="date"
+                                labelClass="mainLabel"
+                                inputClass="mainInput"
+                                name="date"
+                                value={formData?.date}
+                                onChange={handleChange}
+
+                            />
+
+                        </div>
                         <div className="col-md-12 mb-4">
                             <div className="inputWrapper">
 
@@ -529,11 +545,11 @@ console.log("formData" , formData)
                         </div>
                     </div>
                 </div>
-                <CustomModal   status={status} show={showModal} close={() => {
+                <CustomModal status={status} show={showModal} close={() => {
                     setShowModal(false);
                     goBack();
-                    
-                }} success     heading={successStatus} />
+
+                }} success heading={successStatus} />
 
             </DashboardLayout>
         </>

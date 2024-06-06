@@ -32,18 +32,20 @@ export const UsertargetDetails = () => {
     const { apiData: unitListing, loading: unitLoading } = useApi('admin/unit-listing');
     const { apiData: userListing, loading: userLoading } = useApi('admin/user-units');
 
+    const [dataTarget, setDataTarget] = useState();
+
     const unitValue = [];
- 
+
 
     const username = []
- 
-    
+
+
     useEffect(() => {
         setUser(userListing?.data)
     }, [userListing])
 
 
- 
+
 
     useEffect(() => {
         setUnits(unitListing?.units)
@@ -54,7 +56,7 @@ export const UsertargetDetails = () => {
         const option = {
             code: units[key].id,
             name: units[key].name
-           
+
         }
 
         unitValue.push(option)
@@ -89,6 +91,7 @@ export const UsertargetDetails = () => {
     }
 
     const editDetailData = () => {
+
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Lead Management Detail';
         document.querySelector('.loaderBox').classList.remove("d-none");
@@ -107,15 +110,16 @@ export const UsertargetDetails = () => {
             })
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-          
+
 
                 setLeadData(data.data)
                 setFormData(data.data)
+                setDataTarget(data?.data?.targets)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
- 
+
             })
     }
 
@@ -123,7 +127,7 @@ export const UsertargetDetails = () => {
         editDetailData()
     }, []);
 
-  
+
 
     const monthList = [
         {
@@ -176,7 +180,7 @@ export const UsertargetDetails = () => {
     ]
 
 
- 
+
     const maleHeaders = [
         {
             key: "id",
@@ -190,10 +194,10 @@ export const UsertargetDetails = () => {
             key: "target",
             title: "Target",
         },
-        // {
-        //     key: "targetscore",
-        //     title: "Target Score",
-        // },
+        {
+            key: "targetscore",
+            title: "Target Score",
+        },
         {
             key: "month",
             title: "Month"
@@ -214,11 +218,14 @@ export const UsertargetDetails = () => {
     ];
 
 
+
+
     const LogoutData = localStorage.getItem('login');
     const handleEdit = (event) => {
         event.preventDefault();
+
         const userId = leadData?.id
- 
+
         fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/usertarget-add-edit/${id}`,
             {
                 method: 'POST',
@@ -252,7 +259,7 @@ export const UsertargetDetails = () => {
 
 
     const fetchUserData = () => {
-      
+
         document.querySelector('.loaderBox').classList.remove("d-none");
         fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${formData?.unit_id}`,
             {
@@ -269,19 +276,19 @@ export const UsertargetDetails = () => {
                 response.json()
             )
             .then((data) => {
-            
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setUserData(data?.data)
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-           
+
             })
     }
 
- 
- 
- 
+
+
+
     useEffect(() => {
         fetchUserData();
     }, [formData?.unit_id]);
@@ -344,6 +351,35 @@ export const UsertargetDetails = () => {
 
                         </div>
                     </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <h2 className="mainTitle">
+                                Target History
+                            </h2>
+                            <CustomTable
+                                headers={maleHeaders}
+
+                            >
+                                <tbody>
+                                    {dataTarget?.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td className="text-capitalize">
+                                                {item?.user_detail?.name}
+                                            </td>
+                                            <td>{`$ ${item?.target}`}</td>
+                                            <td>{`$ ${item?.score_target}`}</td>
+                                            <td>{month[item?.month]}</td>
+                                            <td>{item?.year}</td>
+                                            <td className={item?.status == 1 ? 'greenColor' : "redColor"}>{item?.status == 1 ? 'Active' : "Inactive"}</td>
+
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </CustomTable>
+                        </div>
+                    </div>
                 </div>
 
                 <CustomModal show={showModal} close={() => { setShowModal(false) }} action={inActive} heading='Are you sure you want to mark this user as inactive?' />
@@ -353,6 +389,7 @@ export const UsertargetDetails = () => {
                 <CustomModal show={showModal4} close={() => { setShowModal4(false) }} success heading='Marked as Active' />
 
                 <CustomModal show={editModal} close={() => { setEditModal(false) }} heading="Edit Target" >
+
 
 
 
@@ -409,7 +446,7 @@ export const UsertargetDetails = () => {
                         label="Select Month"
                         required
                         value={formData?.month}
-                        disabled
+                        // disabled
                         option={monthList}
                         onChange={(event) => {
                             setFormData({ ...formData, month: event.target.value });
@@ -417,8 +454,10 @@ export const UsertargetDetails = () => {
 
                     />
 
+                    {/* <CustomButton variant='primaryButton' text='Edit' type='button' onClick={handleEdit} /> */}
 
-                    <CustomButton variant='primaryButton' text='Edit' type='button' onClick={handleEdit} />
+                    <CustomButton variant='primaryButton' text='Update' type='button' onClick={handleEdit} />
+
                 </CustomModal>
             </DashboardLayout>
         </>

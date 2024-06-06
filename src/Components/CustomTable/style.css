@@ -1,6 +1,3 @@
-.customTable {
-    overflow-x: auto;
-}
 
 .arrowTables {
     position: absolute;
@@ -83,4 +80,12 @@ th {
     font-size: 15px;
     margin-right: 0.5rem;
     width: 1rem;
+}
+
+
+@media(max-width: 799px) {
+    .customTable {
+        overflow-x: auto;
+    }
+    
 }

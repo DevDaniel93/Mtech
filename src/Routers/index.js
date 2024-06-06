@@ -41,6 +41,8 @@ import { EditReversal } from "../Screens/ReversalManagement/EditReversal";
 
 import { ReportManagement } from "../Screens/ReportManagement";
 import { UnitReportManagement } from "../Screens/UnitReportManagement";
+import { AccountManagement } from "../Screens/AccountManagement";
+import { AccountDetail } from "../Screens/AccountManagement/AccountDetail";
 
 import { BrandListing } from "../Screens/BrandListing";
 import { SourceManagement } from "../Screens/SourceManagement";
@@ -111,6 +113,9 @@ export default function AdminRouter() {
 
         <Route path="/Usertarget-listing" element={<ProtectedRoutes Components={UserTarget} />} />
         <Route path="/target-listing/usertarget-detail/:id" element={<ProtectedRoutes Components={UsertargetDetails} />} />
+
+        <Route path="/account-management" element={<ProtectedRoutes Components={AccountManagement} />} />
+        <Route path="/account-management/account-detail/:id" element={<ProtectedRoutes Components={AccountDetail} />} />
 
 
 

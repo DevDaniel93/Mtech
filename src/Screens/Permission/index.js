@@ -73,43 +73,6 @@ export const Permission = () => {
     console.log("initalRole", initalRole)
 
 
-    // const leadData = () => {
-
-
-
-    //     const LogoutData = localStorage.getItem('login');
-    //     document.querySelector('.loaderBox').classList.remove("d-none");
-    //     fetch(`${process.env.REACT_APP_API_URL}/public/api/get-permissions?role=4&child_role=1`,
-    //         {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${LogoutData}`
-    //             },
-    //         }
-    //     )
-
-    //         .then(response =>
-    //             response.json()
-    //         )
-    //         .then((data) => {
-
-    //             document.querySelector('.loaderBox').classList.add("d-none");
-    //             setData(data.leads);
-    //             setPermission(data?.permission)
-    //         })
-    //         .catch((error) => {
-    //             document.querySelector('.loaderBox').classList.add("d-none");
-
-    //         })
-
-    // }
-
-
-
-
-
 
     const fectchBrandData = () => {
         const LogoutData = localStorage.getItem('login');
@@ -309,17 +272,20 @@ export const Permission = () => {
             setChildpermission(true)
 
             setroles(value)
-            console.log("permissionname ", name)
+            console.log("permissionname ", initalRoles)
 
-        }
+        } 
         if (name == 'permission' && value == 1 || name == 'permission' && value == 2 || name == 'permission' && value == 3) {
-
+            // alert(initalRoles)
             setChrildrole(value)
+
+            console.log('child', childrole)
         }
 
-        if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
+        if (name == 'user_role' && value == 3 || name == 'user_role' && value == 6) {
             setChildpermission(false)
             setroles(value)
+            setChrildrole('');
         }
 
         setFormData((prevData) => ({

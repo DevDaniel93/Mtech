@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
@@ -29,6 +29,93 @@ export const UserReportManagement = () => {
   const [total, setTotal] = useState();
   const [allTotal, setAllTotal] = useState();
 
+  const [userList, setUserList] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [showList, setShowList] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const inputRef = useRef(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setShowList(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex < filteredUsers.length - 1 ? prevIndex + 1 : prevIndex
+      );
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setSelectedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
+    } else if (event.key === 'Enter' && selectedIndex !== -1) {
+      event.preventDefault();
+      handleUserSelect(filteredUsers[selectedIndex]);
+    }
+  };
+
+
+  useEffect(() => {
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-listing`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
+    )
+
+      .then(response =>
+        response.json()
+      )
+      .then((data) => {
+
+        document.querySelector('.loaderBox').classList.add("d-none");
+        setUserList(data.users);
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+
+      })
+  }, []);
+
+  useEffect(() => {
+    // Filter user list based on input value
+    const filtered = userList.filter(user =>
+      user.name.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setFilteredUsers(filtered);
+  }, [inputValue, userList]);
+
+  // const handleInputChange = event => {
+  //   setInputValue(event.target.value);
+  // };
+
+  const handleUserSelect = user => {
+    // setInputValue(user.name); // Set input value to the selected user name
+
+    setFormData({
+      ...formData, search: user.name
+    })
+    // Do something with the selected user, such as displaying more details or triggering an action
+  };
 
   const SelectOptions = []
   for (const key in initialunit) {
@@ -51,115 +138,12 @@ export const UserReportManagement = () => {
   };
 
 
-  const monthList = [
-    {
-      code: 1,
-      name: 'January'
-    },
-    {
-      code: 2,
-      name: 'Feburay'
-    }, {
-      code: 3,
-      name: 'March'
-    },
-    {
-      code: 4,
-      name: 'April'
-    },
-    {
-      code: 5,
-      name: 'May'
-    },
-    {
-      code: 6,
-      name: 'June'
-    },
-    {
-      code: 7,
-      name: 'July'
-    },
-    {
-      code: 8,
-      name: 'August'
-    },
-    {
-      code: 9,
-      name: 'September'
-    },
-    {
-      code: 10,
-      name: 'October'
-    },
-    {
-      code: 11,
-      name: 'November'
-    },
-    {
-      code: 12,
-      name: 'December'
-    }
-  ]
-
-
-
-
-  const YearList = [
-    {
-      code: 2020,
-      name: '2020'
-    }, {
-      code: 2021,
-      name: '2021'
-    },
-    {
-      code: 2022,
-      name: '2022'
-    },
-    {
-      code: 2023,
-      name: '2023'
-    },
-    {
-      code: 2024,
-      name: '2024'
-    },
-    {
-      code: 2025,
-      name: '2025'
-    },
-    {
-      code: 2026,
-      name: '2026'
-    },
-    {
-      code: 2027,
-      name: '2027'
-    },
-    {
-      code: 2028,
-      name: '2028'
-    },
-    {
-      code: 2029,
-      name: '2029'
-    },
-    {
-      code: 2030,
-      name: '2030'
-    },
-
-  ]
-
-  // const handleChange = (e) => {
-  //  setFormData(e.target.value);
-  // }
-
-
 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    setInputValue(event.target.value);
 
 
     setFormData((prevData) => ({
@@ -169,65 +153,6 @@ export const UserReportManagement = () => {
 
   };
 
-
-
-  const fectchBrandData = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/brand-listing`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
-
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-
-        document.querySelector('.loaderBox').classList.add("d-none");
-        setBrands(data.brands);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-
-      })
-  }
-
-
-  const fetchUnitData = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
-
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
-
-        document.querySelector('.loaderBox').classList.add("d-none");
-        setUnit(data.units);
-        setItemsPerPage(data.units.length);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-
-      })
-  }
 
 
 
@@ -270,8 +195,8 @@ export const UserReportManagement = () => {
 
   useEffect(() => {
     document.title = 'Mt Records | Report Management';
-    fectchBrandData()
-    fetchUnitData()
+    // fectchBrandData()
+    // fetchUnitData()
 
   }, []);
 
@@ -312,10 +237,10 @@ export const UserReportManagement = () => {
       key: "acheived",
       title: "ACHEIVED",
     },
-    {
-      key: "should_be_at",
-      title: "SHOULD BE AT",
-    },
+    // {
+    //   key: "should_be_at",
+    //   title: "SHOULD BE AT",
+    // },
 
 
 
@@ -338,9 +263,38 @@ export const UserReportManagement = () => {
                     <h2 className="mainTitle">User Reports Management</h2>
                   </div>
                   <div className="col-md-6 mb-2">
-                    <div className="addUser align-items-center">
-                      <CustomInput type="text" placeholder="Search Here..." name="search" value={formData.search} inputClass="mainInput" onChange={handleChange} />
-                      <CustomButton variant='primaryButton' text='Search' type='button' onClick={fetchData} />
+                    <div className="addUser align-items-center" ref={inputRef}>
+                      <CustomInput
+                        type="text"
+                        placeholder="Search Here..."
+                        name="search"
+                        value={formData.search}
+                        inputClass="mainInput"
+                        onChange={handleChange}
+                        onFocus={() => setShowList(true)}
+                        onKeyDown={handleKeyDown} // Add keydown event handler
+                      />
+                      <CustomButton
+                        variant="primaryButton"
+                        text="Search"
+                        type="button"
+                        onClick={fetchData}
+                      />
+                    </div>
+                    <div className="position-relative">
+                      {showList && (
+                        <ul className="searchList">
+                          {filteredUsers.map((user, index) => (
+                            <li
+                              key={user.id}
+                              onClick={() => handleUserSelect(user)}
+                              className={selectedIndex === index ? 'selected' : ''}
+                            >
+                              {user.name}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -358,14 +312,14 @@ export const UserReportManagement = () => {
                             </td>
 
 
-                            <td>{`$ ${item?.target}`}</td>  
+                            <td>{`$ ${item?.target}`}</td>
                             <td>{`$ ${item?.gross_sum}`}</td>
                             <td>{`$ ${item?.refunds}`}</td>
                             <td>{`$ ${item?.reversal}`}</td>
                             <td>{`$ ${item?.purchase}`}</td>
                             <td>{`$ ${item?.net}`}</td>
                             <td>{item?.achived}</td>
-                            <td>{item?.should_be_at}</td>
+                            {/* <td>{item?.should_be_at}</td> */}
                           </tr>
                         ))}
                       </tbody>
@@ -374,11 +328,11 @@ export const UserReportManagement = () => {
                         {allTotal?.map((item, index) => (
                           <tr>
                             <td className="text-capitalize">
-                            <p className="totalAmountWorth"><span className="font-weight-bold">Total</span></p>
+                              <p className="totalAmountWorth"><span className="font-weight-bold">Total</span></p>
                             </td>
 
 
-                            <td>{`$ ${item?.target_total}`}</td>  
+                            <td>{`$ ${item?.target_total}`}</td>
                             <td>{`$ ${item?.gross_sum_total}`}</td>
                             <td>{`$ ${item?.refunds_total + item?.chargeback_total}`}</td>
                             <td>{`$ ${item?.reversal_total}`}</td>

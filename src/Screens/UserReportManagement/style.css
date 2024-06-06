@@ -4,6 +4,29 @@
 }
 
 
+.searchList {
+    position: absolute;
+    list-style: none;
+    padding-left: 0px;
+    background-color: #fff;
+    z-index: 9;
+    width: 265px;
+    top: 3px;
+    height: 220px;
+    overflow-y: auto;
+    max-width: 100%;
+}
+
+.searchList li {
+    line-height: 1.9;
+    padding: 5px 10px;
+}
+
+li.selected, .searchList li:hover {
+    background-color: whitesmoke;
+}
+
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
         border-color: #fff0;

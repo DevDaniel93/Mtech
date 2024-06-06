@@ -5,22 +5,65 @@ import { DashboardLayout } from "./../../Components/Layout/DashboardLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleDown,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { CChart } from "@coreui/react-chartjs";
 import { SelectBox } from "../../Components/CustomSelect";
-import {useApi} from "../../Api";
+import { useApi } from "../../Api";
+import CustomInput from "../../Components/CustomInput"
 
 import "./style.css";
+import CustomButton from "../../Components/CustomButton";
 
 export const Dashboard = () => {
   const [data, setData] = useState('');
-  const [lead, setLead] = useState('');
-  const [recived, setReceived] = useState('');
-  const [amount, setAmount] = useState('');
-  // const { apiData: leadsAmountData, loading: dataLoading } = useApi('admin/leads-amount');
-  // const { apiData: leadsAmountMonthlyData, loading: leadLoading} = useApi('admin/leads-amount-monthly');
-  // const { apiData: leadsAmountReceivedData, loading: receivedLoading} = useApi('admin/leads-amount-received');
-  // const { apiData: leadsAmountReceivedMonthlyData, loading: AmountLoading } = useApi('admin/leads-amount-received-monthly');
+  const [formData, setFormData] = useState({
+    current_date: false,
+    last_date: false,
+  });
+
+  const currentData = () => {
+
+    if (!formData.last_date) {
+      setFormData({
+        ...formData,
+        last_date: formData?.current_date
+      });
+    }
+
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/get-dashboard-table?current_date=${formData?.current_date}&last_date=${formData?.last_date}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
+    )
+
+      .then(response =>
+        response.json()
+      )
+      .then((data) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+        setData(data);
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+      })
+  }
+
+
+
+  const handleSearch = () => {
+    currentData()
+  }
 
 
   useEffect(() => {
@@ -29,143 +72,168 @@ export const Dashboard = () => {
   }, []);
 
 
-  // useEffect(() => {
-  //   setData(leadsAmountData)
-  //   setLead(leadsAmountMonthlyData)
-  //   setReceived(leadsAmountReceivedData)
-  //   setAmount(leadsAmountReceivedMonthlyData)
+  useEffect(() => {
+    currentData()
 
-  // }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
+  }, [])
+
+  const handleChange = (e) => {
+    // currentData(e.target.value)
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    console.log(formData);
+  }
+
 
 
   return (
     <>
       <DashboardLayout>
-        <div className="container-fluid">
-          <div className="row mb-3">
-            <div className="col-12">
-              {/* <div className="dashCard">
-                <div className="row">
-                  <div className="col-xl-4 col-md-6 stats">
-                    <div className="statsCard">
-                      <div className="statsContent">
-                        <div className="statsData">
-                          {leadLoading ? 'Loading...' : <h3 className="statsNumber">{`$ ${data?.totalSum}`}</h3>}
-                          <p className="statsText">Total Amount</p>
-                        </div>
-                      </div>
-                      <div className="statsChange">
-                        <p>
-                          <FontAwesomeIcon
-                            icon={faArrowCircleDown}
-                            className="me-2 redColor"
-                          />
-
-                          100 %
-                        </p>
-                        <p>Since last week</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-4 col-md-6 stats">
-                    <div className="statsCard">
-                      <div className="statsContent">
-                        <div className="statsData">
-                          {receivedLoading ? 'Loading... ' : <h3 className="statsNumber">{`$ ${recived?.totalSumReceivedAmount}`}</h3>}
-                          <p className="statsText">Total Amount Recieved</p>
-                        </div>
-                      </div>
-                      <div className="statsChange">
-                        <p>
-                          <FontAwesomeIcon
-                            icon={faArrowCircleDown}
-                            className="me-2 redColor"
-                          />
-
-                          100 %
-                        </p>
-                        <p>Since last week</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-xl-4 col-md-6 stats">
-                    <div className="statsCard">
-                      <div className="statsContent">
-                        <div className="statsData">
-                          {AmountLoading ? 'Loading...' : 
-                          <h3 className="statsNumber">{`$ ${amount?.sumAmountMonthlyReceived}`}</h3>
-                          }
-                          <p className="statsText">Monthly Recieved</p>
-                        </div>
-                      </div>
-                      <div className="statsChange">
-                        <p>
-                          <FontAwesomeIcon
-                            icon={faArrowCircleDown}
-                            className="me-2 redColor"
-                          />
-
-                          100 %
-                        </p>
-                        <p>Since last week</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-            </div>
-          </div>
+        <div className="container-fluid statsBox">
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
-                <div className="d-flex flex-wrap justify-content-between">
-                  <h3 className="mainTitle">Total Sales</h3>
-                  <SelectBox selectClass="mainInput" name="Monthly" required option={'optionData'}
+                <div className="row mb-4 align-items-center justify-content-end">
+                  <div className="col-md-12 mb-4">
+                    <div className="row align-items-end justify-content-between">
+                      {data?.start_month && (
 
-                  />
-                </div>
-                <div className="graph-wrapper">
-                  <CChart
-                    type="line"
-                    height="90"
-                    options={{
-                      scales: {
-                        y: {
-                          suggestedMin: 0,
-                          suggestedMax: 40,
-                        },
-                      },
-                    }}
-                    data={{
-                      labels: ["Nov 2010"],
-                      tension: "0.5",
-                      datasets: [
-                        {
-                          label: "Total Amount",
+                        <div className="col-md-3">
+                          <h3 className="mainTitle">{`Month of ${data?.start_month} ${data?.start_year}`} {data?.end_month ? (<span>{`- ${data?.end_month} ${data?.end_year}`}</span>): ''}</h3>
+                        </div>
+                      )}
+                      <div className="col-md-9">
+                        <div className="row align-items-end justify-content-end">
+                          <div className="col-md-3 mb-2">
+                            <CustomInput
+                              label="Start Date"
+                              id="date"
+                              name="current_date"
+                              type="date"
+                              placeholder="date"
+                              labelClass="mainLabel"
+                              inputClass="mainInput"
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="col-md-3 mb-2">
+                            <CustomInput
+                              label="End Date"
+                              id="date"
+                              type="date"
+                              placeholder="date"
+                              name="last_date"
+                              labelClass="mainLabel"
+                              inputClass="mainInput"
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="col-md-1 px-md-0 mb-2">
+                            {/* {
+                          clear && (
+                            <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
+                          )
+                        } */}
+                            <CustomButton variant='primaryButton' className="searchBtn" type='button' onClick={handleSearch} icon={faMagnifyingGlass} />
+                          </div>
+                        </div>
 
-                          backgroundColor: "rgb(0 41 59 / 81%)",
-                          borderColor: "#00293B",
-                          pointBackgroundColor: "#00293B",
-                          pointBorderColor: "#00293B",
-                          borderWidth: 1,
-                          data: [35],
-                          tension: 0.5,
-                        },
-                        {
-                          label: "Amount Pending",
-                          backgroundColor: "rgb(1 22 215 / 81%)",
-                          borderColor: "#0116d7",
-                          pointBackgroundColor: "#0116d7",
-                          borderWidth: 1,
-                          pointBorderColor: "#0116d7",
-                          data: [20],
-                          tension: 0.5,
-                        },
-                      ],
-                    }}
-                  />
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div className="col-md-9">
+                    <div className="row">
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6 className="text-success">Total Gross</h6>
+                          <h5>{`$${data?.totals?.gross_amount}`}</h5>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6 className="text-danger">Total Refund</h6>
+                          <h5>{`$${data?.totals?.refund_amount}`}</h5>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6 className="text-ornage">Total CB</h6>
+                          <h5>{`$${data?.totals?.charge_back}`}</h5>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6>Total Purchase</h6>
+                          <h5>{`$${data?.totals?.purchase}`}</h5>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6>Total Reversal</h6>
+                          <h5>{`$${data?.totals?.reversal_amount}`}</h5>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="shadow p-2 rounded-3">
+                          <h6>Total Net</h6>
+                          <h5>{`$${data?.totals?.net}`}</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                 
+
+                {data?.data && data?.data?.map((item, index) => (
+                  <div className={`row mb-5 ${index % 2 === 0 ? '' : ''}`}>
+                    <div className="col-md-12">
+                      <h3 className="mainTitle mb-3 borderLine">{item?.unit_name}</h3>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6 className="text-success">Gross</h6>
+                        <h5>{`$${item?.gross_amount}`}</h5>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6 className="text-danger">Refund</h6>
+                        <h5>{`$${item?.refund_amount}`}</h5>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6 className="text-ornage">CB</h6>
+                        <h5>{`$${item?.charge_back}`}</h5>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6>Purchase</h6>
+                        <h5>{`$${item?.purchase}`}</h5>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6>Reversal</h6>
+                        <h5>{`$${item?.reversal_amount}`}</h5>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="shadow p-2 rounded-3">
+                        <h6>Net</h6>
+                        <h5>{`$${item?.net}`}</h5>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+
               </div>
             </div>
           </div>

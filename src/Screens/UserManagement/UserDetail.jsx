@@ -100,6 +100,10 @@ export const UserDetail = () => {
                                     <p className="secondaryText">User Role</p>
                                     <p>{user?.role?.name}</p>
                                 </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Show Reports</p>
+                                    <p>{user?.show_reports === 1 ? 'True' : 'False'}</p>
+                                </div>
 
                                 {
                                     user?.permission && (

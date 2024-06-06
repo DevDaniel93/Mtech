@@ -85,12 +85,12 @@ export const Sidebar = (props) => {
     const permissionData = localStorage.getItem('rolesPermission');
 
     setPermission(JSON.parse(permissionData))
-  
+
 
   }, []);
 
 
-  
+
   const role = localStorage.getItem('role');
   console.log("role", role)
   console.log("permission", permission)
@@ -147,22 +147,19 @@ export const Sidebar = (props) => {
       <img src={mtechlogo} className="mw-100 authLogo" />
       <div className={`sidebar  ${isShown ? '' : 'collapsed'} ${props.sideClass}`} id="sidebar">
         <ul className="list-unstyled" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
-          <li className="sidebar-li">
-            <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
-              <span className="sideIcon">
-                {/* <FontAwesomeIcon icon={faBorderAll} /> */}
-                <img src={dashboard} className="sideBarIcon" />
-              </span>
-              <span className="sideLinkText">Dashboard</span>
-            </Link>
-          </li>
-
-          {/* {role == 1 || role == 4 ? */}
-          <div>
-          </div>
-          {/* : " "} */}
-
-          {/* {role == 1 ? */}
+          {
+            role && role != 6 ? (
+              <li className="sidebar-li">
+                <Link className={`sideLink ${location.pathname.includes('/dashboard') ? 'active' : ''}`} to="/dashboard">
+                  <span className="sideIcon">
+                    {/* <FontAwesomeIcon icon={faBorderAll} /> */}
+                    <img src={dashboard} className="sideBarIcon" />
+                  </span>
+                  <span className="sideLinkText">Dashboard</span>
+                </Link>
+              </li>
+            ) : ''
+          }
           <div>
 
 
@@ -286,7 +283,7 @@ export const Sidebar = (props) => {
 
 
             <li className="sidebar-li">
-              {permission?.units?.read === true ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
+              {permission?.user_reports == 'true' ? <Link className={`sideLink ${location.pathname.includes('/user-report-management') ? 'active' : ''}`} to="/user-report-management">
                 <span className="sideIcon">
                   <img src={report} className="sideBarIcon" />
                 </span>
@@ -347,14 +344,16 @@ export const Sidebar = (props) => {
               </Link> : " "}
             </li>
             <li className="sidebar-li">
-              <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
-                <span className="sideIcon">
-                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
-                  {/*  */}
-                  <img src={target} className="sideBarIcon" />
-                </span>
-                <span className="sideLinkText">Targets</span>
-              </Link>
+
+              {permission?.unit_targets?.read === true || permission?.user_targets?.read === true ?
+                <Link className={`sideLink ${location.pathname.includes('/target-listing') ? 'active' : ''}`} to="/target-listing">
+                  <span className="sideIcon">
+                    {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                    {/*  */}
+                    <img src={target} className="sideBarIcon" />
+                  </span>
+                  <span className="sideLinkText">Targets</span>
+                </Link> : ''}
             </li>
 
 
@@ -365,6 +364,16 @@ export const Sidebar = (props) => {
                   <img src={report} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Report Management</span>
+              </Link> : " "}
+            </li>
+
+            <li className="sidebar-li">
+              {permission?.account_management === 'true' ? <Link className={`sideLink ${location.pathname.includes('/account-management') ? 'active' : ''}`} to="/account-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={Purchase} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Account Management</span>
               </Link> : " "}
             </li>
 

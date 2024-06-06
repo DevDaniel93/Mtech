@@ -7,6 +7,14 @@ input[type=number]::-webkit-inner-spin-button {
     display: none;
 }
 
+
+.commentData h6 {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+
 /* .verification-box input {
     width: 75px;
     height: 75px;

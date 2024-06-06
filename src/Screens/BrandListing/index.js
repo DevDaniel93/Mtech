@@ -28,6 +28,7 @@ export const BrandListing = () => {
   const [showModal, setShowModal] = useState(false);
   const [userForm, setUserFrom] = useState(false);
   const [idUser, setIdUser] = useState(0);
+  const [message, setMessage] = useState('Server Error!');
   const [formData, setFormData] = useState({
     name: '',
     status: 1
@@ -148,6 +149,7 @@ export const BrandListing = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
         setShowModal(true)
          setStatus(data?.status)
+         setMessage(data?.msg)
         setUser(false)
         setFormData({
           name: ''
@@ -306,7 +308,7 @@ export const BrandListing = () => {
                                
                                
                                
-                                {permission?.brands.delete === true ?    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
+                                {permission?.brands.delete === true ?    <button type="button" className="tableAction" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
@@ -376,7 +378,7 @@ export const BrandListing = () => {
             <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleEditSubmit} />
           </CustomModal>
 
-          <CustomModal   status={status} show={showModal} close={() => { setShowModal(false) }} success heading='Brand added Successfully.' />
+          <CustomModal   status={status} show={showModal} close={() => { setShowModal(false) }} success heading={message} />
 
 
         </div>

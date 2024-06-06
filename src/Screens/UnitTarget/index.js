@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom'
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV, faPencil, faRemove, faTimes, faFilter, faEye } from "@fortawesome/free-solid-svg-icons";
@@ -24,9 +24,11 @@ import { useApi, usePost, usePostUpdate } from "../../Api";
 import "./style.css";
 
 export const UnitTarget = () => {
+  const [successStatus, setSuccessStatus] = useState('Server Error!');
   const [userdata, setUserdata] = useState([]);
   const [data, setData] = useState([]);
   const [userinputValue, setuserInputValue] = useState('');
+  const [status, setStatus] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState();
 
@@ -36,6 +38,7 @@ export const UnitTarget = () => {
   const [units, setUnits] = useState({});
   const [addUser, setUser] = useState(false);
   const [addUsers, setUsers] = useState(false);
+  const [showerror, setShowerror] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [idUser, setIdUser] = useState();
   const { apiData: unitListing, loading: unitLoading } = useApi('admin/unit-listing');
@@ -60,6 +63,11 @@ export const UnitTarget = () => {
     targetUpdateData(editFormData);
   }
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1)
+  };
 
 
   const unitValue = [];
@@ -161,14 +169,15 @@ export const UnitTarget = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const filterUserdata = userdata.filter(item =>
-    item?.unit_detail?.name?.toLowerCase().includes(userValue.toLowerCase())
+  const filterUserdata = userdata?.filter(item =>
+    // (item?.unit_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase())) ||
+    (item?.user_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase()))
   );
 
 
-  const userindexOfLastItem = currentPage * itemsPerPage;
-  const userindexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const usercurrentItems = filterUserdata.slice(userindexOfFirstItem, userindexOfLastItem);
+  // const userindexOfLastItem = currentPage * itemsPerPage;
+  // const userindexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const usercurrentItems = filterUserdata.slice(userindexOfFirstItem, userindexOfLastItem);
 
 
 
@@ -243,7 +252,9 @@ export const UnitTarget = () => {
     document.title = 'Mt Records | Unit Target';
 
     fetchData()
-    
+    fetchuserData();
+    // fetchUserUnit()
+
   }, []);
 
   const maleHeaders = [
@@ -319,7 +330,7 @@ export const UnitTarget = () => {
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
-    setuserInputValue(event.target.value)
+    // setuserInputValue(event.target.value)
     const { name, value } = event.target;
     if (name === 'unit_id') {
       setViewleads(value);
@@ -372,7 +383,13 @@ export const UnitTarget = () => {
 
         fetchData()
         setUser(false)
-
+        data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
+        setStatus(data?.status)
+        setShowerror(true);
+        setTimeout(()=>{
+          setShowerror(false)
+        },1500)
+        console.log("data status", data?.status)
 
 
       })
@@ -407,8 +424,15 @@ export const UnitTarget = () => {
         fetchData()
         fetchuserData()
         setUsers(false)
+        data?.status ? setSuccessStatus(data?.msg) : setSuccessStatus(data?.msg)
+        setStatus(data?.status)
+        setShowerror(true);
+        setTimeout(()=>{
+          setShowerror(false)
+        },1500)
 
 
+        console.log(" status", data?.status)
 
       })
       .catch((error) => {
@@ -416,7 +440,6 @@ export const UnitTarget = () => {
 
       })
   }
-
 
 
 
@@ -457,7 +480,7 @@ export const UnitTarget = () => {
 
 
 
-  const fetchUserData = () => {
+  const fetchUserUnit = () => {
 
     document.querySelector('.loaderBox').classList.remove("d-none");
     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${viewleads}`,
@@ -485,9 +508,11 @@ export const UnitTarget = () => {
       })
   }
 
+
+
   useEffect(() => {
-    fetchUserData();
-  }, [viewleads]);
+    fetchUserUnit()
+  }, [viewleads])
 
 
 
@@ -513,7 +538,6 @@ export const UnitTarget = () => {
                       defaultActiveKey="unit"
                       id="uncontrolled-tab-example"
                       className="mb-3"
-                      onSelect={fetchuserData}
                     >
 
                       {unitpermission?.unit_targets.read && (
@@ -635,7 +659,7 @@ export const UnitTarget = () => {
 
                           >
                             <tbody>
-                              {usercurrentItems?.map((item, index) => (
+                              {filterUserdata?.map((item, index) => (
                                 <tr key={index}>
                                   <td>{index + 1}</td>
                                   <td className="text-uppercase">
@@ -728,6 +752,14 @@ export const UnitTarget = () => {
 
 
 
+
+
+
+
+
+
+
+
                     </Tabs>
 
 
@@ -741,7 +773,12 @@ export const UnitTarget = () => {
           </div>
 
 
-
+          <CustomModal
+            show={showerror}
+            status={status}
+            heading={successStatus}
+            close={() => { setShowerror(false) }} 
+          />
         </div>
 
 

@@ -122,31 +122,7 @@ export const ReportManagement = () => {
     {
       code: 2024,
       name: '2024'
-    },
-    {
-      code: 2025,
-      name: '2025'
-    },
-    {
-      code: 2026,
-      name: '2026'
-    },
-    {
-      code: 2027,
-      name: '2027'
-    },
-    {
-      code: 2028,
-      name: '2028'
-    },
-    {
-      code: 2029,
-      name: '2029'
-    },
-    {
-      code: 2030,
-      name: '2030'
-    },
+    }
 
   ]
 
@@ -213,7 +189,12 @@ export const ReportManagement = () => {
   }
 
 
-
+  const [target, setTarget] = useState();
+  const [gross, setGross] = useState();
+  const [refund, setRefund] = useState();
+  const [reversal, setReversal] = useState();
+  const [purchase, setPurchase] = useState();
+  const [net, setNet] = useState();
 
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
@@ -235,31 +216,33 @@ export const ReportManagement = () => {
     formDataMethod.append('unit_id', JSON.stringify(formData?.unit_id));
 
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate`,
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-        body: formDataMethod
-
-      }
-    )
-
-      .then(response =>
-        response.json()
-      )
-      .then((data) => {
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-sheets-generate`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${LogoutData}`
+      },
+      body: formDataMethod
+    })
+      .then(response => response.json())
+      .then(data => {
         document.querySelector('.loaderBox').classList.add("d-none");
 
         setData(data?.data);
         setTotal(data?.total);
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
 
+        // Calculate total
+        setTarget(data?.data.reduce((acc, item) => acc + (item?.target || 0), 0))
+        setGross(data?.data.reduce((acc, item) => acc + (item?.gross_sum || 0), 0))
+        setRefund(data?.data.reduce((acc, item) => acc + ((item?.refunds || 0) + (item?.chargeback || 0)), 0));
+        setPurchase(data?.data.reduce((acc, item) => acc + (item?.purchase || 0), 0))
+        setReversal(data?.data.reduce((acc, item) => acc + (item?.reversal || 0), 0))
+        setNet(data?.data.reduce((acc, item) => acc + (item?.net || 0), 0))
       })
+      .catch(error => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+      });
+
   }
 
   useEffect(() => {
@@ -306,10 +289,10 @@ export const ReportManagement = () => {
       key: "acheived",
       title: "ACHEIVED",
     },
-    {
-      key: "should_be_at",
-      title: "SHOULD BE AT",
-    },
+    // {
+    //   key: "should_be_at",
+    //   title: "SHOULD BE AT",
+    // },
 
 
 
@@ -407,9 +390,23 @@ export const ReportManagement = () => {
                             <td>{`$ ${item?.purchase}`}</td>
                             <td>{`$ ${item?.net}`}</td>
                             <td>{item?.achived}</td>
-                            <td>{item?.should_be_at}</td>
+                            {/* <td>{item?.should_be_at}</td> */}
                           </tr>
                         ))}
+
+                        {target && (
+                          <tr>
+                            <td><h6 className="font-weight-bold mb-0">Total:</h6></td>
+                            <td></td>
+                            <td className="font-weight-bold">{`$${target}`}</td>
+                            <td className="font-weight-bold">{`$${gross}`}</td>
+                            <td className="font-weight-bold">{`$${refund}`}</td>
+                            <td className="font-weight-bold">{`$${reversal}`}</td>
+                            <td className="font-weight-bold">{`$${purchase}`}</td>
+                            <td className="font-weight-bold">{`$${net}`}</td>
+                            <td colSpan={2}></td>
+                          </tr>
+                        )}
                       </tbody>
 
 
@@ -418,13 +415,13 @@ export const ReportManagement = () => {
 
 
                   </div>
-                  <div className="d-flex justify-content-center">
+                  {/* <div className="d-flex justify-content-center">
                     {
                       total && (
                         <p className="totalAmountWorth"><span className="font-weight-bold">Total</span>{`$${total}`}</p>
                       )
                     }
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

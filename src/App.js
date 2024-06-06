@@ -10,51 +10,28 @@ function App() {
   //   const disableRightClick = (event) => {
   //     event.preventDefault();
   //   };
-  //   document.body.addEventListener('contextmenu', disableRightClick);
-  //   return () => {
-  //     document.body.removeEventListener('contextmenu', disableRightClick);
-  //   };
 
-  // }, []);
-
-
-  // useEffect(() => {
-  //   const handleKeyUp = (e) => {
-  //     const keyCode = e.keyCode ? e.keyCode : e.which;
-  //     if (keyCode === 44) {
-  //       stopPrntScr();
+  //   const handleKeyDown = (event) => {
+  //     if ((event.ctrlKey && event.shiftKey && event.keyCode === 73) ||  // Ctrl + Shift + I
+  //         (event.ctrlKey && event.keyCode === 85)) { // Ctrl + U (view source)
+  //       event.preventDefault();
   //     }
   //   };
 
-  //   document.addEventListener("keyup", handleKeyUp);
+  //   const handleContextMenu = (event) => {
+  //     event.preventDefault();
+  //   };
+
+  //   document.body.addEventListener('contextmenu', disableRightClick);
+  //   document.addEventListener('keydown', handleKeyDown);
+  //   document.addEventListener('contextmenu', handleContextMenu);
 
   //   return () => {
-  //     document.removeEventListener("keyup", handleKeyUp);
+  //     document.body.removeEventListener('contextmenu', disableRightClick);
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //     document.removeEventListener('contextmenu', handleContextMenu);
   //   };
   // }, []);
-
-  // const stopPrntScr = () => {
-  //   const inpFld = document.createElement("input");
-  //   inpFld.setAttribute("value", ".");
-  //   inpFld.setAttribute("width", "0");
-  //   inpFld.style.height = "0px";
-  //   inpFld.style.width = "0px";
-  //   inpFld.style.border = "0px";
-  //   document.body.appendChild(inpFld);
-  //   inpFld.select();
-  //   document.execCommand("copy");
-  //   inpFld.remove(inpFld);
-  // };
-
-  // const accessClipboardData = () => {
-  //   try {
-  //     window.clipboardData.setData('text', "Access Restricted");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // setInterval(accessClipboardData, 300);
 
 
  

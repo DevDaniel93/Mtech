@@ -28,6 +28,7 @@ export const TargetDetails = () => {
     const [leadData, setLeadData] = useState(false);
     const [formData, setFormData] = useState({});
     const [units, setUnits] = useState({});
+    const [dataTarget, setDataTarget] = useState();
     const { apiData: unitListing, loading: unitLoading } = useApi('admin/unit-listing');
 
     const unitValue = [];
@@ -94,15 +95,16 @@ export const TargetDetails = () => {
             })
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-             
+
 
                 setLeadData(data?.data)
                 setFormData(data?.data?.current_month_target)
+                setDataTarget(data?.data?.month_target)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-            
+
             })
     }
 
@@ -111,7 +113,7 @@ export const TargetDetails = () => {
     }, []);
 
 
-   
+
 
     const monthList = [
         {
@@ -176,10 +178,10 @@ export const TargetDetails = () => {
             key: "target",
             title: "Target",
         },
-        // {
-        //     key: "targetscore",
-        //     title: "Target Score",
-        // },
+        {
+            key: "targetscore",
+            title: "Target Score",
+        },
         {
             key: "month",
             title: "Month"
@@ -188,14 +190,6 @@ export const TargetDetails = () => {
             key: "year",
             title: "Year"
         },
-        // {
-        //     key: "status",
-        //     title: "Status",
-        // },
-        // {
-        //     key: "action",
-        //     title: "Action",
-        // },
 
     ];
 
@@ -219,13 +213,13 @@ export const TargetDetails = () => {
                 return response.json()
             })
             .then((data) => {
-          
+
                 editDetailData()
                 setEditModal(false)
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-        
+
             })
     }
 
@@ -271,7 +265,7 @@ export const TargetDetails = () => {
                                 </div> */}
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Unit Name:</p>
-                                    <p>{leadData?.name}</p>  
+                                    <p>{leadData?.name}</p>
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Current Month Target</p>
@@ -308,6 +302,35 @@ export const TargetDetails = () => {
 
                         </div>
                     </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <h2 className="mainTitle">
+                                Target History
+                            </h2>
+                            <CustomTable
+                                headers={maleHeaders}
+
+                            >
+                                <tbody>
+                                    {dataTarget?.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td className="text-capitalize">
+                                                {leadData?.name}
+                                            </td>
+                                            <td>{`$ ${item?.target}`}</td>
+                                            <td>{`$ ${item?.target_score}`}</td>
+                                            <td>{month[item?.month]}</td>
+                                            <td>{item?.year}</td>
+                                           
+
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </CustomTable>
+                        </div>
+                    </div>
                 </div>
 
                 <CustomModal show={showModal} close={() => { setShowModal(false) }} action={inActive} heading='Are you sure you want to mark this user as inactive?' />
@@ -326,11 +349,11 @@ export const TargetDetails = () => {
                         label="Select Unit"
                         labelClass='mainLabel'
                         required
-                        value={formData?.id}
+                        value={formData?.unit_id}
                         disabled
                         option={unitValue}
                         onChange={(event) => {
-                            setFormData({ ...formData, id: event.target.value });
+                            setFormData({ ...formData, unit_id: event.target.value });
 
                         }}
 
@@ -363,7 +386,7 @@ export const TargetDetails = () => {
                         name="target"
                         labelClass='mainLabel'
                         inputClass='mainInput'
-                        
+
                         value={parseInt(formData?.target)}
                         onChange={(event) => {
                             setFormData({ ...formData, target: event.target.value });

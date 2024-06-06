@@ -48,14 +48,14 @@ export const DetailListing = () => {
             })
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-               
+
 
                 setLead(data.leads)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-             
+
             })
     }, [id]);
 
@@ -74,17 +74,29 @@ export const DetailListing = () => {
                     </div>
                     <div className="row mb-3">
                         <div className="col-12">
-                        
+
 
 
                             <div className="row">
                                 <div className="col-md-4 mb-4">
-                                   <p className="secondaryText">Source Name</p>
-                                   <p>{lead?.getsource?.name}</p>
+                                    <p className="secondaryText">Lead Code:</p>
+                                    <p>{lead?.code}</p>
+
+
                                 </div>
                                 <div className="col-md-4 mb-4">
-                                   <p className="secondaryText">Product Name</p>
-                                   <p>{lead?.product}</p>
+                                    <p className="secondaryText">Date:</p>
+                                    <p>{lead?.date}</p>
+
+
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Source Name</p>
+                                    <p>{lead?.getsource?.name}</p>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Product Name</p>
+                                    <p>{lead?.product}</p>
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Email Address</p>
@@ -97,12 +109,12 @@ export const DetailListing = () => {
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Phone No</p>
                                     <p>{lead?.phone}</p>
-                                  
+
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Quoted Amount</p>
                                     <p>{`$ ${lead?.quoted_amount}`}</p>
-                                    
+
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Amount Recevied</p>
@@ -111,41 +123,36 @@ export const DetailListing = () => {
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Amount Recovery</p>
                                     <p>{`$ ${lead?.recovery}`}</p>
-                                
+
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Brand Name</p>
                                     <p>{lead?.getbrand?.name}</p>
-                                   
+
 
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Unit Name</p>
                                     <p>{lead?.unitdetail?.name}</p>
-                                
+
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Account Rep</p>
                                     <p>{lead?.accountrepdetail?.name}</p>
-                                
+
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Sales Rep</p>
                                     <p>{lead?.salesrep?.name}</p>
-                                
-                                </div>
-                                <div className="col-md-8 mb-4">
-                                   <p className="secondaryText">Description:</p>
-                                   <p>{lead?.description}</p>
-
 
                                 </div>
                                 <div className="col-md-8 mb-4">
-                                   <p className="secondaryText">LEAD Code:</p>
-                                   <p>{lead?.code}</p>
+                                    <p className="secondaryText">Description:</p>
+                                    <p>{lead?.description}</p>
 
 
                                 </div>
+
                             </div>
                         </div>
                     </div>

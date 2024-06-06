@@ -30,28 +30,50 @@ export const EditUser = () => {
     };
 
 
-    const SelectOptions = []
-    for (const key in initialunit) {
-        if (initialunit.hasOwnProperty(key)) {
-            const item = initialunit[key];
 
 
+
+
+
+    // Assuming formData.unit_id and initialunit are arrays of objects
+    var SelectOptions = [];
+
+    if (initialunit.length > 0) {
+        SelectOptions = initialunit?.filter(item => {
+            // Check if the item.id is not present in formData.unit_id
+            return !formData?.unit_id?.some(data => data?.value == item?.id);
+        });
+    }
+
+
+    const SelectOptionsFilter = []
+    for (const key in SelectOptions) {
+        if (SelectOptions.hasOwnProperty(key)) {
+            const item = SelectOptions[key];
 
             const option = {
                 label: item.name,
                 value: item.id,
             };
 
-            SelectOptions.push(option);
+
+            SelectOptionsFilter.push(option);
+
+
         }
     }
 
+
+    console.log("SelectOptions", SelectOptionsFilter);
+    console.log("filter", formData?.unit_id)
 
     const handleChangeSelect = (selected) => {
         setFormData({
             ...formData, unit_id: selected
         })
     };
+
+
 
     const editBrandList = [];
 
@@ -77,7 +99,7 @@ export const EditUser = () => {
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setFormData(data.users);
                 data.users?.permission != null ? setPermission(true) : setPermission(false)
-                const abac = SelectOptions.filter(dataItem => data?.users?.unit_id?.includes(dataItem.id))
+                // const abac = SelectOptions.filter(dataItem => data?.users?.unit_id?.includes(dataItem.id))
 
 
 
@@ -317,19 +339,31 @@ export const EditUser = () => {
                 ...prevData,
                 [name]: value,
             }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                leave_date: '',
+            }));
         }
         console.log(formData);
     };
 
 
     const handleChecked = (event) => {
-        const {name, checked} = event.target
-        setFormData({
-            ...formData,
-            show_reports: checked ? 1 : 0 // Convert checked value to 1 or 0
-        });
+        console.log('date', formData?.leave_date)
+        const { name, checked } = event.target;
 
-    }
+        // Update formData based on the checkbox state
+        setFormData((prevData) => ({
+            ...prevData,
+            show_reports: checked ? 1 : 0,
+        }));
+
+    
+
+
+    };
+
 
 
 
@@ -429,7 +463,7 @@ export const EditUser = () => {
                                                         value={formData?.unit_id}
                                                         isMulti
                                                         required
-                                                        options={SelectOptions}
+                                                        options={SelectOptionsFilter}
                                                         onChange={handleChangeSelect}
                                                     />
                                                 </div>

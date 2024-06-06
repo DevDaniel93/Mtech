@@ -292,7 +292,7 @@ export const SourceManagement = () => {
 
                     >
                       <tbody>
-                        {currentItems.map((item, index) => (
+                        {data?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
@@ -312,7 +312,7 @@ export const SourceManagement = () => {
                                
                                
                                
-                                {permission?.brands.delete === true ?    <button type="button" className="bg-transparent border-0 ps-lg-3 pt-1" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
+                                {permission?.brands.delete === true ?    <button type="button" className="tableAction" onClick={() => { removeItem(item?.id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> Delete</button> : ""}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>

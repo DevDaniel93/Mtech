@@ -36,6 +36,7 @@ export const UserTarget = () => {
   const [addUser, setUser] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [idUser, setIdUser] = useState();
+  const [userSearch, setUserSearch] = useState();
   const { apiData: unitListing, loading: unitLoading } = useApi('admin/unit-listing');
   const { apiData: TargetListing, loading: TargetLoding } = useApi('admin/unit-Target-List');
   const { apiData: TargetResponseData, loading: TragetResponseLoading, error: TargetResponseError, updateDataForm: targetUpdateData, editParam: TargetEditData } = usePostUpdate('admin/unit-targets-edit/');
@@ -146,7 +147,8 @@ export const UserTarget = () => {
 
 
   const filterData = data.filter(item =>
-    item?.name.toLowerCase().includes(inputValue.toLowerCase())
+    (item?.unit_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase())) ||
+    (item?.user_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase()))
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -155,9 +157,11 @@ export const UserTarget = () => {
 
 
 
-  const filterUserdata = userdata.filter(item =>
-    item?.unit_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase())
+  const filterUserdata = userdata?.filter(item =>
+    (item?.unit_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase())) ||
+    (item?.user_detail?.name?.toLowerCase().includes(userinputValue.toLowerCase()))
   );
+
 
 
   const userindexOfLastItem = currentPage * itemsPerPage;
@@ -521,7 +525,7 @@ export const UserTarget = () => {
                               <CustomButton text="Add User Target" variant='primaryButton' onClick={() => {
                                 setUser(true)
                               }} />
-                              <CustomInput type="text" placeholder="Search Here..." value={userinputValue} inputClass="mainInput" onChange={handleChange} />
+                              <CustomInput type="text" placeholder="Search Here..." value={userSearch} inputClass="mainInput" />
                             </div>
                           </div>
                         </div>
@@ -550,7 +554,7 @@ export const UserTarget = () => {
                                       <FontAwesomeIcon icon={faEllipsisV} />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu align="end" className="tableDropdownMenu">
- 
+
                                       <Link className="tableAction" to={`target-detail/${item?.id}`}><FontAwesomeIcon icon={faEye} className="tableActionIcon" />View Details</Link>
                                     </Dropdown.Menu>
                                   </Dropdown>
@@ -631,11 +635,11 @@ export const UserTarget = () => {
             onChange={handleChange}
           />
 
- 
+
 
           <CustomButton variant='primaryButton' text='Add' type='button' onClick={handleSubmit} />
         </CustomModal>
- 
+
 
       </DashboardLayout>
     </>

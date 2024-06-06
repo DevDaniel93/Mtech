@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash, faCopy, faMagnifyingGlass, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faEye, faCheck, faTimes, faFilter, faEdit, faTrash, faCopy, faMagnifyingGlass, faFile, faRefresh } from "@fortawesome/free-solid-svg-icons";
 
 
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
@@ -15,6 +15,7 @@ import CustomInput from "../../Components/CustomInput";
 import CustomButton from "../../Components/CustomButton";
 
 import { SelectBox } from "../../Components/CustomSelect";
+import Select from 'react-select'
 import "./style.css";
 
 export const LeadListing = () => {
@@ -43,20 +44,54 @@ export const LeadListing = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    leadlist(pageNumber)
   };
 
   const hanldeRoute = () => {
     navigate('/add-lead')
   }
+  // const coppied = (id, lead_code) => {
+  //   navigator.clipboard.writeText(`${lead_code}`);
+  //   setCopied(true);
+  //   setCopiedId(id);
+  //   setTimeout(() => {
+  //     setCopied(false);
+  //     setCopiedId(null);
+  //   }, 1000);
+  // };
+
+
   const coppied = (id, lead_code) => {
-    navigator.clipboard.writeText(`${lead_code}`);
-    setCopied(true);
-    setCopiedId(id);
-    setTimeout(() => {
-      setCopied(false);
-      setCopiedId(null);
-    }, 1000);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(`${lead_code}`).then(() => {
+        setCopied(true);
+        setCopiedId(id);
+        setTimeout(() => {
+          setCopied(false);
+          setCopiedId(null);
+        }, 1000);
+      }).catch(error => {
+        console.error('Failed to copy: ', error);
+      });
+    } else {
+      // Fallback for browsers that don't support navigator.clipboard
+      const textarea = document.createElement('textarea');
+      textarea.value = lead_code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+
+      // Set copied state and timeout as usual
+      setCopied(true);
+      setCopiedId(id);
+      setTimeout(() => {
+        setCopied(false);
+        setCopiedId(null);
+      }, 1000);
+    }
   };
+
 
   const role = localStorage.getItem('role');
   const inActive = () => {
@@ -68,20 +103,23 @@ export const LeadListing = () => {
     setShowModal4(true)
   }
 
-  const filterData = data?.filter(item =>
-    item?.name.toLowerCase().includes(inputValue.toLowerCase())
-  );
+  // const filterData = data?.filter(item =>
+  //   item?.name.toLowerCase().includes(inputValue.toLowerCase())
+  // );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filterData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   const [unit, setUnit] = useState({});
+  const [totalRecord, setTotalRecord] = useState();
+
+  const [isUsers, setIsUsers] = useState(false);
   const leadData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}&page=1&search=${formData?.search}&search_type=${formData?.search_type}&users=${userArray}`,
       {
         method: 'GET',
         headers: {
@@ -105,7 +143,8 @@ export const LeadListing = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
 
-        setData(data.leads);
+        setData(data?.leads);
+        setTotalRecord(data?.total_records);
 
         // setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
@@ -116,7 +155,7 @@ export const LeadListing = () => {
 
         setPermission(data?.permission);
         // setItemsPerPage(data?.leads.length);
-        if (data?.extra_fileds?.net != "") {
+        if (data?.extra_fileds != "") {
 
 
           setShowtable(true);
@@ -133,11 +172,20 @@ export const LeadListing = () => {
 
   }
 
-  const leadlist = () => {
+
+
+
+ 
+  
+  
+
+
+
+  const leadlist = (page) => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}&year=${formData?.year}`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData.month}&unit_id=${formData.unit_id}&year=${formData?.year}&page=${page}&search=${formData?.search}&search_type=${formData?.search_type}&users=${JSON.stringify(userArray)}`,
       {
         method: 'GET',
         headers: {
@@ -161,7 +209,8 @@ export const LeadListing = () => {
 
         document.querySelector('.loaderBox').classList.add("d-none");
 
-        setData(data.leads);
+        setData(data?.leads);
+        setTotalRecord(data?.total_records);
 
         setExtra_Data(data?.extra_fileds)
         setPermission(data?.permission)
@@ -198,7 +247,7 @@ export const LeadListing = () => {
     //  leadData();
     setClear(false);
     window.location.reload()
-};
+  };
 
 
 
@@ -351,33 +400,27 @@ export const LeadListing = () => {
     {
       code: 2024,
       name: '2024'
-    },
-    {
-      code: 2025,
-      name: '2025'
-    },
-    {
-      code: 2026,
-      name: '2026'
-    },
-    {
-      code: 2027,
-      name: '2027'
-    },
-    {
-      code: 2028,
-      name: '2028'
-    },
-    {
-      code: 2029,
-      name: '2029'
-    },
-    {
-      code: 2030,
-      name: '2030'
-    },
+    }
 
   ]
+
+  const [unitUser, setUnitUser] = useState({});
+
+  const SelectOptions = []
+  for (const key in unitUser) {
+    if (unitUser.hasOwnProperty(key)) {
+      const item = unitUser[key];
+
+
+      const option = {
+        value: item.id,
+        label: item.name,
+      };
+
+
+      SelectOptions.push(option);
+    }
+  }
 
   const removeItem = (catId) => {
     const LogoutData = localStorage.getItem('login');
@@ -484,6 +527,21 @@ export const LeadListing = () => {
   ]
 
 
+  const searchType = [
+    {
+      code: 'account_rep',
+      name: 'Account Rep'
+    },
+    {
+      code: 'sales_rep',
+      name: 'Sales Rep'
+    },
+    // {
+    //   code: 'customer',
+    //   name: 'Customer'
+    // },
+  ]
+
   const fetchUnitData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
@@ -512,14 +570,46 @@ export const LeadListing = () => {
       })
   }
 
+
+  const userList = () => {
+    const LogoutData = localStorage.getItem('login');
+    document.querySelector('.loaderBox').classList.remove("d-none");
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getLeadUsers`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${LogoutData}`
+        },
+      }
+    )
+
+      .then(response =>
+        response.json()
+      )
+      .then((data) => {
+
+        document.querySelector('.loaderBox').classList.add("d-none");
+        console.log('user', data?.users)
+        setUnitUser(data?.users);
+      })
+      .catch((error) => {
+        document.querySelector('.loaderBox').classList.add("d-none");
+
+      })
+  }
+
   useEffect(() => {
     fetchUnitData()
+    userList()
   }, [])
 
 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // searchData(value)
 
     if (name === "search") {
       setInputValue(value)
@@ -530,9 +620,26 @@ export const LeadListing = () => {
       [name]: value,
     }));
 
+    console.log(formData)
     setClear(true)
 
   };
+
+  const userArray = [];
+
+  const handleChangeSelect = (selected) => {
+
+   
+    selected.map((item, index)=> {
+      userArray.push(item?.value);
+    })
+    setFormData({
+      ...formData, users: selected
+    })
+
+    console.log('valll', userArray)
+  };
+
 
   console.log("extra_data", extra_data)
   console.log("currentItems", currentItems)
@@ -545,92 +652,135 @@ export const LeadListing = () => {
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
-                <div className="row mb-0">
+                <div className="row mb-0 justify-content-between">
                   <div className="col-md-4 mb-2">
                     <h2 className="mainTitle">Lead Management</h2>
                   </div>
-                  <div className="col-md-8 mb-2">
-                    <div className="row   align-items-center  justify-content-end ">
-                      <div className=" col-md-4 ">
-                        {/* {role == 1 ? <CustomInput className="w-100" icon={faFile} type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values, text/csv, application/csv" placeholder="" onChange={handleChanges} /> : " "} */}
-                      </div>
-                      <div className=" col-md-4 ">
-                        <CustomInput type="text" placeholder="Search Here..." name="search" value={inputValue} inputClass="mainInput" onChange={handleChange} />
+                  <div className="col mb-2 text-md-end">
+                    {permission?.leads.create === true ?
+                      <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12 mb-2">
+                    <div className="row align-items-center">
+                      <div className="col-md-12">
+                        <div className="row align-items-end justify-content-end ">
+                          <div className="col mb-2">
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="unit_id"
+                              label="Unit"
+                              required
+                              value={formData.unit_id}
+                              option={unit}
+                              onChange={handleChange}
+                            />
+                          </div>
+
+
+
+                          <div className="col mb-2">
+                            <div className="addUser align-items-center">
+                              <SelectBox
+                                selectClass="mainInput"
+                                name="month"
+                                label="Month"
+                                value={formData.month}
+                                required
+                                option={monthList}
+                                onChange={handleChange}
+                              />
+
+                            </div>
+                          </div>
+                          <div className="col mb-2">
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="year"
+                              label="Year"
+                              value={formData.Year}
+                              required
+                              option={YearList}
+                              onChange={(event) => {
+                                setFormData({ ...formData, year: event.target.value });
+
+                              }}
+                            />
+                          </div>
+                          <div className="col mb-2">
+
+                            <CustomInput type="text" placeholder="Search Here..." label="Search" name="search" inputClass="mainInput" onChange={handleChange} />
+                          </div>
+                          <div className="col mb-2">
+
+                            <SelectBox
+                              selectClass="mainInput"
+                              name="search_type"
+                              label="Search Type"
+                              value={formData.search_type}
+                              option={searchType}
+                              onChange={(event) => {
+                                const newValue = event.target.value;
+                                setFormData({
+                                  ...formData,
+                                  search_type: newValue,
+                                  ...(newValue == 'customer' && { users: '' })
+                                });
+                                if (newValue === 'customer') {
+                                  setIsUsers(false);
+                                } else {
+                                  setIsUsers(true);
+                                }
+                              }}
+
+                            />
+                          </div>
+                          {/* {isUsers && (
+                            <div className="col-md-3 mb-2">
+
+                              <Select
+                                value={formData?.users}
+                                isMulti
+                                required
+                                options={SelectOptions}
+                                onChange={handleChangeSelect}
+                              />
+
+                            </div>
+                          )} */}
+
+                          <div className="col px-md-0 mb-2">
+                            {
+                              clear && (
+                                <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
+                              )
+                            }
+                            <CustomButton variant='primaryButton' className="searchBtn" type='button' onClick={leadData} icon={faMagnifyingGlass} />
+                          </div>
+                        </div>
+
                       </div>
 
-                      <div className=" col-md-4 ">
-                        {permission?.leads.create === true ?
-                          <CustomButton text="Add Lead" variant='primaryButton' onClick={hanldeRoute} /> : " "}
-                      </div>
+
 
                     </div>
 
                   </div>
-
-
                 </div>
                 <div className="align-items-end row mb-0 border-bottom pb-0">
 
 
 
-                  <div className="col-md-5 mb-2">
+                  {/* <div className="col-md-5 ">
                     <div className="row align-items-end md-0">
-                      <div className="col-md-3">
-                        <SelectBox
-                          selectClass="mainInput"
-                          name="unit_id"
-                          label="Unit"
-                          required
-                          value={formData.unit_id}
-                          option={unit}
-                          onChange={handleChange}
-                        />
-                      </div>
 
-
-
-                      <div className="col-md-3">
-                        <div className="addUser align-items-center">
-                          <SelectBox
-                            selectClass="mainInput"
-                            name="month"
-                            label="Month"
-                            value={formData.month}
-                            required
-                            option={monthList}
-                            onChange={handleChange}
-                          />
-
-                        </div>
-                      </div>
-                      <div className="col-md-3">
-                        <SelectBox
-                          selectClass="mainInput"
-                          name="year"
-                          label="Year"
-                          value={formData.Year}
-                          required
-                          option={YearList}
-                          onChange={(event) => {
-                            setFormData({ ...formData, year: event.target.value });
-
-                          }}
-                        />
-                      </div>
-                      <div className="col-md-2">
-                        <CustomButton variant='primaryButton' className="searchBtn " type='button' onClick={leadData} icon={faMagnifyingGlass} />
-                        {
-                          clear && (
-                            <button className="clearFilter bg-transparent border-0" onClick={clearFilter}>Clear</button>
-                          )
-                        }
-                      </div>
                     </div>
-                  </div>
+                  </div> */}
 
 
-                  {showtable == true ? (
-                    <div className="col-md-7 text-center">
+                  {showtable == true && extra_data ? (
+                    <div className="col-md-12 text-center">
                       <CustomTable headers={unitHeaders}>
                         <tbody>
                           <tr>
@@ -656,7 +806,7 @@ export const LeadListing = () => {
 
                     >
                       <tbody>
-                        {currentItems?.map((item, index) => (
+                        {data?.map((item, index) => (
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td className="text-capitalize">
@@ -732,7 +882,7 @@ export const LeadListing = () => {
                     </CustomTable>
                     <CustomPagination
                       itemsPerPage={itemsPerPage}
-                      totalItems={filterData.length}
+                      totalItems={totalRecord}
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
                     />

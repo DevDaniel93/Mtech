@@ -98,6 +98,7 @@ export const AddLead = () => {
             .then((data) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setBrands(data?.data);
+                console.log('vbb', data)
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -155,6 +156,7 @@ export const AddLead = () => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setUnit(data.units);
+
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -201,20 +203,25 @@ export const AddLead = () => {
         } else {
             if (name === 'unit_id') {
 
+
                 setFormData((prevData) => ({
                     ...prevData,
                     [name]: value,
                 }));
-                userData(value);
+
                 fectchBrandData(value)
+                userData(value, true);
+                console.log('abc', formData)
+
+
 
             } else if (
-                // name === 'phone' ||
+                name === 'phone' ||
                 name === 'quoted_amount' ||
                 name === 'received' ||
                 name === 'recovery'
             ) {
-                const characterLimit = 12;
+                const characterLimit = 50;
 
                 if (value.length <= characterLimit) {
                     setFormData((prevData) => ({
@@ -227,19 +234,22 @@ export const AddLead = () => {
                 }
             } else {
 
+
                 const defaultCharacterLimit = 20;
 
 
                 // source
                 // if (value.length <= defaultCharacterLimit) {
-                
-                    setFormData((prevData) => ({
-                        ...prevData,
-                        [name]: value,
-                    }));
+
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name]: value,
+                }));
                 // }
             }
         }
+
+        console.log('def', formData)
     };
     const isReceivedEmpty = formData.received === '';
     const isRecoveryEmpty = formData.recovery === '';
@@ -257,7 +267,7 @@ export const AddLead = () => {
     const LogoutData = localStorage.getItem('login');
 
 
-    const userData = (uniID) => {
+    const userData = (uniID, isChange) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
         fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
             {
@@ -277,6 +287,20 @@ export const AddLead = () => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
                 setUser(data?.data)
+                if (isChange === true) {
+
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        sales_rep: data?.data[0]?.id,
+                        account_rep: data?.data[0]?.id,
+                    }));
+                    // setFormData({
+                    //     ...formData, 
+
+                    // })
+                }
+
+
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -284,7 +308,7 @@ export const AddLead = () => {
             })
     }
 
- 
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -297,15 +321,15 @@ export const AddLead = () => {
                 formData.name === 'asa' ||
                 formData.phone === '2323' ||
                 formData.description === '23'
-    
+
             ) {
-    
+
                 console.log("yes")
                 return;
-    
+
             }
         }
-    
+
 
 
         const formDataMethod = new FormData();
@@ -394,7 +418,7 @@ export const AddLead = () => {
 
             userData(data?.leads.unit_id);
             fectchBrandData(data?.leads?.unit_id)
-            ;
+                ;
         } catch (error) {
             console.error('Error fetching data:', error);
             // userData(0);
@@ -469,6 +493,7 @@ export const AddLead = () => {
                                                     label="Source Name"
                                                     value={formData.source}
                                                     option={sourcename}
+                                                    required
                                                     onChange={handleChange}
                                                 />
 
@@ -646,7 +671,7 @@ export const AddLead = () => {
                                                 <CustomInput
                                                     required
                                                     label="Date"
-                                                    id="recovery"
+                                                    id="date"
 
                                                     type="date"
                                                     placeholder="date"
