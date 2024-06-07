@@ -17,7 +17,7 @@ const ForgetPassword = () => {
     const [error, setError] = useState();
 
     useEffect(() => {
-        document.title = 'Project Camp | Password Recovery';
+        document.title = 'Mt Record | Password Recovery';
     }, [])
 
 

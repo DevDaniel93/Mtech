@@ -377,6 +377,25 @@ export const Sidebar = (props) => {
               </Link> : " "}
             </li>
 
+            <li className="sidebar-li">
+              {permission?.qa_management === 'true' ? <Link className={`sideLink ${location.pathname.includes('/qa-management') ? 'active' : ''}`} to="/qa-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={report} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">QA Management</span>
+              </Link> : " "}
+            </li>
+
+            <li className="sidebar-li">
+              {role == '6' ? <Link className={`sideLink ${location.pathname.includes('/logs-management') ? 'active' : ''}`} to="/logs-management">
+                <span className="sideIcon">
+                  <img src={report} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Logs Management</span>
+              </Link> : " "}
+            </li> 
+
 
 
 

@@ -36,7 +36,7 @@ const EditProfile = () => {
 
     useEffect(() => {
 
-        document.title = 'Project Camp | Edit Profile';
+        document.title = 'Mt Record | Edit Profile';
         setOptionData(country);
         setUserData(currentUser);
     },);

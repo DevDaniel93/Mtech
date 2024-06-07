@@ -20,7 +20,7 @@ const AdminLogin = () => {
 
 
     useEffect(() => {
-        document.title = 'Project Camp | Login';
+        document.title = 'Mt Record | Login';
     }, [])
 
     const handleSubmit = async (event) => {

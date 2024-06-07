@@ -16,7 +16,7 @@ const ForgetPassword2 = () => {
     const [formData, setFormData] = useState({})
 
     useEffect(() => {
-        document.title = 'Project Camp | Password Recovery';
+        document.title = 'Mt Record | Password Recovery';
     }, [])
 
     // ${process.env.REACT_APP_API_URL}/public/api/otp_verification

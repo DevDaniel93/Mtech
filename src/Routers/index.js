@@ -57,6 +57,11 @@ import { UsertargetDetails } from "../Screens/UnitTarget/UsertargetDetails";
 
 import { MerchantManagement } from "../Screens/MerchantManagement";
 
+import { QAManagement } from "../Screens/QAManagement";
+import { QaDetail } from "../Screens/QAManagement/qaDetail";
+
+import { LogsManagement } from "../Screens/LogsManagement";
+
 import Profile from "../Screens/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import ChangePassword from "../Screens/Profile/ChangePassword";
@@ -116,6 +121,13 @@ export default function AdminRouter() {
 
         <Route path="/account-management" element={<ProtectedRoutes Components={AccountManagement} />} />
         <Route path="/account-management/account-detail/:id" element={<ProtectedRoutes Components={AccountDetail} />} />
+
+
+        <Route path="/logs-management" element={<ProtectedRoutes Components={LogsManagement} />} />
+
+
+        <Route path="/qa-management" element={<ProtectedRoutes Components={QAManagement} />} />
+        <Route path="/qa-management/qa-detail/:id" element={<ProtectedRoutes Components={QaDetail} />} />
 
 
 

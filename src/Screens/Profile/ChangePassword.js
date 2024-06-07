@@ -25,7 +25,7 @@ const ChangePassword = () => {
 
     useEffect(() => {
 
-        document.title = 'Project Camp | Change Password';
+        document.title = 'Mt Record | Change Password';
 
         setUserData(currentUser);
     }, []);
