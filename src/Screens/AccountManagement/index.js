@@ -116,6 +116,7 @@ export const AccountManagement = () => {
 
                 setExtra_Data(data?.extra_fileds)
                 setPermission(data?.permission)
+                setClear(true)
 
             })
             .catch((error) => {
@@ -469,11 +470,11 @@ export const AccountManagement = () => {
                                                         </div>
 
                                                         <div className="col-md-1 px-md-0 mb-2">
-                                                            {/* {
+                                                            {
                                                             clear && (
                                                                 <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
                                                             )
-                                                        } */}
+                                                        }
                                                             <CustomButton variant='primaryButton' className="searchBtn" type='submit' icon={faMagnifyingGlass} />
                                                         </div>
 

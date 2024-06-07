@@ -378,7 +378,7 @@ export const Sidebar = (props) => {
             </li>
 
             <li className="sidebar-li">
-              {permission?.qa_management === 'true' ? <Link className={`sideLink ${location.pathname.includes('/qa-management') ? 'active' : ''}`} to="/qa-management">
+              {permission?.qa_account_management == 'true' ? <Link className={`sideLink ${location.pathname.includes('/qa-management') ? 'active' : ''}`} to="/qa-management">
                 <span className="sideIcon">
                   {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
                   <img src={report} className="sideBarIcon" />

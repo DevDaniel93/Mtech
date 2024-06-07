@@ -78,7 +78,7 @@ export default function AdminRouter() {
  
 
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/mtRecordFlow">
       <Routes>
  
 

@@ -37,7 +37,7 @@ export const QaDetail = () => {
 
     const AccountData = () => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountData?id=${id}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountData?id=${id}`,
             {
                 method: 'GET',
                 headers: {
@@ -100,7 +100,7 @@ export const QaDetail = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/addAccountComment`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/addQAAccountComment`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -140,7 +140,7 @@ export const QaDetail = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
         // Make the fetch request
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/updateAccountStatus`, {
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/updateQAAccountStatus`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -211,7 +211,7 @@ export const QaDetail = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountStatus`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountStatus`,
             {
                 method: 'GET',
                 headers: {

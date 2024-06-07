@@ -87,7 +87,7 @@ export const QAManagement = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountsData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}`,
             {
                 method: 'GET',
                 headers: {
@@ -130,7 +130,7 @@ export const QAManagement = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountsData`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData`,
             {
                 method: 'GET',
                 headers: {
@@ -433,10 +433,10 @@ export const QAManagement = () => {
                         <div className="col-12">
                             <div className="dashCard">
                                 <div className="row mb-0">
-                                    <div className="col-md-2 mb-2">
+                                    <div className="col-md-5 mb-2">
                                         <h2 className="mainTitle">QA Management</h2>
                                     </div>
-                                    <div className="col-md-10 mb-2">
+                                    {/* <div className="col-md-10 mb-2">
                                         <div className="row align-items-center">
                                             <div className="col-md-12">
                                                 <form onSubmit={searchData}>
@@ -469,11 +469,6 @@ export const QAManagement = () => {
                                                         </div>
 
                                                         <div className="col-md-1 px-md-0 mb-2">
-                                                            {/* {
-                                                            clear && (
-                                                                <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
-                                                            )
-                                                        } */}
                                                             <CustomButton variant='primaryButton' className="searchBtn" type='submit' icon={faMagnifyingGlass} />
                                                         </div>
 
@@ -486,7 +481,7 @@ export const QAManagement = () => {
 
                                         </div>
 
-                                    </div>
+                                    </div> */}
 
 
                                 </div>
