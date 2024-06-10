@@ -17,7 +17,6 @@ import { SelectBox } from "../../Components/CustomSelect";
 // import "./style.css";
 
 export const QAManagement = () => {
-    window.close();
     const [permission, setPermission] = useState()
     const [data, setData] = useState([]);
     const [formData, setFormData] = useState({})
@@ -87,7 +86,7 @@ export const QAManagement = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}`,
             {
                 method: 'GET',
                 headers: {
@@ -116,6 +115,7 @@ export const QAManagement = () => {
 
                 setExtra_Data(data?.extra_fileds)
                 setPermission(data?.permission)
+                setClear(true)
 
             })
             .catch((error) => {
@@ -126,11 +126,11 @@ export const QAManagement = () => {
     }
 
 
-    const leadlist = () => {
+    const leadlist = (page) => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData?page=${page}`,
             {
                 method: 'GET',
                 headers: {
@@ -144,11 +144,8 @@ export const QAManagement = () => {
             .then((response) => {
                 return (
                     response.json()
-
                 )
-            }
-
-            )
+            })
 
             .then((data) => {
 
@@ -159,6 +156,42 @@ export const QAManagement = () => {
 
                 setExtra_Data(data?.extra_fileds)
                 setPermission(data?.permission)
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+            })
+
+    }
+
+
+    const [statusList, setStatusList] = useState();
+    const getStatus = () => {
+        const LogoutData = localStorage.getItem('login');
+        document.querySelector('.loaderBox').classList.remove("d-none");
+
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountStatus`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            }
+        )
+
+            .then((response) => {
+                return (
+                    response.json()
+                )
+            })
+
+            .then((data) => {
+
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+                setStatusList(data?.data);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -183,6 +216,7 @@ export const QAManagement = () => {
     useEffect(() => {
         document.title = 'Mt Records | Account Management';
         leadlist()
+        getStatus()
 
 
     }, []);
@@ -249,85 +283,6 @@ export const QAManagement = () => {
     };
 
 
-
-
-    const YearList = [
-        {
-            code: 2020,
-            name: '2020'
-        }, {
-            code: 2021,
-            name: '2021'
-        },
-        {
-            code: 2022,
-            name: '2022'
-        },
-        {
-            code: 2023,
-            name: '2023'
-        },
-        {
-            code: 2024,
-            name: '2024'
-        }
-
-    ]
-
-
-
-    const monthList = [
-        {
-            code: 1,
-            name: 'January'
-        },
-        {
-            code: 2,
-            name: 'Feburay'
-        }, {
-            code: 3,
-            name: 'March'
-        },
-        {
-            code: 4,
-            name: 'April'
-        },
-        {
-            code: 5,
-            name: 'May'
-        },
-        {
-            code: 6,
-            name: 'June'
-        },
-        {
-            code: 7,
-            name: 'July'
-        },
-        {
-            code: 8,
-            name: 'August'
-        },
-        {
-            code: 9,
-            name: 'September'
-        },
-        {
-            code: 10,
-            name: 'October'
-        },
-        {
-            code: 11,
-            name: 'November'
-        },
-        {
-            code: 12,
-            name: 'December'
-        }
-    ]
-
-
-
     const fetchUnitData = () => {
 
         document.querySelector('.loaderBox').classList.remove("d-none");
@@ -352,6 +307,7 @@ export const QAManagement = () => {
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
+                console.log(error)
 
             })
     }
@@ -432,11 +388,11 @@ export const QAManagement = () => {
                     <div className="row mb-3">
                         <div className="col-12">
                             <div className="dashCard">
-                                <div className="row mb-0">
-                                    <div className="col-md-5 mb-2">
+                                <div className="row mb-0 justify-content-between">
+                                    <div className="col-md-2 mb-2">
                                         <h2 className="mainTitle">QA Management</h2>
                                     </div>
-                                    {/* <div className="col-md-10 mb-2">
+                                    <div className="col-md-10 mb-2">
                                         <div className="row align-items-center">
                                             <div className="col-md-12">
                                                 <form onSubmit={searchData}>
@@ -465,10 +421,35 @@ export const QAManagement = () => {
 
                                                                 }}
                                                             />
-
                                                         </div>
 
+                                                        {
+                                                            formData?.search_type == 'status' ? (
+                                                                <div className="col-md-2 mb-2">
+
+                                                                    <SelectBox
+                                                                        selectClass="mainInput"
+                                                                        name="status"
+                                                                        label="Select Status"
+                                                                        required
+                                                                        value={formData.status}
+                                                                        option={statusList}
+                                                                        onChange={(event) => {
+                                                                            setFormData({ ...formData, status: event.target.value });
+
+                                                                        }}
+                                                                    />
+
+                                                                </div>
+                                                            ) : ''
+                                                        }
+
                                                         <div className="col-md-1 px-md-0 mb-2">
+                                                            {
+                                                                clear && (
+                                                                    <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
+                                                                )
+                                                            }
                                                             <CustomButton variant='primaryButton' className="searchBtn" type='submit' icon={faMagnifyingGlass} />
                                                         </div>
 
@@ -481,7 +462,7 @@ export const QAManagement = () => {
 
                                         </div>
 
-                                    </div> */}
+                                    </div>
 
 
                                 </div>

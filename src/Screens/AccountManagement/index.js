@@ -127,11 +127,11 @@ export const AccountManagement = () => {
     }
 
 
-    const leadlist = () => {
+    const leadlist = (page) => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountsData`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountsData?page=${page}`,
             {
                 method: 'GET',
                 headers: {
@@ -175,16 +175,46 @@ export const AccountManagement = () => {
 
 
 
-    const showDescription = (item) => {
-        setShowModal(true)
-        setDesc(JSON.parse(item))
+    const [statusList, setStatusList] = useState();
+    const getStatus = () => {
+        const LogoutData = localStorage.getItem('login');
+        document.querySelector('.loaderBox').classList.remove("d-none");
+
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getAccountStatus`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${LogoutData}`
+                },
+            }
+        )
+
+            .then((response) => {
+                return (
+                    response.json()
+                )
+            })
+
+            .then((data) => {
+
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+                setStatusList(data?.data);
+            })
+            .catch((error) => {
+                document.querySelector('.loaderBox').classList.add("d-none");
+
+            })
+
     }
 
 
     useEffect(() => {
         document.title = 'Mt Records | Account Management';
         leadlist()
-
+        getStatus()
 
     }, []);
 
@@ -469,12 +499,33 @@ export const AccountManagement = () => {
 
                                                         </div>
 
+                                                        {
+                                                            formData?.search_type == 'status' ? (
+                                                                <div className="col-md-2 mb-2">
+
+                                                                    <SelectBox
+                                                                        selectClass="mainInput"
+                                                                        name="status"
+                                                                        label="Select Status"
+                                                                        required
+                                                                        value={formData.status}
+                                                                        option={statusList}
+                                                                        onChange={(event) => {
+                                                                            setFormData({ ...formData, status: event.target.value });
+
+                                                                        }}
+                                                                    />
+
+                                                                </div>
+                                                            ) : ''
+                                                        }
+
                                                         <div className="col-md-1 px-md-0 mb-2">
                                                             {
-                                                            clear && (
-                                                                <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
-                                                            )
-                                                        }
+                                                                clear && (
+                                                                    <button className="clearFilter bg-transparent border-0" onClick={clearFilter}><FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon></button>
+                                                                )
+                                                            }
                                                             <CustomButton variant='primaryButton' className="searchBtn" type='submit' icon={faMagnifyingGlass} />
                                                         </div>
 

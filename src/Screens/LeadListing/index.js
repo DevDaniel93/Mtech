@@ -536,10 +536,10 @@ export const LeadListing = () => {
       code: 'sales_rep',
       name: 'Sales Rep'
     },
-    // {
-    //   code: 'customer',
-    //   name: 'Customer'
-    // },
+    {
+      code: 'customer',
+      name: 'Customer'
+    },
   ]
 
   const fetchUnitData = () => {
