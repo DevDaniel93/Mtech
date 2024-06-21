@@ -28,7 +28,7 @@ export const PurchaseDetail = () => {
         setShowModal3(false)
         setShowModal4(true)
     }
- 
+
     useEffect(() => {
         const LogoutData = localStorage.getItem('login');
         document.title = 'Mt Records | Purchase Detail';
@@ -47,14 +47,14 @@ export const PurchaseDetail = () => {
                 return response.json()
             })
             .then((data) => {
-                 
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 SetUser(data.data)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-             
+
             })
     }, [id]);
 
@@ -73,7 +73,7 @@ export const PurchaseDetail = () => {
                     </div>
                     <div className="row mb-3">
                         <div className="col-12">
-                        
+
 
 
                             <div className="row">
@@ -99,15 +99,22 @@ export const PurchaseDetail = () => {
                                     <p className="secondaryText">Purchase Amount</p>
                                     <p>{`$ ${user?.purchase_amount}`}</p>
                                 </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Name</p>
+                                    <p>{user?.leaddetail?.name}</p>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Email Address</p>
+                                    <p>{user?.leaddetail?.email}</p>
+                                </div>
 
-                           
 
                                 <div className="col-md-12 mb-4">
                                     <p className="secondaryText">Reason</p>
                                     <p>{user?.reason}</p>
                                 </div>
-                               
-                               
+
+
                             </div>
                         </div>
                     </div>

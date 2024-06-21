@@ -262,6 +262,10 @@ export const AccountManagement = () => {
             title: "ACCOUNT REP",
         },
         {
+            key: "unit",
+            title: "Unit",
+        },
+        {
             key: "status",
             title: "Status",
         },
@@ -572,7 +576,17 @@ export const AccountManagement = () => {
                                                         {/* <td className="descField"><span onClick={() => { showDescription(item?.descriptions) }} className="btnLabel">Show Description</span></td> */}
                                                         <td>{`$${item?.all_payments}`}</td>
                                                         <td>{item?.salesrep?.name}</td>
+
                                                         <td>{item?.accountrep === null ? 'No Account Rep' : item?.accountrep?.name}</td>
+                                                        <td>
+                                                            {item?.account_units && item.account_units.map((unit, index) => {
+                                                                const unitName = unit?.unit?.name; // Store unit name for clarity
+
+                                                                if (!unitName) return; // Handle potential null unitName
+
+                                                                return `${unitName} ${index === item.account_units.length - 1 ? '' : '  |  '}`;
+                                                            })}
+                                                        </td>
                                                         <td className={item?.accountstatus?.name == 'In Progress' ? 'text-success' : item?.accountstatus?.name == 'Completed' ? 'text-success' : item?.accountstatus?.name == 'Out of Contact' ? 'text-warning' : item?.accountstatus?.name == 'Disputed' ? 'text-danger' : 'text-danger'}>{item?.accountstatus?.name}</td>
                                                         <td className="">
                                                             <Link to={`/account-management/account-detail/${item?.id}`} className="">

@@ -103,6 +103,14 @@ export const ChargeBackDetail = () => {
                                     <p className="secondaryText">Merchant</p>
                                     <p>{user?.merchantdetail?.name}</p>
                                 </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Name</p>
+                                    <p>{user?.leaddetail?.name}</p>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Email Address</p>
+                                    <p>{user?.leaddetail?.email}</p>
+                                </div>
 
                                 <div className="col-md-12 mb-4">
                                     <p className="secondaryText">Reason</p>

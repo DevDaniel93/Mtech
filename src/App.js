@@ -59,7 +59,7 @@ function App() {
         console.log(data);
         localStorage.removeItem('login');
         localStorage.removeItem('rolesPermission');
-        window.location.replace('/mtRecordFlow');
+        window.location.replace('/');
       })
       .catch(error => {
         console.log(error);
@@ -91,7 +91,7 @@ function App() {
     timeoutRef.current = setTimeout(() => {
       clearInterval(intervalRef.current);
       logout();
-    }, 10 * 60 * 1000); // 10 minutes
+    }, 10 * 60 * 3000); // 10 minutes
   }, [logout]);
 
   useEffect(() => {

@@ -183,6 +183,18 @@ export const QaDetail = () => {
             title: "Description",
         },
         {
+            key: "unit",
+            title: "Unit",
+        },
+        {
+            key: "brand",
+            title: "Brand",
+        },
+        {
+            key: "date",
+            title: "Date",
+        },
+        {
             key: "qr",
             title: "Quoted Amount",
         },
@@ -284,6 +296,16 @@ export const QaDetail = () => {
                                     <p>{lead?.accountrep?.name}</p>
                                 </div>
                                 <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Unit</p>
+                                    <p>{ lead?.account_units && lead.account_units.map((unit, index) => {
+                                        const unitName = unit?.unit?.name; // Store unit name for clarity
+
+                                        if (!unitName) return; // Handle potential null unitName
+
+                                        return `${unitName} ${index === lead.account_units.length - 1 ? '' : '  |  '}`;
+                                    })}</p>
+                                </div>
+                                <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Status</p>
                                     <p className={lead?.accountstatus?.name == 'In Progress' ? 'text-success' : lead?.accountstatus?.name == 'Completed' ? 'text-success' : lead?.accountstatus?.name == 'Out of Contact' ? 'text-warning' : lead?.accountstatus?.name == 'Disputed' ? 'text-danger' : 'text-danger'}>  <button type="button" className="bg-transparent border-0" onClick={() => { setStatusBox(true); }}>  <FontAwesomeIcon icon={faEdit} style={{ decoration: 'line-through' }} /></button> {lead?.accountstatus?.name}</p>
 
@@ -310,11 +332,14 @@ export const QaDetail = () => {
                                                     {/* <td>{item?.username}</td> */}
                                                     {/* <td className="emailFiled"><span>{item?.email}</span></td> */}
                                                     <td>{item?.description}</td>
+                                                    <td>{item?.unitdetail?.name}</td>
+                                                    <td>{item?.getbrand?.name}</td>
+                                                    <td>{item?.date}</td>
                                                     <td>{`$${item?.quoted_amount}`}</td>
                                                     <td>{`$${item?.received}`}</td>
                                                     <td>{item?.salesrep?.name}</td>
                                                     <td>{item?.accountrepdetail === null ? 'No Account Rep' : item?.accountrepdetail?.name}</td>
-                                                  
+
                                                 </tr>
                                             ))}
                                         </tbody>

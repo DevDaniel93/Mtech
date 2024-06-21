@@ -47,16 +47,16 @@ export const RefundDetail = () => {
                 return response.json()
             })
             .then((data) => {
-              
-                
+
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 SetUser(data.data)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-             
-                
+
+
             })
     }, [id]);
 
@@ -75,7 +75,7 @@ export const RefundDetail = () => {
                     </div>
                     <div className="row mb-3">
                         <div className="col-12">
-                       
+
 
 
                             <div className="row">
@@ -106,13 +106,21 @@ export const RefundDetail = () => {
                                     <p className="secondaryText">Merchant</p>
                                     <p>{user?.merchantdetail?.name}</p>
                                 </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Name</p>
+                                    <p>{user?.leaddetail?.name}</p>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Customer Email Address</p>
+                                    <p>{user?.leaddetail?.email}</p>
+                                </div>
 
                                 <div className="col-md-12 mb-4">
                                     <p className="secondaryText">Reason</p>
                                     <p>{user?.reason}</p>
                                 </div>
-                               
-                               
+
+
                             </div>
                         </div>
                     </div>
