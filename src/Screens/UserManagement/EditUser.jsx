@@ -238,7 +238,7 @@ export const EditUser = () => {
         })
     }, [])
 
-    const userRole = [
+    const roleData = [
         {
             code: 1,
             name: 'Lead'
@@ -252,63 +252,17 @@ export const EditUser = () => {
             name: 'Sub Executive'
         }
     ]
-
-    // const handleChange = (event) => {
-    //     const { name, value } = event.target;
-    //     if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
-    //         setPermission(true)
-    //     }
-
-    //     if (name == 'user_role' && value == 1 || name == 'user_role' && value == 3) {
-    //         setPermission(false)
-    //     }
-
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-
-    // };
-
-
-
-
-
-
+    const [userRole, setUserRole] = useState(roleData)
 
     const [checkpermission, setCheckPermission] = useState(false);
 
     console.log("checkpermission", checkpermission)
 
-    // const handleChange = (event) => {
-    //     const { name, value, checked } = event.target;
-
-    //     if (name === 'currently_working_check') {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             currently_working_check: checkpermission
-
-
-    //         }));
-
-    //         setCheckPermission(checked);
-    //     } else if (name === 'user_role' && (value === '2' || value === '4')) {
-    //         setPermission(true);
-    //     } else if (name === 'user_role' && (value === '1' || value === '3')) {
-    //         setPermission(false);
-    //     }
-
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-    // };
-
 
 
     const handleChange = (event) => {
         const { name, value, checked } = event.target;
-
+        setUserRole(roleData)
         if (name === 'currently_working_check') {
             setFormData((prevData) => ({
                 ...prevData,
@@ -318,10 +272,13 @@ export const EditUser = () => {
             setCheckPermission(checked);
         }
 
-        else if (name === 'user_role' && (value === '2' || value === '4')) {
+        else if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4 || name == 'user_role' && value == 11) {
             setPermission(true);
-        } else if (name === 'user_role' && (value === '1' || value === '3')) {
+        } else if (name === 'user_role' && (value === '1' || value === '3' || value === '6' || value === '7' || value === '8')) {
             setPermission(false);
+        } else if (name == 'user_role' && value == 9 || name == 'user_role' && value == 10) {
+            setUserRole([roleData[1]])
+            setPermission(true);
         }
 
 
@@ -359,7 +316,7 @@ export const EditUser = () => {
             show_reports: checked ? 1 : 0,
         }));
 
-    
+
 
 
     };

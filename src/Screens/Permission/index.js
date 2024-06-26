@@ -156,13 +156,13 @@ export const Permission = () => {
 
 
     console.log("getpermission", getpermission)
-    useEffect(() => {
-        setData(leadsAmountData)
-        setLead(leadsAmountMonthlyData)
-        setReceived(leadsAmountReceivedData)
-        setAmount(leadsAmountReceivedMonthlyData)
+    // useEffect(() => {
+    //     setData(leadsAmountData)
+    //     setLead(leadsAmountMonthlyData)
+    //     setReceived(leadsAmountReceivedData)
+    //     setAmount(leadsAmountReceivedMonthlyData)
 
-    }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
+    // }, [leadsAmountData, leadsAmountMonthlyData, leadsAmountReceivedData, leadsAmountReceivedMonthlyData])
 
 
     const LogoutData = localStorage.getItem('login');
@@ -247,7 +247,7 @@ export const Permission = () => {
             })
     };
 
-    const userRole = [
+    const roleData = [
         {
             code: 1,
             name: 'Lead'
@@ -261,20 +261,33 @@ export const Permission = () => {
             name: 'Sub Executive'
         }
     ]
+    const [userRole, setUserRole] = useState(roleData)
 
 
+    console.log('sdad', userRole[0])
 
 
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4) {
+        setUserRole(roleData)
+        if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4 || name == 'user_role' && value == 11) {
             setChildpermission(true)
 
             setroles(value)
             console.log("permissionname ", initalRoles)
 
-        } 
+        }
+
+        if (name == 'user_role' && value == 9 || name == 'user_role' && value == 10) {
+            setChildpermission(true)
+
+            setroles(value)
+            setUserRole([roleData[1]])
+            console.log("permissionname ", initalRoles)
+
+        }
+
         if (name == 'permission' && value == 1 || name == 'permission' && value == 2 || name == 'permission' && value == 3) {
             // alert(initalRoles)
             setChrildrole(value)
@@ -282,7 +295,7 @@ export const Permission = () => {
             console.log('child', childrole)
         }
 
-        if (name == 'user_role' && value == 3 || name == 'user_role' && value == 6) {
+        if (name == 'user_role' && value == 3 || name == 'user_role' && value == 6 || name == 'user_role' && value == 7 || name == 'user_role' && value == 8) {
             setChildpermission(false)
             setroles(value)
             setChrildrole('');

@@ -251,8 +251,8 @@ export const AddLead = () => {
 
         console.log('def', formData)
     };
-    const isReceivedEmpty = formData.received === '';
-    const isRecoveryEmpty = formData.recovery === '';
+    const isReceivedEmpty = formData?.received === '';
+    const isRecoveryEmpty = formData?.recovery === '';
     //  if (name === 'email') {
     //     setFormData((prevData) => ({
     //         ...prevData,
@@ -266,10 +266,10 @@ export const AddLead = () => {
 
     const LogoutData = localStorage.getItem('login');
 
-
+    const [salesRep, setSalesRep] = useState();
     const userData = (uniID, isChange) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units2/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -286,13 +286,15 @@ export const AddLead = () => {
             .then((data) => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
-                setUser(data?.data)
+                console.log('ss', data)
+                setUser(data?.account_rep);
+                setSalesRep(data?.sales_rep)
                 if (isChange === true) {
 
                     setFormData((prevData) => ({
                         ...prevData,
-                        sales_rep: data?.data[0]?.id,
-                        account_rep: data?.data[0]?.id,
+                        sales_rep: data?.sales_rep[0]?.id,
+                        account_rep: data?.account_rep[0]?.id,
                     }));
                     // setFormData({
                     //     ...formData, 
@@ -315,12 +317,12 @@ export const AddLead = () => {
 
         for (const key in formData) {
             if (
-                formData.brand === '2323' ||
-                formData.product === '232' ||
-                formData.email === 'asass' ||
-                formData.name === 'asa' ||
-                formData.phone === '2323' ||
-                formData.description === '23'
+                formData?.brand === '2323' ||
+                formData?.product === '232' ||
+                formData?.email === 'asass' ||
+                formData?.name === 'asa' ||
+                formData?.phone === '2323' ||
+                formData?.description === '23'
 
             ) {
 
@@ -463,7 +465,7 @@ export const AddLead = () => {
                                         labelClass='mainLabel'
                                         inputClass='mainInput'
                                         name="lead_code"
-                                        value={formData.lead_code}
+                                        value={formData?.lead_code}
                                         onChange={handleChange}
                                         onBlur={handleFetch}
                                     />
@@ -491,7 +493,7 @@ export const AddLead = () => {
                                                     selectClass="mainInput"
                                                     name="source"
                                                     label="Source Name"
-                                                    value={formData.source}
+                                                    value={formData?.source}
                                                     option={sourcename}
                                                     required
                                                     onChange={handleChange}
@@ -512,7 +514,7 @@ export const AddLead = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="product"
-                                                    value={formData.product}
+                                                    value={formData?.product}
                                                     onChange={handleChange}
                                                 />
 
@@ -530,7 +532,7 @@ export const AddLead = () => {
                                                     name="name"
                                                     value={formData?.name || ""}
 
-                                                    // value={formData.name == " " ? " " : viewl?.leads?.name}
+                                                    // value={formData?.name == " " ? " " : viewl?.leads?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -547,7 +549,7 @@ export const AddLead = () => {
                                                     // value={viewl?.leads?.email}
                                                     value={formData?.email || ""}
 
-                                                    // value={formData.email == " " ? " " : viewl?.leads?.email}
+                                                    // value={formData?.email == " " ? " " : viewl?.leads?.email}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -562,7 +564,7 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="phone"
-                                                    value={formData.phone || ""}
+                                                    value={formData?.phone || ""}
                                                     // value={viewl?.leads?.phone}
                                                     onChange={handleChange}
                                                 />
@@ -579,7 +581,7 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="quoted_amount"
-                                                    value={formData.quoted_amount}
+                                                    value={formData?.quoted_amount}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -594,7 +596,7 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="received"
-                                                    value={formData.received}
+                                                    value={formData?.received}
                                                     onChange={handleChange}
                                                     disabled={!isRecoveryEmpty}
 
@@ -612,7 +614,7 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="recovery"
-                                                    value={formData.recovery}
+                                                    value={formData?.recovery}
                                                     onChange={handleChange}
                                                     disabled={!isReceivedEmpty}
                                                 />
@@ -624,7 +626,7 @@ export const AddLead = () => {
                                                     name="unit_id"
                                                     label="Unit"
                                                     required
-                                                    value={formData.unit_id}
+                                                    value={formData?.unit_id}
                                                     option={unit}
                                                     onChange={handleChange}
                                                 />
@@ -635,7 +637,7 @@ export const AddLead = () => {
                                                     name="brand"
                                                     label="Brand"
                                                     required
-                                                    value={formData.brand}
+                                                    value={formData?.brand}
                                                     option={brands}
                                                     onChange={handleChange}
                                                 />
@@ -647,8 +649,8 @@ export const AddLead = () => {
                                                     name="sales_rep"
                                                     label="Sales Rep"
                                                     required
-                                                    value={formData.sales_rep}
-                                                    option={user}
+                                                    value={formData?.sales_rep}
+                                                    option={salesRep}
                                                     onChange={handleChange}
                                                 />
 
@@ -659,7 +661,7 @@ export const AddLead = () => {
                                                     selectClass="mainInput"
                                                     name="account_rep"
                                                     label="Account Rep"
-                                                    value={formData.account_rep}
+                                                    value={formData?.account_rep}
                                                     option={user}
                                                     onChange={handleChange}
                                                 />
@@ -678,7 +680,7 @@ export const AddLead = () => {
                                                     labelClass="mainLabel"
                                                     inputClass="mainInput"
                                                     name="date"
-                                                    value={formData.date}
+                                                    value={formData?.date}
                                                     onChange={handleChange}
 
                                                 />
@@ -701,7 +703,7 @@ export const AddLead = () => {
                                                             id="description"
                                                             cols="30"
                                                             rows="10"
-                                                            value={formData.description}
+                                                            value={formData?.description}
                                                             onChange={handleChange}
                                                         // disabled={remainingWords <= 0}
                                                         />

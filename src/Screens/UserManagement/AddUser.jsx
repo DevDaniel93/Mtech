@@ -28,7 +28,7 @@ export const AddUser = () => {
         navigate(-1)
     };
 
-    const userRole = [
+    const roleData = [
         {
             code: 1,
             name: 'Lead'
@@ -42,6 +42,7 @@ export const AddUser = () => {
             name: 'Sub Executive'
         }
     ]
+    const [userRole, setUserRole] = useState(roleData)
 
 
     const fectchBrandData = () => {
@@ -207,19 +208,21 @@ export const AddUser = () => {
 
     const [checkpermission, setCheckPermission] = useState(false);
 
-console.log("checkpermission" , checkpermission)
-    
+    console.log("checkpermission", checkpermission)
+
     const handleChange = (event) => {
         const { name, value, checked } = event.target;
-
+        setUserRole(roleData)
         if (name === 'currently_working_check') {
             setCheckPermission(checked);
-        } else if (name === 'user_role' && (value === '2' || value === '4')) {
+        } else if (name == 'user_role' && value == 2 || name == 'user_role' && value == 4 || name == 'user_role' && value == 11) {
             setPermission(true);
-        } else if (name === 'user_role' && (value === '1' || value === '3')) {
+        } else if (name === 'user_role' && (value === '1' || value === '3' || value === '6' || value === '7' || value === '8')) {
             setPermission(false);
+        } else if (name == 'user_role' && value == 9 || name == 'user_role' && value == 10) {
+            setUserRole([roleData[1]])
+            setPermission(true);
         }
-
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -362,7 +365,7 @@ console.log("checkpermission" , checkpermission)
                                                     type="checkbox"
                                                     id="currently_working_check"
                                                     name="currently_working_check"
-                                                    checked={checkpermission} 
+                                                    checked={checkpermission}
                                                 />
                                             </p>
                                             {checkpermission === false ? (<div className="col-md-4 mb-4">

@@ -155,14 +155,14 @@ export const EditLead = () => {
 
         for (const key in formData) {
             if (
-                //    formData[key] == formData.source =='' ||
-                // formData.amount == '' ||
-                formData.brand === '' ||
-                formData.product === '' ||
-                formData.email === '' ||
-                formData.name === '' ||
-                formData.phone === '' ||
-                formData.description === ''
+                //    formData[key] == formData?.source =='' ||
+                // formData?.amount == '' ||
+                formData?.brand === '' ||
+                formData?.product === '' ||
+                formData?.email === '' ||
+                formData?.name === '' ||
+                formData?.phone === '' ||
+                formData?.description === ''
 
             ) {
 
@@ -212,10 +212,10 @@ export const EditLead = () => {
     }, [])
 
 
-
+    const [salesRep, setSalesRep] = useState();
     const userData = (uniID) => {
         document.querySelector('.loaderBox').classList.remove("d-none");
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units/${uniID}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/user-units2/${uniID}`,
             {
                 method: 'GET',
                 headers: {
@@ -232,7 +232,8 @@ export const EditLead = () => {
             .then((data) => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
-                setUser(data?.data)
+                setUser(data?.account_rep);
+                setSalesRep(data?.sales_rep);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -316,8 +317,8 @@ export const EditLead = () => {
             }
         }
     };
-    const isReceivedEmpty = formData.received == '';
-    const isRecoveryEmpty = formData.recovery == '';
+    const isReceivedEmpty = formData?.received == '';
+    const isRecoveryEmpty = formData?.recovery == '';
 
     console.log("formData", formData)
     return (
@@ -430,7 +431,7 @@ export const EditLead = () => {
                                 labelClass="mainLabel"
                                 inputClass="mainInput"
                                 name="received"
-                                value={formData.received}
+                                value={formData?.received}
                                 onChange={handleChange}
                                 disabled={!isRecoveryEmpty}
 
@@ -448,7 +449,7 @@ export const EditLead = () => {
                                 labelClass="mainLabel"
                                 inputClass="mainInput"
                                 name="recovery"
-                                value={formData.recovery}
+                                value={formData?.recovery}
                                 onChange={handleChange}
                                 disabled={!isReceivedEmpty}
                             />
@@ -486,8 +487,8 @@ export const EditLead = () => {
                                 name="sales_rep"
                                 label="Sales Rep"
                                 required
-                                value={formData.sales_rep}
-                                option={user}
+                                value={formData?.sales_rep}
+                                option={salesRep}
                                 onChange={handleChange}
                             />
 
@@ -497,7 +498,7 @@ export const EditLead = () => {
                                 selectClass="mainInput"
                                 name="account_rep"
                                 label="Account Rep"
-                                value={formData.account_rep}
+                                value={formData?.account_rep}
                                 option={user}
                                 onChange={handleChange}
                             />
@@ -530,7 +531,7 @@ export const EditLead = () => {
                                         id="description"
                                         cols="30"
                                         rows="10"
-                                        value={formData.description}
+                                        value={formData?.description}
                                         onChange={handleChange}
                                     // disabled={remainingWords <= 0}
                                     />
