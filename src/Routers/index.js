@@ -62,6 +62,10 @@ import { QaDetail } from "../Screens/QAManagement/qaDetail";
 
 import { LogsManagement } from "../Screens/LogsManagement";
 
+import { FrontSourceManagement } from "../Screens/FrontSourceManagement";
+import { FrontLeadStatus } from "../Screens/FrontLeadStatus";
+import { FrontRegionManagement } from "../Screens/FrontRegionManagement";
+
 import Profile from "../Screens/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
 import ChangePassword from "../Screens/Profile/ChangePassword";
@@ -78,14 +82,12 @@ export default function AdminRouter() {
  
 
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/mtRecordFlow">
       <Routes>
  
 
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/" element={<AdminLogin />} />
-
- 
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/forget-password2" element={<ForgetPassword2 />} />
         <Route path="/forget-password3" element={<ForgetPassword3 />} />
@@ -132,6 +134,11 @@ export default function AdminRouter() {
 
 
         <Route path="/user-report-management" element={<ProtectedRoutes Components={UserReportManagement} />} />
+
+
+        <Route path="/front-source-management" element={<ProtectedRoutes Components={FrontSourceManagement} />} />
+        <Route path="/front-lead-management" element={<ProtectedRoutes Components={FrontLeadStatus} />} />
+        <Route path="/front-region-management" element={<ProtectedRoutes Components={FrontRegionManagement} />} />
 
 {/* user-report-management */}
 

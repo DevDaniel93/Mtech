@@ -394,7 +394,38 @@ export const Sidebar = (props) => {
                 </span>
                 <span className="sideLinkText">Logs Management</span>
               </Link> : " "}
-            </li> 
+            </li>
+
+
+            <li className="sidebar-li">
+              {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-source-management') ? 'active' : ''}`} to="/front-source-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+                  <img src={Brands} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Front Source Management</span>
+              </Link> : ""}
+            </li>
+
+            <li className="sidebar-li">
+              {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-lead-management') ? 'active' : ''}`} to="/front-lead-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+                  <img src={Brands} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Front Lead Status</span>
+              </Link> : ""}
+            </li>
+
+            <li className="sidebar-li">
+              {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-region-management') ? 'active' : ''}`} to="/front-region-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+                  <img src={Brands} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Front Region Management</span>
+              </Link> : ""}
+            </li>
 
 
 
