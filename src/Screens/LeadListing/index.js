@@ -115,69 +115,75 @@ export const LeadListing = () => {
   const [totalRecord, setTotalRecord] = useState();
 
   const [isUsers, setIsUsers] = useState(false);
+
   const leadData = () => {
-    const LogoutData = localStorage.getItem('login');
-    document.querySelector('.loaderBox').classList.remove("d-none");
+    if (!formData?.month && !formData?.unit_id && !formData?.year && !formData?.search && !formData?.search_type && !formData?.userArray) {
+      leadlist();
+    } else {
+      const LogoutData = localStorage.getItem('login');
+      document.querySelector('.loaderBox').classList.remove("d-none");
 
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}&page=1&search=${formData?.search}&search_type=${formData?.search_type}&users=${userArray}`,
-      {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${LogoutData}`
-        },
-      }
-    )
-
-      .then((response) => {
-        return (
-          response.json()
-
-        )
-      }
-
+      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing-search?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}&page=1&search=${formData?.search}&search_type=${formData?.search_type}&users=${userArray}`,
+        {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${LogoutData}`
+          },
+        }
       )
 
-      .then((data) => {
+        .then((response) => {
+          return (
+            response.json()
 
-        document.querySelector('.loaderBox').classList.add("d-none");
-
-        setData(data?.leads);
-        setTotalRecord(data?.total_records);
-
-        // setExtra_Data(data?.extra_fileds)
-        setPermission(data?.permission)
-        // setItemsPerPage(data?.leads.length);
-        setShowtable(true)
-
-        setExtra_Data(data?.extra_fileds);
-
-        setPermission(data?.permission);
-        // setItemsPerPage(data?.leads.length);
-        if (data?.extra_fileds != "") {
-
-
-          setShowtable(true);
-        } else {
-          // If there is no data, set showtable to false
-          setShowtable(false);
+          )
         }
 
-      })
-      .catch((error) => {
-        document.querySelector('.loaderBox').classList.add("d-none");
-        setShowtable(false)
-      })
+        )
+
+        .then((data) => {
+
+          document.querySelector('.loaderBox').classList.add("d-none");
+
+          setData(data?.leads);
+          setTotalRecord(data?.total_records);
+
+          // setExtra_Data(data?.extra_fileds)
+          setPermission(data?.permission)
+          // setItemsPerPage(data?.leads.length);
+          setShowtable(true)
+
+          setExtra_Data(data?.extra_fileds);
+
+          setPermission(data?.permission);
+          // setItemsPerPage(data?.leads.length);
+          if (data?.extra_fileds != "") {
+
+
+            setShowtable(true);
+          } else {
+            // If there is no data, set showtable to false
+            setShowtable(false);
+          }
+
+        })
+        .catch((error) => {
+          document.querySelector('.loaderBox').classList.add("d-none");
+          setShowtable(false)
+        })
+
+    }
 
   }
 
 
 
 
- 
-  
-  
+
+
+
 
 
 
@@ -235,16 +241,6 @@ export const LeadListing = () => {
   }, []);
 
   const clearFilter = () => {
-    // // Clearing filter fields in formData
-    //  setFormData({
-    //     ...formData,
-    //     unit_id: '',
-    //     month: '',
-    //     year: ''
-    // });
-
-    // // Triggering leadData function to update or retrieve data based on cleared filters
-    //  leadData();
     setClear(false);
     window.location.reload()
   };
@@ -629,8 +625,8 @@ export const LeadListing = () => {
 
   const handleChangeSelect = (selected) => {
 
-   
-    selected.map((item, index)=> {
+
+    selected.map((item, index) => {
       userArray.push(item?.value);
     })
     setFormData({
