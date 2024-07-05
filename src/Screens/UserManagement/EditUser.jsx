@@ -46,6 +46,7 @@ export const EditUser = () => {
     }
 
 
+
     const SelectOptionsFilter = []
     for (const key in SelectOptions) {
         if (SelectOptions.hasOwnProperty(key)) {
@@ -64,12 +65,48 @@ export const EditUser = () => {
     }
 
 
+
+    var SelectSubOptions = [];
+
+    if (initialunit.length > 0) {
+        SelectSubOptions = initialunit?.filter(item => {
+            // Check if the item.id is not present in formData.unit_id
+            return !formData?.sub_unit_id?.some(data => data?.value == item?.id);
+        });
+    }
+
+
+    const SelectOptionsSubFilter = []
+    for (const key in SelectSubOptions) {
+        if (SelectSubOptions.hasOwnProperty(key)) {
+            const item = SelectSubOptions[key];
+
+            const option = {
+                label: item.name,
+                value: item.id,
+            };
+
+
+            SelectOptionsSubFilter.push(option);
+
+
+        }
+    }
+
+
     console.log("SelectOptions", SelectOptionsFilter);
     console.log("filter", formData?.unit_id)
 
     const handleChangeSelect = (selected) => {
         setFormData({
             ...formData, unit_id: selected
+        })
+    };
+
+
+    const handleChangeSubSelect = (selected) => {
+        setFormData({
+            ...formData, sub_unit_id: selected
         })
     };
 
@@ -97,8 +134,8 @@ export const EditUser = () => {
             .then((data) => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
-                setFormData(data.users);
-                data.users?.permission != null ? setPermission(true) : setPermission(false)
+                setFormData(data?.users);
+                data?.users?.permission != null ? setPermission(true) : setPermission(false)
                 // const abac = SelectOptions.filter(dataItem => data?.users?.unit_id?.includes(dataItem.id))
 
 
@@ -195,7 +232,7 @@ export const EditUser = () => {
 
         const formDataMethod = new FormData();
         for (const key in formData) {
-            if (key == 'unit_id') {
+            if (key == 'unit_id' || key == 'sub_unit_id') {
                 formDataMethod.append(key, JSON.stringify(formData[key]))
             } else {
                 formDataMethod.append(key, formData[key]);
@@ -422,6 +459,19 @@ export const EditUser = () => {
                                                         required
                                                         options={SelectOptionsFilter}
                                                         onChange={handleChangeSelect}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-4 mb-4">
+                                                <div class="inputWrapper">
+                                                    <label class="mainLabel">Edit Sub Units<span>*</span></label>
+                                                    <Select
+                                                        value={formData?.sub_unit_id}
+                                                        isMulti
+                                                        required
+                                                        options={SelectOptionsSubFilter}
+                                                        onChange={handleChangeSubSelect}
                                                     />
                                                 </div>
                                             </div>

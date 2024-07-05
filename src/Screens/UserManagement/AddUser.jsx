@@ -94,7 +94,7 @@ export const AddUser = () => {
             .then((data) => {
 
                 document.querySelector('.loaderBox').classList.add("d-none");
-                setUnit(data.units);
+                setUnit(data?.units);
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
@@ -106,6 +106,12 @@ export const AddUser = () => {
     const handleChangeSelect = (selected) => {
         setFormData({
             ...formData, unit_id: selected
+        })
+    };
+
+    const handleChangeSubSelect = (selectedData) => {
+        setFormData({
+            ...formData, sub_unit_id: selectedData
         })
     };
 
@@ -136,10 +142,10 @@ export const AddUser = () => {
         for (const key in formData) {
             if (
 
-                formData.name === '' ||
-                formData.product === '' ||
-                formData.email === '' ||
-                formData.user_role === ''
+                formData?.name === '' ||
+                formData?.product === '' ||
+                formData?.email === '' ||
+                formData?.user_role === ''
 
 
             ) {
@@ -150,7 +156,7 @@ export const AddUser = () => {
         }
         const formDataMethod = new FormData();
         for (const key in formData) {
-            if (key == 'unit_id') {
+            if (key == 'unit_id' || key == 'sub_unit_id') {
                 formDataMethod.append(key, JSON.stringify(formData[key]))
             } else {
                 formDataMethod.append(key, formData[key]);
@@ -227,6 +233,8 @@ export const AddUser = () => {
             ...prevData,
             [name]: value,
         }));
+
+        console.log('userData', formData)
     };
     const handlecheck = () => {
 
@@ -262,7 +270,7 @@ export const AddUser = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="name"
-                                                    value={formData.name}
+                                                    value={formData?.name}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -276,7 +284,7 @@ export const AddUser = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="email"
-                                                    value={formData.email}
+                                                    value={formData?.email}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -290,7 +298,7 @@ export const AddUser = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="password"
-                                                    value={formData.password}
+                                                    value={formData?.password}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -300,7 +308,7 @@ export const AddUser = () => {
                                                     name="user_role"
                                                     label="User Role"
                                                     required
-                                                    value={formData.user_role}
+                                                    value={formData?.user_role}
                                                     option={initalRole}
                                                     onChange={handleChange}
                                                 />
@@ -314,7 +322,7 @@ export const AddUser = () => {
                                                             name="permission"
                                                             label="Permission"
                                                             required
-                                                            value={formData.permission}
+                                                            value={formData?.permission}
                                                             option={userRole}
                                                             onChange={handleChange}
                                                         />
@@ -328,11 +336,25 @@ export const AddUser = () => {
                                                     <label class="mainLabel">Add Units<span>*</span></label>
 
                                                     <Select
-                                                        value={formData.unit_id}
+                                                        value={formData?.unit_id}
                                                         isMulti
                                                         required
                                                         options={SelectOptions}
                                                         onChange={handleChangeSelect}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-4 mb-4">
+                                                <div class="inputWrapper">
+                                                    <label class="mainLabel">Add Sub Units<span>*</span></label>
+
+                                                    <Select
+                                                        value={formData?.sub_unit_id}
+                                                        isMulti
+                                                        required
+                                                        options={SelectOptions}
+                                                        onChange={handleChangeSubSelect}
                                                     />
                                                 </div>
                                             </div>
@@ -349,7 +371,7 @@ export const AddUser = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="join_date"
-                                                    value={formData.join_date}
+                                                    value={formData?.join_date}
                                                     onChange={handleChange}
                                                 />
                                             </div>
@@ -378,7 +400,7 @@ export const AddUser = () => {
                                                     labelClass='mainLabel'
                                                     inputClass='mainInput'
                                                     name="leave_date"
-                                                    value={formData.leave_date}
+                                                    value={formData?.leave_date}
                                                     onChange={handleChange}
                                                 />
                                             </div>) : ""}

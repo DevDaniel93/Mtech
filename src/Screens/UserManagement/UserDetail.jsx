@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { DashboardLayout } from "../../Components/Layout/DashboardLayout";
 import BackButton from "../../Components/BackButton";
 import CustomModal from "../../Components/CustomModal";
- 
+
 export const UserDetail = () => {
 
     const { id } = useParams();
@@ -46,14 +46,14 @@ export const UserDetail = () => {
                 return response.json()
             })
             .then((data) => {
-          
+
                 document.querySelector('.loaderBox').classList.add("d-none");
                 SetUser(data.users)
 
             })
             .catch((error) => {
                 document.querySelector('.loaderBox').classList.add("d-none");
-                
+
             })
     }, [id]);
 
@@ -92,6 +92,15 @@ export const UserDetail = () => {
                                     <p className="secondaryText">Unit Name</p>
                                     {
                                         user?.unit_id && user?.unit_id?.map((item, index) => (
+                                            <span className="ps-1" key={index}>{item?.label}</span>
+                                        ))
+                                    }
+                                </div>
+
+                                <div className="col-md-4 mb-4">
+                                    <p className="secondaryText">Sub Unit Name</p>
+                                    {
+                                        user?.sub_unit_id && user?.sub_unit_id?.map((item, index) => (
                                             <span className="ps-1" key={index}>{item?.label}</span>
                                         ))
                                     }

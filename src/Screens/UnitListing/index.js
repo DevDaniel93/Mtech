@@ -217,7 +217,10 @@ export const UnitListing = () => {
       })
   }
 
+  const [isloading, setIsLoading] = useState(false);
+
   const editUnit = (unitID) => {
+    setIsLoading(true);
     const LogoutData = localStorage.getItem('login');
     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/view-unit/${unitID}`,
       {
@@ -236,7 +239,9 @@ export const UnitListing = () => {
 
         setIdUser(unitID)
 
-        data.unit[0].unit_brands.map((item) => {
+        setIsLoading(false);
+
+        data?.unit[0]?.unit_brands.map((item) => {
           const editData = {
             value: item.brands.id,
             label: item.brands.name,
@@ -254,6 +259,8 @@ export const UnitListing = () => {
 
       })
       .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
       })
   }
 
@@ -341,10 +348,17 @@ export const UnitListing = () => {
                                   <FontAwesomeIcon icon={faEllipsisV} />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu align="end" className="tableDropdownMenu">
-                                  {permission?.units.update ? <button onClick={() => {
-                                    editUnit(item.id)
-                                    setUserFrom(true)
-                                  }} className="tableAction"><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button> : " "}
+                                  {permission?.units.update ?
+                                    <button onClick={() => {
+                                      editUnit(item.id)
+                                      setUserFrom(true)
+
+                                    }}
+                                      className="tableAction"
+                                      disabled={isloading}
+                                    ><FontAwesomeIcon icon={faPencil} className="tableActionIcon" />Edit</button>
+
+                                    : " "}
                                 </Dropdown.Menu>
                               </Dropdown>
                             </td>
@@ -417,7 +431,7 @@ export const UnitListing = () => {
             <div class="inputWrapper">
               <label class="mainLabel">Edit brands<span>*</span></label>
               <Select
-                value={formData.brands}
+                value={formData?.brands}
                 isMulti
                 required
                 options={SelectOptions}
