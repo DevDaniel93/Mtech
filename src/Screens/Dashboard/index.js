@@ -97,8 +97,8 @@ export const Dashboard = () => {
           <div className="row mb-3">
             <div className="col-12">
               <div className="dashCard">
-                <div className="row mb-4 align-items-center justify-content-end">
-                  <div className="col-md-12 mb-4">
+                <div className="row mb-2 align-items-center justify-content-end">
+                  <div className="col-md-12 mb-2">
                     <div className="row align-items-end justify-content-between">
                       {data?.start_month && (
 
@@ -150,37 +150,37 @@ export const Dashboard = () => {
                   <div className="col-md-9">
                     <div className="row">
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6 className="text-success">Total Gross</h6>
                           <h5>{`$${data?.totals?.gross_amount}`}</h5>
                         </div>
                       </div>
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6 className="text-danger">Total Refund</h6>
                           <h5>{`$${data?.totals?.refund_amount}`}</h5>
                         </div>
                       </div>
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6 className="text-ornage">Total CB</h6>
                           <h5>{`$${data?.totals?.charge_back}`}</h5>
                         </div>
                       </div>
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6>Total Purchase</h6>
                           <h5>{`$${data?.totals?.purchase}`}</h5>
                         </div>
                       </div>
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6>Total Reversal</h6>
                           <h5>{`$${data?.totals?.reversal_amount}`}</h5>
                         </div>
                       </div>
                       <div className="col">
-                        <div className="shadow p-2 rounded-3">
+                        <div className="spaceReduce shadow p-2 rounded-3">
                           <h6>Total Net</h6>
                           <h5>{`$${data?.totals?.net}`}</h5>
                         </div>
@@ -190,42 +190,42 @@ export const Dashboard = () => {
                 </div>
 
                 {data?.data && data?.data?.map((item, index) => (
-                  <div className={`row mb-5 ${index % 2 === 0 ? '' : ''}`}>
+                  <div className={`row mb-2 ${index % 2 === 0 ? '' : ''}`}>
                     <div className="col-md-12">
-                      <h3 className="mainTitle mb-3 borderLine">{item?.unit_name}</h3>
+                      <h3 className="mainTitle mb-1 borderLine">{item?.unit_name}</h3>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6 className="text-success">Gross</h6>
                         <h5>{`$${item?.gross_amount}`}</h5>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6 className="text-danger">Refund</h6>
                         <h5>{`$${item?.refund_amount}`}</h5>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6 className="text-ornage">CB</h6>
                         <h5>{`$${item?.charge_back}`}</h5>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6>Purchase</h6>
                         <h5>{`$${item?.purchase}`}</h5>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6>Reversal</h6>
                         <h5>{`$${item?.reversal_amount}`}</h5>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="shadow p-2 rounded-3">
+                      <div className="spaceReduce shadow p-2 rounded-3">
                         <h6>Net</h6>
                         <h5>{`$${item?.net}`}</h5>
                       </div>

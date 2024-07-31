@@ -96,15 +96,32 @@ export const UserDetail = () => {
                                         ))
                                     }
                                 </div>
+                                {
+                                    user?.sub_unit_id && (
+                                        <div className="col-md-4 mb-4">
+                                            <p className="secondaryText">Sub Unit Name</p>
+                                            {
+                                                user?.sub_unit_id && user?.sub_unit_id?.map((item, index) => (
+                                                    <span className="ps-1" key={index}>{item?.label}</span>
+                                                ))
+                                            }
+                                        </div>
+                                    )
+                                }
 
-                                <div className="col-md-4 mb-4">
-                                    <p className="secondaryText">Sub Unit Name</p>
-                                    {
-                                        user?.sub_unit_id && user?.sub_unit_id?.map((item, index) => (
-                                            <span className="ps-1" key={index}>{item?.label}</span>
-                                        ))
-                                    }
-                                </div>
+{
+                                    user?.prev_unit_id && (
+                                        <div className="col-md-4 mb-4">
+                                            <p className="secondaryText">Previous Unit Name</p>
+                                            {
+                                                user?.prev_unit_id && user?.prev_unit_id?.map((item, index) => (
+                                                    <span className="ps-1" key={index}>{item?.label}</span>
+                                                ))
+                                            }
+                                        </div>
+                                    )
+                                }
+
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">User Role</p>
                                     <p>{user?.role?.name}</p>

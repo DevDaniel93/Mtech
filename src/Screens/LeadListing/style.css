@@ -33,8 +33,9 @@ td {
     padding: 8px 15px;
     min-width: auto;
 }
-.item-name{
- background-color: orange;
+
+.item-name {
+    background-color: orange;
 }
 
 
@@ -53,8 +54,17 @@ td {
     border-radius: 50px;
 }
 
+.bgSuccess {
+    background-color: #01a94c;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+
 @media screen and (max-width: 1200px) and (min-width: 768px) {
-    .stats, .stats:not(:last-child) {
+
+    .stats,
+    .stats:not(:last-child) {
         border-color: #fff0;
     }
 
@@ -64,10 +74,28 @@ td {
 }
 
 @media screen and (max-width: 767px) {
-    .stats, .stats:not(:last-child), .stats:nth-child(odd) {
+
+    .stats,
+    .stats:not(:last-child),
+    .stats:nth-child(odd) {
         border-color: #fff0;
     }
 }
 
 
+@media(min-width: 1336px) {
+    .preWrap table {
+        text-align: left !important;
+    }
 
+    .preWrap table td {
+        white-space: pre-wrap !important;
+    }
+
+    .emailData {
+        display: flex;
+        justify-content: start;
+        position: relative;
+        left: 2rem;
+    }
+}

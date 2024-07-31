@@ -104,7 +104,7 @@ export const UnitListing = () => {
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing-detail`,
       {
         method: 'GET',
         headers: {

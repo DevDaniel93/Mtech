@@ -22,7 +22,8 @@ export const EditUser = () => {
         email: '',
         unit_id: [],
         user_role: '',
-        show_reports: ''
+        show_reports: '',
+        sub_unit_id: []
     });
     const navigate = useNavigate();
     const goBack = () => {
@@ -110,6 +111,27 @@ export const EditUser = () => {
         })
     };
 
+
+    const prevSelectOptions = []
+    for (const key in initialunit) {
+        if (initialunit.hasOwnProperty(key)) {
+            const item = initialunit[key];
+
+            const option = {
+                value: item.id,
+                label: item.name,
+            };
+
+            prevSelectOptions.push(option);
+        }
+    }
+
+
+    const handleChangePrevSubSelect = (selectedData) => {
+        setFormData({
+            ...formData, prev_unit_id: selectedData
+        })
+    };
 
 
     const editBrandList = [];
@@ -232,7 +254,7 @@ export const EditUser = () => {
 
         const formDataMethod = new FormData();
         for (const key in formData) {
-            if (key == 'unit_id' || key == 'sub_unit_id') {
+            if (key == 'unit_id' || key == 'sub_unit_id' || key == 'prev_unit_id') {
                 formDataMethod.append(key, JSON.stringify(formData[key]))
             } else {
                 formDataMethod.append(key, formData[key]);
@@ -465,13 +487,25 @@ export const EditUser = () => {
 
                                             <div className="col-md-4 mb-4">
                                                 <div class="inputWrapper">
-                                                    <label class="mainLabel">Edit Sub Units<span>*</span></label>
+                                                    <label class="mainLabel">Edit Sub Units</label>
                                                     <Select
                                                         value={formData?.sub_unit_id}
                                                         isMulti
-                                                        required
                                                         options={SelectOptionsSubFilter}
                                                         onChange={handleChangeSubSelect}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-4 mb-4">
+                                                <div class="inputWrapper">
+                                                    <label class="mainLabel">Edit Previous Units</label>
+
+                                                    <Select
+                                                        value={formData?.prev_unit_id}
+                                                        isMulti
+                                                        options={prevSelectOptions}
+                                                        onChange={handleChangePrevSubSelect}
                                                     />
                                                 </div>
                                             </div>

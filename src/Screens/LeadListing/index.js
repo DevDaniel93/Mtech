@@ -65,7 +65,7 @@ export const LeadListing = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(`${lead_code}`).then(() => {
         setCopied(true);
-        setCopiedId(id);
+        setCopiedId(lead_code);
         setTimeout(() => {
           setCopied(false);
           setCopiedId(null);
@@ -123,7 +123,7 @@ export const LeadListing = () => {
       const LogoutData = localStorage.getItem('login');
       document.querySelector('.loaderBox').classList.remove("d-none");
 
-      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing-search?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}&page=1&search=${formData?.search}&search_type=${formData?.search_type}&users=${userArray}`,
+      fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing-search?month=${formData?.month}&unit_id=${formData?.unit_id}&year=${formData?.year}&page=1&search=${formData?.search}&search_type=${formData?.search_type}&users=${userArray}&hash=${Date.now()}`,
         {
           method: 'GET',
           headers: {
@@ -448,28 +448,6 @@ export const LeadListing = () => {
 
 
 
-  // function handleChanges(event) {
-  //   const file = event.target.files[0];
-
-  //   if (file) {
-  //     const formData = new FormData();
-  //     formData.append('csv', file);
-
-  //     fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/csv-data-handle`, {
-  //       method: 'POST',
-  //       body: formData,
-  //     })
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         leadData()
-  //         console.log('Upload successful:', data);
-  //       })
-  //       .catch(error => {
-
-  //         console.error('Error uploading file:', error);
-  //       });
-  //   }
-  // }
 
 
   const monthList = [
@@ -535,6 +513,10 @@ export const LeadListing = () => {
     {
       code: 'customer',
       name: 'Customer'
+    },
+    {
+      code: 'source',
+      name: 'Source'
     },
   ]
 
@@ -814,7 +796,7 @@ export const LeadListing = () => {
                                 <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
                               </button>
 
-                              {copied && copiedId === item.id && (
+                              {copied && copiedId === item?.code && (
                                 <span className="text-success px-3 py-1 rounded-pill copiedText">Copied</span>
                               )}
 
@@ -826,12 +808,38 @@ export const LeadListing = () => {
                             <td >{item.getbrand?.name}</td>
                             <td className="prodDField"><span>{item?.product}</span></td>
                             <td className="nameField">
-                              <span className={item?.chargeback === true && item?.refund === true ? "redColorBg" : item?.chargeback === false && item?.refund === false ? '' : item?.refund === true ? 'redColorBg' : 'orangeColorBg'}>   {item?.name}</span>
+                              <span className={item?.chargeback === true && item?.refund === true ? "redColorBg" : item?.chargeback === false && item?.refund === false ? '' : item?.refund === true ? 'redColorBg' : item?.reversal === true ? 'bgSuccess' : 'orangeColorBg'}>   {item?.name}</span>
 
                             </td>
                             {/* <td>{item?.username}</td> */}
-                            <td className="emailFiled"><span>{item?.email}</span></td>
-                            <td className="phoneFiled"><span>{item?.phone}</span></td>
+                            {/* <td className="emailFiled"><span>{item?.email}</span></td> */}
+                            <td>
+                              <div className="emailData">
+                                <button
+                                  onClick={() => coppied(item.id, item?.email)}
+                                  className="bg-transparent border-0 text-secondary"
+                                >
+                                  <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
+
+                                </button>
+                                <span>{item?.email}</span>
+                              </div>
+                              {copied && copiedId === item?.email && (
+                                <span className="text-success px-5 py-1 rounded-pill copiedText">Copied</span>
+                              )}
+                            </td>
+                            <td>
+                              <button
+                                onClick={() => coppied(item.id, item?.phone)}
+                                className="bg-transparent border-0 text-secondary"
+                              >
+                                <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
+                              </button>
+                              {copied && copiedId === item?.phone && (
+                                <span className="text-success px-3 py-1 rounded-pill copiedText">Copied</span>
+                              )}
+                            </td>
+                            {/* <td className="phoneFiled"><span>{item?.phone}</span></td> */}
                             <td className="descField"><span>{item?.description}</span></td>
                             <td>{`$${item?.quoted_amount}`}</td>
 

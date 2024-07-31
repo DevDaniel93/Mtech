@@ -40,6 +40,7 @@ import { AddReversal } from "../Screens/ReversalManagement/AddReversal";
 import { EditReversal } from "../Screens/ReversalManagement/EditReversal";
 
 import { ReportManagement } from "../Screens/ReportManagement";
+import { FrontReportManagement } from "../Screens/FrontReportManagement";
 import { UnitReportManagement } from "../Screens/UnitReportManagement";
 import { AccountManagement } from "../Screens/AccountManagement";
 import { AccountDetail } from "../Screens/AccountManagement/AccountDetail";
@@ -65,6 +66,13 @@ import { LogsManagement } from "../Screens/LogsManagement";
 import { FrontSourceManagement } from "../Screens/FrontSourceManagement";
 import { FrontLeadStatus } from "../Screens/FrontLeadStatus";
 import { FrontRegionManagement } from "../Screens/FrontRegionManagement";
+
+import {FrontLeadListing} from "../Screens/FrontLead"
+import { AddFrontLead } from "../Screens/FrontLead/AddLead";
+import { FrontEditLead } from "../Screens/FrontLead/EditLead";
+import { FrontDetailListing } from "../Screens/FrontLead/DetailListig";
+
+import { SpendingManagement } from "../Screens/spendingManagement";
 
 import Profile from "../Screens/Profile";
 import EditProfile from "../Screens/Profile/EditProfile";
@@ -102,6 +110,12 @@ export default function AdminRouter() {
         <Route path="/add-lead/" element={<ProtectedRoutes Components={AddLead} />} />
 
 
+        <Route path="/front-lead-listing" element={<ProtectedRoutes Components={FrontLeadListing} />} />
+        <Route path="/front-lead-detail/:id" element={<ProtectedRoutes Components={FrontDetailListing} />} />
+        <Route path="/edit-front-lead/:id" element={<ProtectedRoutes Components={FrontEditLead} />} />
+        <Route path="/add-front-lead/" element={<ProtectedRoutes Components={AddFrontLead} />} />
+
+
         <Route path="/user-management" element={<ProtectedRoutes Components={UserManagement} />} />
         <Route path="/user-detail/:id" element={<ProtectedRoutes Components={UserDetail} />} />
         <Route path="/add-user/" element={<ProtectedRoutes Components={AddUser} />} />
@@ -117,7 +131,7 @@ export default function AdminRouter() {
 
 
 
-
+        <Route path="/spending-management" element={<ProtectedRoutes Components={SpendingManagement} />} />
         <Route path="/Usertarget-listing" element={<ProtectedRoutes Components={UserTarget} />} />
         <Route path="/target-listing/usertarget-detail/:id" element={<ProtectedRoutes Components={UsertargetDetails} />} />
 
@@ -134,6 +148,7 @@ export default function AdminRouter() {
 
 
         <Route path="/user-report-management" element={<ProtectedRoutes Components={UserReportManagement} />} />
+        <Route path="/front-report-management" element={<ProtectedRoutes Components={FrontReportManagement} />} />
 
 
         <Route path="/front-source-management" element={<ProtectedRoutes Components={FrontSourceManagement} />} />

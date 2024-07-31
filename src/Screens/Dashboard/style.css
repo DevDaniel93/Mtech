@@ -76,6 +76,18 @@
     padding-left: 10px !important;
 }
 
+.spaceReduce h5 {
+    margin-bottom: 0;
+}
+
+.spaceReduce h5 {
+    font-weight: 600;
+}
+
+/* .spaceReduce {
+    text-align: center;
+} */
+
 
 @media screen and (max-width: 1200px) and (min-width: 768px) {
     .stats, .stats:not(:last-child) {
@@ -90,5 +102,16 @@
 @media screen and (max-width: 767px) {
     .stats, .stats:not(:last-child), .stats:nth-child(odd) {
         border-color: #fff0;
+    }
+}
+
+@media(max-width: 1333px) {
+    .dashboardBody .mainTitle {
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+
+    .spaceReduce h5, .spaceReduce h6 {
+        font-size: 12px;
     }
 }

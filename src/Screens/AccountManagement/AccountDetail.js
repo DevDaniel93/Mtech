@@ -8,6 +8,7 @@ import CustomTable from "../../Components/CustomTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChain, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { SelectBox } from "../../Components/CustomSelect";
+import FormatDateTime from "../../Components/DateFormate"
 
 export const AccountDetail = () => {
 
@@ -259,7 +260,7 @@ export const AccountDetail = () => {
     return (
         <>
             <DashboardLayout>
-                <div className="dashCard mb-4">
+                <div className="dashCard mb-4 preWrap">
                     <div className="row mb-3">
                         <div className="col-12 mb-2">
                             <h2 className="mainTitle">
@@ -297,7 +298,7 @@ export const AccountDetail = () => {
                                 </div>
                                 <div className="col-md-4 mb-4">
                                     <p className="secondaryText">Unit</p>
-                                    <p>{ lead?.account_units && lead.account_units.map((unit, index) => {
+                                    <p>{lead?.account_units && lead.account_units.map((unit, index) => {
                                         const unitName = unit?.unit?.name; // Store unit name for clarity
 
                                         if (!unitName) return; // Handle potential null unitName
@@ -355,8 +356,12 @@ export const AccountDetail = () => {
                                     <div className="commentAreaBox">
                                         {lead?.comments && lead?.comments?.map((item, index) => (
                                             <div className="commentData shadow p-2 mb-4 rounded-4">
-                                                <h6>{item?.user_name}</h6>
+                                                <div className="dateTime d-flex align-items-center gap-3 mb-2">
+                                                    <h6 className="mb-0">{item?.user_name}</h6>
+                                                    <FormatDateTime isoDateString={item?.created_at} />
+                                                </div>
                                                 <p>{item?.comment}</p>
+
                                             </div>
                                         ))}
                                     </div>

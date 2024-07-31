@@ -46,35 +46,7 @@ export const Sidebar = (props) => {
   const [permission, setPermission] = useState();
   const [isShown, setIsShown] = useState(false);
   const navigate = useNavigate()
-  // const leadData = () => {
-  //   const LogoutData = localStorage.getItem('login');
 
-  //   fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/leads-listing`,
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${LogoutData}`
-  //       },
-  //     }
-  //   )
-
-  //     .then(response =>
-  //       response.json()
-  //     )
-  //     .then((data) => {
-  //       console.log("permission", data)
-  //       // document.querySelector('.loaderBox').classList.add("d-none");
-  //       // setData(data.leads);
-  //       setPermission(data?.permission)
-  //     })
-  //     .catch((error) => {
-  //       // document.querySelector('.loaderBox').classList.add("d-none");
-
-  //     })
-
-  // }
 
 
 
@@ -184,6 +156,18 @@ export const Sidebar = (props) => {
                 <span className="sideLinkText">Lead Management</span>
               </Link> : " "}
             </li>
+
+
+            <li className="sidebar-li">
+              {permission?.leads?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-lead-listing') ? 'active' : ''}`} to="/front-lead-listing">
+                <span className="sideIcon">
+
+                  <img src={Leads} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Front Lead Management</span>
+              </Link> : " "}
+            </li>
+
             <li className="sidebar-li">
               {permission?.roles?.read === true ? <Link className={`sideLink ${location.pathname.includes('/role-management') ? 'active' : ''}`} to="/role-management">
                 <span className="sideIcon">
@@ -397,10 +381,10 @@ export const Sidebar = (props) => {
             </li>
 
 
-            <li className="sidebar-li">
+            {/* <li className="sidebar-li">
               {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-source-management') ? 'active' : ''}`} to="/front-source-management">
                 <span className="sideIcon">
-                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+
                   <img src={Brands} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Front Source Management</span>
@@ -410,7 +394,7 @@ export const Sidebar = (props) => {
             <li className="sidebar-li">
               {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-lead-management') ? 'active' : ''}`} to="/front-lead-management">
                 <span className="sideIcon">
-                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+
                   <img src={Brands} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Front Lead Status</span>
@@ -420,15 +404,34 @@ export const Sidebar = (props) => {
             <li className="sidebar-li">
               {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/front-region-management') ? 'active' : ''}`} to="/front-region-management">
                 <span className="sideIcon">
-                  {/* <FontAwesomeIcon icon={faTasks} /> */}
+
                   <img src={Brands} className="sideBarIcon" />
                 </span>
                 <span className="sideLinkText">Front Region Management</span>
               </Link> : ""}
             </li>
 
+           */}
 
+            <li className="sidebar-li">
+              {permission?.brands?.read === true ? <Link className={`sideLink ${location.pathname.includes('/spending-management') ? 'active' : ''}`} to="/spending-management">
+                <span className="sideIcon">
 
+                  <img src={Brands} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Spending Management</span>
+              </Link> : ""}
+            </li>
+
+            <li className="sidebar-li">
+              {permission?.report === 'true' ? <Link className={`sideLink ${location.pathname.includes('/front-report-management') ? 'active' : ''}`} to="/front-report-management">
+                <span className="sideIcon">
+                  {/* <FontAwesomeIcon icon={faMoneyBill} /> */}
+                  <img src={report} className="sideBarIcon" />
+                </span>
+                <span className="sideLinkText">Front Report Management</span>
+              </Link> : " "}
+            </li>
 
             <li className="sidebar-li">
               <Link className={`sideLink ${location.pathname.includes('#') ? 'active' : ''}`} onClick={handleClickPopup} >

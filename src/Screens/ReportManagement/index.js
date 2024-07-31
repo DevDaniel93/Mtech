@@ -162,7 +162,7 @@ export const ReportManagement = () => {
   const fetchUnitData = () => {
     const LogoutData = localStorage.getItem('login');
     document.querySelector('.loaderBox').classList.remove("d-none");
-    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing`,
+    fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/unit-listing2`,
       {
         method: 'GET',
         headers: {
@@ -189,12 +189,12 @@ export const ReportManagement = () => {
   }
 
 
-  const [target, setTarget] = useState();
-  const [gross, setGross] = useState();
-  const [refund, setRefund] = useState();
-  const [reversal, setReversal] = useState();
-  const [purchase, setPurchase] = useState();
-  const [net, setNet] = useState();
+  const [target, setTarget] = useState(0);
+  const [gross, setGross] = useState(0);
+  const [refund, setRefund] = useState(0);
+  const [reversal, setReversal] = useState(0);
+  const [purchase, setPurchase] = useState(0);
+  const [net, setNet] = useState(0);
 
   const fetchData = () => {
     const LogoutData = localStorage.getItem('login');
@@ -243,12 +243,15 @@ export const ReportManagement = () => {
         document.querySelector('.loaderBox').classList.add("d-none");
       });
 
+      console.log(target)
+
   }
 
   useEffect(() => {
     document.title = 'Mt Records | Report Management';
     fectchBrandData()
     fetchUnitData()
+    
 
   }, []);
 
@@ -394,7 +397,7 @@ export const ReportManagement = () => {
                           </tr>
                         ))}
 
-                        {target && (
+                        { (
                           <tr>
                             <td><h6 className="font-weight-bold mb-0">Total:</h6></td>
                             <td></td>

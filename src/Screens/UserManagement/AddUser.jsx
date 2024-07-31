@@ -21,6 +21,7 @@ export const AddUser = () => {
         email: '',
         password: '',
         unit_id: [],
+        sub_unit_id: [],
         user_role: ''
     });
     const navigate = useNavigate();
@@ -115,6 +116,12 @@ export const AddUser = () => {
         })
     };
 
+    const handleChangePrevSubSelect = (selectedData) => {
+        setFormData({
+            ...formData, prev_unit_id: selectedData
+        })
+    };
+
 
 
     const LogoutData = localStorage.getItem('login');
@@ -130,6 +137,21 @@ export const AddUser = () => {
             };
 
             SelectOptions.push(option);
+        }
+    }
+
+
+    const prevSelectOptions = []
+    for (const key in initialunit) {
+        if (initialunit.hasOwnProperty(key)) {
+            const item = initialunit[key];
+
+            const option = {
+                value: item.id,
+                label: item.name,
+            };
+
+            prevSelectOptions.push(option);
         }
     }
 
@@ -156,7 +178,7 @@ export const AddUser = () => {
         }
         const formDataMethod = new FormData();
         for (const key in formData) {
-            if (key == 'unit_id' || key == 'sub_unit_id') {
+            if (key == 'unit_id' || key == 'sub_unit_id' || key == 'prev_unit_id') {
                 formDataMethod.append(key, JSON.stringify(formData[key]))
             } else {
                 formDataMethod.append(key, formData[key]);
@@ -347,14 +369,26 @@ export const AddUser = () => {
 
                                             <div className="col-md-4 mb-4">
                                                 <div class="inputWrapper">
-                                                    <label class="mainLabel">Add Sub Units<span>*</span></label>
+                                                    <label class="mainLabel">Add Sub Units</label>
 
                                                     <Select
                                                         value={formData?.sub_unit_id}
                                                         isMulti
-                                                        required
                                                         options={SelectOptions}
                                                         onChange={handleChangeSubSelect}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-4 mb-4">
+                                                <div class="inputWrapper">
+                                                    <label class="mainLabel">Add Previous Units</label>
+
+                                                    <Select
+                                                        value={formData?.prev_unit_id}
+                                                        isMulti
+                                                        options={prevSelectOptions}
+                                                        onChange={handleChangePrevSubSelect}
                                                     />
                                                 </div>
                                             </div>

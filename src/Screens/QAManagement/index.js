@@ -78,6 +78,10 @@ export const QAManagement = () => {
             code: 'status',
             name: 'Status'
         },
+        {
+            code: 'date',
+            name: 'Date'
+        },
     ]
 
 
@@ -86,7 +90,7 @@ export const QAManagement = () => {
         const LogoutData = localStorage.getItem('login');
         document.querySelector('.loaderBox').classList.remove("d-none");
 
-        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}`,
+        fetch(`${process.env.REACT_APP_API_URL}/public/api/admin/getQAAccountsData?search=${formData?.search}&page=1&search_type=${formData?.search_type}${formData?.search_type == 'status' ? `&status=${formData?.status}` : ''}&date=${formData?.date}`,
             {
                 method: 'GET',
                 headers: {
@@ -248,10 +252,10 @@ export const QAManagement = () => {
             key: "email",
             title: "Email Address",
         },
-        // {
-        //     key: "desc",
-        //     title: "Description",
-        // },
+        {
+            key: "number",
+            title: "Phone",
+        },
         {
             key: "toal",
             title: "Total Amount",
@@ -271,6 +275,10 @@ export const QAManagement = () => {
         {
             key: "status",
             title: "Status",
+        },
+        {
+            key: "date",
+            title: "Last Sale Date",
         },
         {
             key: "action",
@@ -342,6 +350,14 @@ export const QAManagement = () => {
             [name]: value,
         }));
 
+        if (name == "date" && (formData?.search_type == "" || formData?.search_type === undefined || formData?.search_type === null)) {
+            setFormData({
+                ...formData,
+                search_type: 'date',
+                [name]: value,
+            })
+        }
+
         console.log(formData)
     };
 
@@ -383,6 +399,38 @@ export const QAManagement = () => {
     };
 
 
+
+
+    const coppied = (id, lead_code) => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(`${lead_code}`).then(() => {
+                setCopied(true);
+                setCopiedId(id);
+                setTimeout(() => {
+                    setCopied(false);
+                    setCopiedId(null);
+                }, 1000);
+            }).catch(error => {
+                console.error('Failed to copy: ', error);
+            });
+        } else {
+            // Fallback for browsers that don't support navigator.clipboard
+            const textarea = document.createElement('textarea');
+            textarea.value = lead_code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Set copied state and timeout as usual
+            setCopied(true);
+            setCopiedId(id);
+            setTimeout(() => {
+                setCopied(false);
+                setCopiedId(null);
+            }, 1000);
+        }
+    };
 
 
     return (
@@ -448,6 +496,17 @@ export const QAManagement = () => {
                                                             ) : ''
                                                         }
 
+                                                        <div className="col-md-2 mb-2">
+
+                                                            <CustomInput
+                                                                type="date"
+                                                                label="Filter by date"
+                                                                name="date"
+                                                                inputClass="mainInput"
+                                                                // required
+                                                                onChange={handleChange} />
+                                                        </div>
+
                                                         <div className="col-md-1 px-md-0 mb-2">
                                                             {
                                                                 clear && (
@@ -496,7 +555,30 @@ export const QAManagement = () => {
                                                         </td>
 
                                                         {/* <td>{item?.username}</td> */}
-                                                        <td className="emailFiled"><span>{item?.customer_email}</span></td>
+                                                        <td className="">
+                                                            <button
+                                                                onClick={() => coppied(item?.id, item?.customer_email)}
+                                                                className="bg-transparent border-0 text-secondary"
+                                                            >
+                                                                <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon> 
+                                                            </button>
+                                                            {/* {copied && copiedId === item.id && (
+                                                                <span className="text-success px-3 py-1 rounded-pill copiedText">Copied</span>
+                                                            )} */}
+
+                                                        </td>
+                                                        <td className="">
+                                                            <button
+                                                                onClick={() => coppied(item?.id, item?.customer_phone)}
+                                                                className="bg-transparent border-0 text-secondary"
+                                                            >
+                                                                <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon> 
+                                                            </button>
+                                                            {/* {copied && copiedId === item.id && (
+                                                                <span className="text-success px-3 py-1 rounded-pill copiedText">Copied</span>
+                                                            )} */}
+
+                                                        </td>
                                                         {/* <td className="descField"><span onClick={() => { showDescription(item?.descriptions) }} className="btnLabel">Show Description</span></td> */}
                                                         <td>{`$${item?.all_payments}`}</td>
                                                         <td>{item?.salesrep?.name}</td>
@@ -507,10 +589,11 @@ export const QAManagement = () => {
 
                                                                 if (!unitName) return; // Handle potential null unitName
 
-                                                                return `${unitName} ${index === item.account_units.length - 1 ? '' : '  |  '}`;
+                                                                return `${unitName} ${index === item?.account_units?.length - 1 ? '' : '  |  '}`;
                                                             })}
                                                         </td>
                                                         <td className={item?.accountstatus?.name == 'In Progress' ? 'text-success' : item?.accountstatus?.name == 'Completed' ? 'text-success' : item?.accountstatus?.name == 'Out of Contact' ? 'text-warning' : item?.accountstatus?.name == 'Disputed' ? 'text-danger' : 'text-danger'}>{item?.accountstatus?.name}</td>
+                                                        <td>{item?.last_sale_date}</td>
                                                         <td className="">
                                                             <Link to={`/qa-management/qa-detail/${item?.id}`} className="">
                                                                 <FontAwesomeIcon icon={faEye} className="tableActionIcon text-dark" />
